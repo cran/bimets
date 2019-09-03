@@ -10,21 +10,21 @@
 \author{Andrea Luciani\\Bank of Italy\thanks{Disclaimer: \emph{The views and opinions expressed in these pages are those of the author and do not necessarily reflect the official policy or position of the Bank of Italy. Examples of analysis performed within these pages are only examples. They should not be utilized in real-world analytic products as they are based only on very limited and dated open source information. Assumptions made within the analysis are not reflective of the position of the Bank of Italy.}}}
 \Plainauthor{Andrea Luciani}
 
-\title{\pkg{BIMETS}: \\ Time Series and Econometric Modeling in \proglang{R}}
+\title{\pkg{bimets}: \\ Time Series and Econometric Modeling in \proglang{R}}
 \Plaintitle{bimets: A Package for Time Series and Econometric Modeling in R}
-\Shorttitle{BIMETS: Time Series and Econometric Modeling in \proglang{R}}
+\Shorttitle{bimets: Time Series and Econometric Modeling in \proglang{R}}
 
 \Abstract{
-BIMETS is an \proglang{R} package developed with the aim of easing time series analysis and building up a framework that facilitates the definition, estimation and simulation of simultaneous equation models.
+\pkg{bimets} is an \proglang{R} package developed with the aim of easing time series analysis and building up a framework that facilitates the definition, estimation and simulation of simultaneous equation models.
 \bigskip
 
-This package supports daily, weekly, monthly, quarterly, semiannual and yearly time series. Time series with frequency of 24 and 36 periods per year are also supported. Users can access and modify time series data by dates, year-period and observation index. Advanced time series manipulation and (dis)aggregation capabilities are provided, e.g. time series extension, merging, projection, lag, cumulative and moving product and sum, etc.
+This package supports daily, weekly, monthly, quarterly, semiannual and yearly time series. Time series with frequency of 24 and 36 periods per year are also supported. Users can access and modify time series data by date, year-period and observation index. Advanced time series manipulation and (dis)aggregation capabilities are provided, e.g. time series extension, merging, projection, lag, cumulative and moving product and sum, etc.
 \bigskip
 
 Econometric modeling capabilities comprehend advanced model definition (e.g. conditional evaluation of equations, per-equation estimation method and time range), estimation of equations with instrumental variables, coefficient restrictions and error autocorrelation, static and dynamic simulation of simultaneous equations with exogenizations and add-factors, interim and impact multipliers analysis, endogenous targeting with model "renormalization".
 \bigskip
 
-BIMETS does not depend on compilers or third-party software so it can be freely downloaded and installed on Linux, MS Windows\textsuperscript{\textregistered} and Mac OSX\textsuperscript{\textregistered}, without any further requirements. 
+\pkg{bimets} does not depend on compilers or third-party software so it can be freely downloaded and installed on Linux, MS Windows\textsuperscript{\textregistered} and Mac OSX\textsuperscript{\textregistered}, without any further requirements. 
 
 }
 
@@ -53,7 +53,7 @@ BIMETS does not depend on compilers or third-party software so it can be freely 
   
 \begin{document}
 \SweaveOpts{concordance=TRUE}
-%\VignetteIndexEntry{BIMETS}
+%\VignetteIndexEntry{bimets}
 %\VignetteKeywords{R, system of simultaneous equations,
 % estimation, ols, instrumental variables, error autocorrelation,
 % pdl, simulation, multipliers, renormalization, forecasting}
@@ -65,20 +65,20 @@ options( prompt = "R> ", continue = "   " )
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
 \section{Introduction}
 \linespread{1.2}
-BIMETS is a software framework developed by using \proglang{R} language and designed for time series analysis and econometric modeling, which allows creating and manipulating time series, specifying simultaneous equation models of any size by using a kind of high-level description language, and performing model estimation, simulation and forecasting.\\ \\
-In addition, BIMETS computational capabilities provide many tools to pre-process data and post-process results, designed for statisticians and economists. These operations are fully integrated with the \proglang{R} environment.\\ \\
-BIMETS estimation and simulation results have been compared to the output results of leading commercial econometric software, by using several large and complex models.\\ \\
+\pkg{bimets} is a software framework developed by using \proglang{R} language and designed for time series analysis and econometric modeling, which allows creating and manipulating time series, specifying simultaneous equation models of any size by using a kind of high-level description language, and performing model estimation, simulation and forecasting.\\ \\
+In addition, \pkg{bimets} computational capabilities provide many tools to pre-process data and post-process results, designed for statisticians and economists. These operations are fully integrated with the \proglang{R} environment.\\ \\
+\pkg{bimets} estimation and simulation results have been compared to the output results of leading commercial econometric software, by using several large and complex models.\\ \\
 The models used in the comparison have more than:
-\begin{itemize}
+\begin{itemize} 
 \item +100  behavioral equations;
 \item +700  technical identities;
 \item +500  coefficients;
 \item +1000 time series of endogenous and exogenous variables;
 \end{itemize}
 \linespread{1.2}
-In these models we can find equations with restricted coefficients, polynomial distributed lags, error autocorrelation and conditional evaluation of technical identities; all models have been simulated in \emph{static}, \emph{dynamic}, and \emph{forecast} mode, with exogenization and constant adjustments of endogenous variables through the use of BIMETS capabilities.\\ \\
-In the +800 endogenous simulated time series over the +20 simulated periods (i.e. more than 16.000 simulated observations), the average \emph{percentage} difference between BIMETS and leading commercial software results has a magnitude of \(10^{-7} \% \). The difference between results calculated using different commercial software has the same average magnitude.\\ \\
-BIMETS stands for Bank of Italy Model Easy Time Series; it does not depend on compilers or third-party software so it can be freely downloaded and installed on Linux, MS Windows\textsuperscript{\textregistered} and Mac OSX\textsuperscript{\textregistered}, without any further requirements. \\ \\
+In these models we can find equations with restricted coefficients, polynomial distributed lags, error autocorrelation and conditional evaluation of technical identities; all models have been simulated in \emph{static}, \emph{dynamic}, and \emph{forecast} mode, with exogenization and constant adjustments of endogenous variables through the use of \pkg{bimets} capabilities.\\ \\
+In the +800 endogenous simulated time series over the +20 simulated periods (i.e. more than 16.000 simulated observations), the average \emph{percentage} difference between \pkg{bimets} and leading commercial software results has a magnitude of \(10^{-7} \% \). The difference between results calculated using different commercial software has the same average magnitude.\\ \\
+\pkg{bimets} stands for Bank of Italy Model Easy Time Series; it does not depend on compilers or third-party software so it can be freely downloaded and installed on Linux, MS Windows\textsuperscript{\textregistered} and Mac OSX\textsuperscript{\textregistered}, without any further requirements. \\ \\
 The package can be installed and loaded in \proglang{R} with the following commands (with "\code{R>}" as the \proglang{R} command prompt):
 \begin{footnotesize}
 <<eval=FALSE>>=
@@ -91,20 +91,20 @@ library(bimets)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Time Series}
 
-BIMETS supports daily, weekly, monthly, quarterly, semiannual and yearly time series. Time series with a frequency of 24 and 36 periods per year are also supproted. The time series are created by the \code{TIMESERIES()} function.\\ \\
+\pkg{bimets} supports daily, weekly, monthly, quarterly, semiannual and yearly time series. Time series with a frequency of 24 and 36 periods per year are also supproted. The time series are created by the \code{TIMESERIES()} function.\\ \\
 Example: 
 \begin{footnotesize}
 <<>>=
 #yearly time series
-myTS=TIMESERIES(1:10,START=as.Date('2000-01-01'),FREQ=1)
+myTS <- TIMESERIES(1:10,START=as.Date('2000-01-01'),FREQ=1)
 @
 
 <<>>=
 #monthly time series
-myTS=TIMESERIES(1:10,START=c(2002,3),FREQ='M')
+myTS <- TIMESERIES(1:10,START=c(2002,3),FREQ='M')
 @
 \end{footnotesize}
-The main BIMETS time series capabilities are:
+The main \pkg{bimets} time series capabilities are:
 \begin{itemize}
 \item[--] \emph{Indexing}
 \item[--] \emph{Aggregation / Disaggregation}
@@ -112,7 +112,7 @@ The main BIMETS time series capabilities are:
 \end{itemize}
 
 \subsection{Time Series Indexing}
-The BIMETS package extends R indexing capabilities in order to ease time series analysis and manipulation. Users can access and modify time series data:
+The \pkg{bimets} package extends R indexing capabilities in order to ease time series analysis and manipulation. Users can access and modify time series data:
 
 \begin{itemize}
 \item[--] \emph{by date}:  users can select and modify a single observation by date by using the syntax \code{ts['Date']}, or multiple observations using \code{ts['StartDate/EndDate']}; 
@@ -123,7 +123,7 @@ Example:
 \begin{footnotesize}
 <<>>=
 #create a daily time series
-myTS=TIMESERIES((1:100),START=c(2000,1),FREQ='D')
+myTS <- TIMESERIES((1:100),START=c(2000,1),FREQ='D')
 @
 <<computation,results=hide>>=
 myTS[1:3]                      #get first three obs.
@@ -131,32 +131,32 @@ myTS['2000-01-12']             #get Jan 12, 2000 data
 myTS['2000-02-03/2000-02-14']  #get Feb 3 up to Feb 14
 myTS[[2000,14]]                #get year 2000 period 14
 
-myTS['2000-01-15'] = NA        #assign to Jan 15, 2000
-myTS[[2000,42]] = NA           #assign to Feb 11, 2000
-myTS[[2000,100]] = c(-1,-2,-3) #extend time series starting from period 100
+myTS['2000-01-15'] <- NA        #assign to Jan 15, 2000
+myTS[[2000,42]] <- NA           #assign to Feb 11, 2000
+myTS[[2000,100]] <- c(-1,-2,-3) #extend time series starting from period 100
 @
 \end{footnotesize}
 \subsection{Time Series Aggregation/Disaggregation} 
-The BIMETS package provides advanced (dis)aggregation capabilities, with several linear interpolation capabilities in disaggregation, and many aggregation functions (e.g. \code{STOCK}, \code{SUM}, \code{AVE}, etc.) while reducing the time series frequency. 
+The \pkg{bimets} package provides advanced (dis)aggregation capabilities, with several linear interpolation capabilities in disaggregation, and many aggregation functions (e.g. \code{STOCK}, \code{SUM}, \code{AVE}, etc.) while reducing the time series frequency. 
 \bigskip
 
 Example:
 \begin{footnotesize}
 <<>>=
 #create a monthly time series
-myMonthlyTS=TIMESERIES(1:100,START=c(2000,1),FREQ='M')
+myMonthlyTS <- TIMESERIES(1:100,START=c(2000,1),FREQ='M')
 @
 <<>>=
 #convert to annual time series using the average as aggregation fun
-myAnnualTS=ANNUAL(myMonthlyTS,'AVE')
+myAnnualTS <- ANNUAL(myMonthlyTS,'AVE')
 @
 <<>>=
 #convert to daily using central interpolation as disaggregation fun
-myDailyTS=DAILY(myMonthlyTS,'INTERP_CENTER')
+myDailyTS <- DAILY(myMonthlyTS,'INTERP_CENTER')
 @
 \end{footnotesize}
 \subsection{Time Series Manipulation} 
-The BIMETS package provides, among others, the following time series manipulation capabilities:
+The \pkg{bimets} package provides, among others, the following time series manipulation capabilities:
 \begin{itemize}
 \item[--]  Time series extension \code{TSEXTEND()} 
 \item[--]  Time series merging \code{TSMERGE()} 
@@ -174,29 +174,29 @@ Example:
 \begin{footnotesize}
 <<>>=
 #define two time series
-myTS1=TIMESERIES(1:100,START=c(2000,1),FREQ='M')
-myTS2=TIMESERIES(-(1:100),START=c(2005,1),FREQ='M')
+myTS1 <- TIMESERIES(1:100,START=c(2000,1),FREQ='M')
+myTS2 <- TIMESERIES(-(1:100),START=c(2005,1),FREQ='M')
 @
 <<>>=
 #extend time series up to Apr 2020 with quadratic formula
-myExtendedTS=TSEXTEND(myTS1,UPTO = c(2020,4),EXTMODE = 'QUADRATIC')
+myExtendedTS <- TSEXTEND(myTS1,UPTO = c(2020,4),EXTMODE = 'QUADRATIC')
 @
 <<>>=
 #merge two time series with sum
-myMergedTS=TSMERGE(myExtendedTS,myTS2,fun = 'SUM')
+myMergedTS <- TSMERGE(myExtendedTS,myTS2,fun = 'SUM')
 @
 <<>>=
 #project time series on arbitrary time range
-myProjectedTS=TSPROJECT(myMergedTS,TSRANGE = c(2004,2,2006,4))
+myProjectedTS <- TSPROJECT(myMergedTS,TSRANGE = c(2004,2,2006,4))
 @
 <<>>=
 #lag and delta% time series
-myLagTS=TSLAG(myProjectedTS,2)
-myDeltaPTS=TSDELTAP(myLagTS,2)
+myLagTS <- TSLAG(myProjectedTS,2)
+myDeltaPTS <- TSDELTAP(myLagTS,2)
 @
 <<>>=
 #moving average
-myMovAveTS=MOVAVG(myDeltaPTS,5)
+myMovAveTS <- MOVAVG(myDeltaPTS,5)
 @
 <<>>=
 #print data
@@ -212,7 +212,7 @@ TABIT(myMovAveTS,
 \section{Econometric Modeling} 
 
 
-BIMETS econometric modeling capabilities comprehend:
+\pkg{bimets} econometric modeling capabilities comprehend:
 \begin{itemize}
 \item[--] \emph{Model Definition Language} 
 \item[--] \emph{Estimation} 
@@ -224,13 +224,13 @@ BIMETS econometric modeling capabilities comprehend:
 We will go through each item of the list with a simple Tinbergen-Klein model example. 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
 \subsection{Model Definition Language}
-BIMETS provides a language to unambiguously specify an econometric model. This section describes how to create a model and its general structure. The specification of an econometric model is translated and identified by keyword statements which are grouped in a model file, i.e. a plain text file or a \code{character} variable with a specific syntax. Collectively, these keyword statements constitute the BIMETS Model Description Language (from now on "\code{MDL}"). The model specifications consist of groups of statements. Each statement begins with a keyword. The keyword classifies the component of the model which is beign specified.
+\pkg{bimets} provides a language to unambiguously specify an econometric model. This section describes how to create a model and its general structure. The specification of an econometric model is translated and identified by keyword statements which are grouped in a model file, i.e. a plain text file or a \code{character} variable with a specific syntax. Collectively, these keyword statements constitute the \pkg{bimets} Model Description Language (from now on "\code{MDL}"). The model specifications consist of groups of statements. Each statement begins with a keyword. The keyword classifies the component of the model which is beign specified.
 \bigskip
 
 Below is an example of Klein's model, that can either be stored in an \proglang{R} variable of class \code{character} or in a plain text file with a \code{MDL} compliant syntax. \\ \\The content of the \emph{klein1.txt} variable  is:
 \begin{footnotesize}
 <<>>=
-klein1.txt="
+klein1.txt <- "
 MODEL 
 
 COMMENT> Consumption
@@ -271,7 +271,7 @@ END
 Please note that there are circular dependencies between equations of the model, i.e. \code{cn <- w1 <- y <- cn}. Circular dependencies imply that the model simulation must be solved with an iterative algorithm.
 \bigskip
 
-As shown, the model definition is quite intuitive. The first keyword is \code{MODEL}, while at the end of the model definition we can find the \code{END} keyword. Available tags in the definition of a generic BIMETS model are: 
+As shown, the model definition is quite intuitive. The first keyword is \code{MODEL}, while at the end of the model definition we can find the \code{END} keyword. Available tags in the definition of a generic \pkg{bimets} model are: 
 \begin{itemize}
 \item[--] \textbf{EQUATION>} or \textbf{BEHAVIORAL>} indicate the beginning of a series of keyword statements describing a behavioral equation. The behavioral statement general form is: \\
 \code{BEHAVIORAL> name  [TSRANGE startYear, startPeriod, endYear, endPeriod]}  \\
@@ -311,16 +311,16 @@ During an estimation, users must ensure that the required data is available for 
 The solution requires an iterative algorithm. Given \({Y_{1}=\beta_{1}*X_{1}+\epsilon_{1}}\), where \({Y_{1}}\) are the historical values of the dependent variable and \({X_{1}}\) are the historical values of the regressors, the iterative algorithm is based on the Cochrane-Orcutt procedure:
 \smallskip
 
-1) Make an initial estimation by using the original TSRANGE extended backward \code{n} periods (given \code{n} is the autocorrelation order).
+1) Make an initial estimation by using the original TSRANGE extended backward \code{n} periods (given \code{n} as the autocorrelation order).
 \smallskip
 
 2) Estimate the error autocorrelation coefficients \({\rho_{i}=\rho_{i,1},...,\rho_{i,n}}\) with \({i=1}\) by regressing the residuals \({\epsilon_{i}}\) on their lagged values through the use of the auxiliary model: \\ \({\epsilon_{i}=\rho_{i,1}*TSLAG(\epsilon_{i},1)+...+\rho_{i,n}*TSLAG(\epsilon_{i},n)}\)
 \smallskip
 
-3) Transform the data for the dependent and the independent variables by using the estimated \({\rho_{i}}\). The new dependent variable will be: \({Y_{i+1}=P*Y_i}\), and the new independent variables will be \({X_{i+1}=P*X_i}\) with the matrix \({P}\) defined as:
+3) Transform the data for the dependent and the independent variables by using the estimated \({\rho_{i}}\). The new dependent variable will be: \({Y_{i+1}=P_i*Y_i}\), and the new independent variables will be \({X_{i+1}=P_i*X_i}\) with the matrix \({P_i}\) defined as:
 \smallskip
 
-\( P=\begin{pmatrix}
+\( P_i=\begin{pmatrix}
 1 & 0 & 0 & 0 & ... & 0 & 0 \\ 
 -\rho_{i,1} & 1 & 0 & 0 & ... & 0 & 0 \\
 -\rho_{i,2} & -\rho_{i,1} & 1 & 0 & ... & 0 & 0 \\
@@ -344,11 +344,11 @@ If \( all(abs(\rho_{i+1}-\rho_{i})<\delta )\), where \( \rho_{i} \) is the \( \r
 A deterministic (exact) coefficient restriction sets a linear expression containing one or more coefficients equal to a constant. The restriction only affects the coefficients of the behavioral equation in which it is specified. The restriction statement general form is:
 
 \code{
-RESTRICT> linear_combination_of coefficients_1 = value_1 \\
+RESTRICT> linear_combination_of_coefficients_1 = value_1 \\
 ... \\
-linear_combination_of coefficients_n = value_n
+linear_combination_of_coefficients_n = value_n
 } \\ \\
-where \code{linear_combination_of coefficients_i, i=1..n} is a linear combination of the coefficient(s) to be restricted and \code{value_i} is the in-place scalar value to which the linear combination of the coefficients is set equal. Each linear combination can be set equal to a different value.
+where \code{linear_combination_of_coefficients_i, i=1..n} is a linear combination of the coefficient(s) to be restricted and \code{value_i} is the in-place scalar value to which the linear combination of the coefficients is set equal. Each linear combination can be set equal to a different value.
 \smallskip
 
 MDL example: \\ \\
@@ -359,7 +359,7 @@ coeff3-3*coeff4+1.2*coeff5 = 0
 }
 \smallskip
 
-In many econometric packages, linear restrictions have to be coded by hand in the equations. BIMETS allows the users to write down the restriction in a natural way thus applying a constrained minimization. This procedure, although it leads to approximate numerical estimates, allows an easy implementation.
+In many econometric packages, linear restrictions have to be coded by hand in the equations. \pkg{bimets} allows the users to write down the restriction in a natural way thus applying a constrained minimization. This procedure, although it leads to approximate numerical estimates, allows an easy implementation.
 \smallskip
 
 The theory behind this procedure is that of the Lagrange multipliers. Presented here is an example of its implementation.
@@ -426,7 +426,7 @@ PDL> C2 2 5
  \\ \\ and \\ \\
 \({r=\begin{pmatrix} 0 \\ 0  \end{pmatrix}} \)
 \\ \\
-The expanded regressors are: \\ \code{X1, X2, TSLAG(X2,1), TSLAG(X2,2), TSLAG(X2,3), TSLAG(X2,4), X3}. \\ \\The scaling factor is given, as in the standard restriction case, by: \({mean(R) / max(abs(R[i,]))}\) \\ 
+The expanded regressors are: \\ \code{X1, X2, TSLAG(X2,1), TSLAG(X2,2), TSLAG(X2,3), TSLAG(X2,4), X3}. \\ \\The scaling factor is given, as in the standard restriction case, by: \({mean(X' X) / max(abs(R[i,]))}\) \\ 
 \item[--] \textbf{IF>} keyword is used to conditionally evaluate an identity during a simulation, depending on the value of a logical expression. Thus, it is possible to have a model alternating between two or more identity specifications for each simulation period, depending upon results from other equations. \\ \\
 The \code{IF>} statement general form is: \\
 \code{IF> logical_expression} \\ \\The \code{IF>} keyword must be specified within an identity group; this keyword causes the equation specified in the identity group to be evaluated during the current simulation period only when the \code{logical_expression} is \code{TRUE}.\\ \\ Only one \code{IF>} keyword is allowed in an identity group. Further occurrences produce an error message and processing stops.\\ \\
@@ -462,14 +462,14 @@ The mathematical expression in \code{EQ>} and \code{IF>} definitions can include
 \end{itemize}
 
 
-Back to Klein's model example, the BIMETS \code{LOAD_MODEL()} function reads the \emph{klein1.txt} model as previously defined:
+Back to Klein's model example, the \pkg{bimets} \code{LOAD_MODEL()} function reads the \emph{klein1.txt} model as previously defined:
 \begin{footnotesize}
 <<>>=
-kleinModel=LOAD_MODEL(modelText = klein1.txt)
+kleinModel <- LOAD_MODEL(modelText = klein1.txt)
 @
 \end{footnotesize}
 
-As shown in the output, BIMETS counted 3 behavioral equations, 3 identities and 12 coefficients. Now in the \proglang{R} session there is a variable named \emph{kleinModel} that contains the model structure defined in the \emph{klein1.txt} variable. From now on, the user can ask BIMETS about any details of this model.
+As shown in the output, \pkg{bimets} counted 3 behavioral equations, 3 identities and 12 coefficients. Now in the \proglang{R} session there is a variable named \emph{kleinModel} that contains the model structure defined in the \emph{klein1.txt} variable. From now on, the user can ask \pkg{bimets} about any details of this model.
 \bigskip
 
 For example, to gather information on the "\code{cn}" Consumption behavioral equation: 
@@ -489,13 +489,13 @@ kleinModel$vfeed
 kleinModel$vpost
 @
 \end{footnotesize}
-While simulating the Klein's model, BIMETS will iterate on the computation of, in order, \code{w1 -> p -> cn -> i -> y} (the \code{vsim} variables), by looking for convergence on \code{y} (the \code{vfeed} variable, only one in this example) that is the feedback variable. If the convergence is achieved, it will calculate \code{k} (the \code{vpost} variable). The \code{vpre} array in this example is empty, that is no equation has to be evaluated before the iterative algorithm.
+While simulating the Klein's model, \pkg{bimets} will iterate on the computation of, in order, \code{w1 -> p -> cn -> i -> y} (the \code{vsim} variables), by looking for convergence on \code{y} (the \code{vfeed} variable, only one in this example) that is the feedback variable. If the convergence is achieved, it will calculate \code{k} (the \code{vpost} variable). The \code{vpre} array in this example is empty, that is no equation has to be evaluated before the iterative algorithm.
 \bigskip
 
 Once the model has been parsed, users needs to load the data of all the time series involved in the model, by using the \code{LOAD_MODEL_DATA()} function. In the following example, the code defines a list of time series and loads this list into the Klein's model previously defined:
 \begin{footnotesize}
 <<>>=
-kleinModelData=list(  
+kleinModelData <- list(  
     cn  =TIMESERIES(39.8,41.9,45,49.2,50.6,52.6,55.1,56.2,57.3,57.8,
                  55,50.9,45.6,46.5,48.7,51.3,57.7,58.7,57.5,61.6,65,69.7, 	
                  START=c(1920,1),FREQ=1),
@@ -529,16 +529,16 @@ kleinModelData=list(
                  START=c(1920,1),FREQ=1)
 	)
 
-kleinModel=LOAD_MODEL_DATA(kleinModel,kleinModelData)
+kleinModel <- LOAD_MODEL_DATA(kleinModel,kleinModelData)
 @
 \end{footnotesize}
-Since time series and other data (e.g. regressor coefficients, error coefficients, constant adjustments, targets, instruments, etc...) are stored into the model object, users can define multiple model objects - each with its own arbitrary data - in the same \proglang{R} session. BIMETS makes it possible to estimate, simulate and compare results from different models with different data sets. Furthermore, users can easily save an estimated or a simulated model as a standard \proglang{R} variable, thus reloading it later, having all available data and time series stored into it, i.e. endogenous and exogenous time series, estimated coefficients, constant adjustments, simulation options, simulated time series, calculated instruments, targets, etc.
+Since time series and other data (e.g. regressor coefficients, error coefficients, constant adjustments, targets, instruments, etc...) are stored into the model object, users can define multiple model objects - each with its own arbitrary data - in the same \proglang{R} session. \pkg{bimets} makes it possible to estimate, simulate and compare results from different models with different data sets. Furthermore, users can easily save an estimated or a simulated model as a standard \proglang{R} variable, thus reloading it later, having all available data and time series stored into it, i.e. endogenous and exogenous time series, estimated coefficients, constant adjustments, simulation options, simulated time series, calculated instruments, targets, etc.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
 \subsection{Estimation}
 
 
-The BIMETS \code{ESTIMATE()} function estimates equations that are linear in the coefficients, as specified in the behavioral equations of the model object. Coefficients can be estimated for single equations or blocks of simultaneous equations. The estimation function supports:
+The \pkg{bimets} \code{ESTIMATE()} function estimates equations that are linear in the coefficients, as specified in the behavioral equations of the model object. Coefficients can be estimated for single equations or blocks of simultaneous equations. The estimation function supports:
 \begin{itemize}
 \item[--] \emph{Ordinary Least Squares};
 \item[--] \emph{Instrumental Variables};
@@ -551,13 +551,13 @@ Restrictions procedure derives from the theory of Lagrange Multipliers, while th
 The estimation of the previously defined Klein's model is shown in the following example (\proglang{R} output omitted):  
 \begin{footnotesize}
 <<>>=
-kleinModel=ESTIMATE(kleinModel, quietly=TRUE)
+kleinModel <- ESTIMATE(kleinModel, quietly=TRUE)
 @
 \end{footnotesize}
 Users can also estimate a selection of behavioral equations:
 \begin{footnotesize}
 <<>>=
-kleinModel=ESTIMATE(kleinModel, eqList=c('cn'))
+kleinModel <- ESTIMATE(kleinModel, eqList=c('cn'))
 @
 \end{footnotesize}
 A similar output is shown for each estimated regression. Once the estimation is completed, coefficient values, residuals, statistics, etc. are stored into the model object.
@@ -582,7 +582,7 @@ Below is an example of a model estimation that presents coefficient restrictions
 \begin{footnotesize}
 <<>>=
 #define model
-advancedKlein1.txt=
+advancedKlein1.txt <- 
 "MODEL
 
 COMMENT> Modified Klein Model 1 of the U.S. Economy with PDL, 
@@ -629,19 +629,19 @@ END"
 @
 <<>>=
 #load model and data
-advancedKleinModel=LOAD_MODEL(modelText=advancedKlein1.txt)
-advancedKleinModel=LOAD_MODEL_DATA(advancedKleinModel,kleinModelData)
+advancedKleinModel <- LOAD_MODEL(modelText=advancedKlein1.txt)
+advancedKleinModel <- LOAD_MODEL_DATA(advancedKleinModel,kleinModelData)
 @
 <<>>=
 #estimate model
-advancedKleinModel=ESTIMATE(advancedKleinModel)
+advancedKleinModel <- ESTIMATE(advancedKleinModel)
 @
 \end{footnotesize}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
 \subsection{Simulation}
 The simulation of an econometric model basically consists in solving the system of the equations describing the model for each time period in the specified time interval. Since the equations may not be linear in the variables, and since the graph derived from the incidence matrix may be cyclic, the usual methods based on linear algebra are not applicable, and the simulation must be solved by using an iterative algorithm. \\ \\
-BIMETS simulation capabilities support:
+\pkg{bimets} simulation capabilities support:
 \begin{itemize}
 \item[--] \emph{Static simulations}: in which the historical values for the lagged endogenous variables are used in the solutions of subsequent periods; 
 \item[--] \emph{Dynamic simulations}: in which the simulated values for the lagged endogenous variables are used in the solutions of subsequent periods;
@@ -650,7 +650,7 @@ BIMETS simulation capabilities support:
 \item[--] \emph{Partial or total exogenization of endogenous variables}: in the provided time interval (i.e. partial exog.) or in the whole simulation time range (i.e. total exog.), the values of the selected endogenous variables can be definitely set equal to their historical values, by excluding their equations from the iterative algorithm of simulation;
 \item[--] \emph{Constant adjustment of endogenous variables (add-factors)}: adds another exogenous time series - the "constant adjustment" - in the equation of the selected endogenous variables;
 \end{itemize}
-In details, the generic model suitable for simulation in BIMETS can be written as: \\ 
+In details, the generic model suitable for simulation in \pkg{bimets} can be written as: \\ 
 
 \({y_1=f_1(\bar{x},\bar{y})}\) \\
 \({...}\) \\
@@ -704,12 +704,12 @@ the add-factors \({\bar{z}=[z_1, ... ,z_n]}\) can be interpreted as estimates of
 \item compute the difference between the historical and the simulated values for each endogenous variables;
 \item average, or process in a suitable way, the difference arising from point 4 in the time periods beyond the estimation sample to compute the constant value to be used as an add-factor in the following forecasting exercises;
 \end{enumerate}
-Back to Kelin's model example, let's try and forecast the GNP (i.e. the "\code{y}" endogenous variable) by using the BIMETS simulation capabilities, up to 1943: \\
+Back to Kelin's model example, let's forecast the GNP (i.e. the "\code{y}" endogenous variable) up to 1943: \\
 \begin{footnotesize}
 <<>>=
 #FORECAST GNP in 1942 and 1943 
 #we need to extend exogenous variables in 1942 and 1943
-kleinModel$modelData=within(kleinModel$modelData,{
+kleinModel$modelData <- within(kleinModel$modelData,{
                     w2   = TSEXTEND(w2,  UPTO=c(1943,1))
                     t    = TSEXTEND(t,   UPTO=c(1943,1))
                     g    = TSEXTEND(g,   UPTO=c(1943,1))
@@ -719,7 +719,7 @@ kleinModel$modelData=within(kleinModel$modelData,{
 
  
 #simulate model
-kleinModel=SIMULATE(kleinModel
+kleinModel <- SIMULATE(kleinModel
                   ,simType='FORECAST'
                   ,TSRANGE=c(1940,1,1943,1)
                   ,simConvergence=0.00001
@@ -746,7 +746,7 @@ The final pattern of an incidence matrix after the equation reordering generally
 \item a simultaneous block;
 \item another recursive block (the post-recursive block);
 \end{enumerate}
-As said, the pre-recursive and the post-recursive blocks are lower triangular. Therefore the corresponding equations are solvable with a cascade substitution with no iteration. Just the simultaneous equations set needs an iterative algorithm to be solved. It is important to say that the convergence criterion may also be applied to these variables only: when the feedback variables converge, the rest of the simultaneous variables also do.\\ \\ BIMETS builds and analyzes the incidence matrix of the model, and then it orders the equations in pre-recursive, simultaneous and post-recursive blocks. The simultaneous block is then analyzed in order to find a minimal set of feedback variables. This last problem is known to be NP-complete\footnote{Garey, Johnson - \emph{Computers and Intractability: a Guide to the Theory of NP-completeness} - San Francisco, Freeman 1979}.\\ \\The optimal reordering of the model equations is programmatically achieved through the use of an iterative algorithm applied to the incidence matrix that can produce 4 ordered lists of endogenous variables:
+As said, the pre-recursive and the post-recursive blocks are lower triangular. Therefore the corresponding equations are solvable with a cascade substitution with no iteration. Just the simultaneous equations set needs an iterative algorithm to be solved. It is important to say that the convergence criterion may also be applied to these variables only: when the feedback variables converge, the rest of the simultaneous variables also do.\\ \\ \pkg{bimets} builds and analyzes the incidence matrix of the model, and then it orders the equations in pre-recursive, simultaneous and post-recursive blocks. The simultaneous block is then analyzed in order to find a minimal set of feedback variables. This last problem is known to be NP-complete\footnote{Garey, Johnson - \emph{Computers and Intractability: a Guide to the Theory of NP-completeness} - San Francisco, Freeman 1979}.\\ \\The optimal reordering of the model equations is programmatically achieved through the use of an iterative algorithm applied to the incidence matrix that can produce 4 ordered lists of endogenous variables:
 \begin{enumerate}
 \item \code{vpre} is the ordered list containing the names of the endogenous pre-recursive variables to be sequentially computed (using their \code{EQ>} definition in the \code{MDL}) before the simulation iterative algorithm takes place;
 \item \code{vsim} is the ordered list containing the names of the endogenous variables to be sequentially computed during each iteration of the simulation iterative algorithm; 
@@ -775,19 +775,19 @@ Below is an example of advanced simulation:
 #define exogenization list
 #'cn' exogenized in 1923-1925
 #'i' exogenized in the whole TSRANGE
-exogenizeList=list(
+exogenizeList <- list(
                 cn = c(1923,1,1925,1),
                 i  = TRUE
               )
  
 #define add-factor list
-constantAdjList=list(
+constantAdjList <- list(
                cn = TIMESERIES(1,-1,START=c(1923,1),FREQ='A'),
                y  = TIMESERIES(0.1,-0.1,-0.5,START=c(1926,1),FREQ='A')
               )
  
 #simulate model
-kleinModel=SIMULATE(kleinModel
+kleinModel <- SIMULATE(kleinModel
                   ,simType='STATIC'
                   ,TSRANGE=c(1923,1,1941,1)
                   ,simConvergence=0.00001
@@ -800,13 +800,13 @@ kleinModel=SIMULATE(kleinModel
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
 \subsection{Multipliers Analysis}
 
-The BIMETS \code{MULTMATRIX()} function computes the matrix of both impact and interim multipliers, for a selected set of endogenous variables (i.e. \code{TARGET}) with respect to a selected set of exogenous variables (i.e. \code{INSTRUMENT}), by subtracting the results from different simulations in each period of the provided time range (i.e. \code{TSRANGE}). The simulation algorithms are the same as those used for the \code{SIMULATE()} operation. \\ \\
+The \pkg{bimets} \code{MULTMATRIX()} function computes the matrix of both impact and interim multipliers, for a selected set of endogenous variables (i.e. \code{TARGET}) with respect to a selected set of exogenous variables (i.e. \code{INSTRUMENT}), by subtracting the results from different simulations in each period of the provided time range (i.e. \code{TSRANGE}). The simulation algorithms are the same as those used for the \code{SIMULATE()} operation. \\ \\
 The \code{MULTMATRIX()} procedure is articulated as follows:
 \begin{enumerate}
 \item simultaneous simulations are done;
 \item the first simulation establishes the base line solution (without shocks);
 \item the other simulations are done with shocks applied to each of the \code{INSTRUMENT} one at a time for every period in \code{TSRANGE};
-\item each simulation follows the defaults described in the \emph{Simulation} section, but has to be \code{STATIC} for the IMPACT multipliers and \code{DYNAMIC} for INTERIM multipliers;
+\item each simulation follows the defaults described in the "Simulation" section, but has to be \code{STATIC} for the IMPACT multipliers and \code{DYNAMIC} for INTERIM multipliers;
 \item given the \code{MM_SHOCK} shock amount as a very small positive number, derivatives are computed by subtracting the base line solution of the \code{TARGET} from the shocked solution, then dividing by the value of the base line \code{INSTRUMENT} times the \code{MM_SHOCK};
 \end{enumerate}
 The IMPACT multipliers measure the effects of impulse exogenous changes on the endogenous variables in the same time period. They can be defined as partial derivatives of each current endogenous variable with respect to each current exogenous variable, all other exogenous variable being kept constant.\\ \\
@@ -814,11 +814,11 @@ Given \({Y(t)}\) an endogenous variable at time \({t}\) and \({X(t)}\) an exogen
 The INTERIM or delay-\code{r} multipliers measure the delay-\code{r} effects of impulse exogenous changes on the endogenous variables in the same time period. The delay-\code{r} multipliers of the endogenous variable \code{Y} with respect to the exogenous variable \code{X} related to a dynamic simulation from time \code{t} to time \code{t+r} can be defined as the partial derivative of the current endogenous variable \code{Y} at time \code{t+r} with respect to the exogenous variable \code{X} at time \code{t}, all other exogenous variable being kept constant.\\ \\
 Given \({Y(t+r)}\) an endogenous variable at time \({t+r}\) and \({X(t)}\) an exogenous variable at time \({t}\) the interim or delay-\code{r} multiplier \({m(Y,X,t,r)}\) is defined as \({m(Y,X,t,r) = \partial Y(t+r)/\partial X(t)}\) and can be approximated by \({m(Y,X,t,r)\approx(Y_{shocked}(t+r)-Y(t+r))/(X_{shocked}(t)-X(t))}\), with \\ \({Y_{shocked}(t+r)}\) the values fo the simulated endogenous variable \({Y}\) at time \({t+r}\) when \({X(t)}\) is shocked to \({X_{shocked}(t)=X(t)(1+MM\_SHOCK)}\)
 \\ \\
-BIMETS users can also declare an endogenous variable as the \code{INSTRUMENT} variable. In this case, the constant adjustment related to the provided endogenous variable will be used as the \code{INSTRUMENT} exogenous variable. \\ \\
+\pkg{bimets} users can also declare an endogenous variable as the \code{INSTRUMENT} variable. In this case, the constant adjustment related to the provided endogenous variable will be used as the \code{INSTRUMENT} exogenous variable. \\ \\
 Back to our Klein's model example, we can calculate impact multipliers of Government non-Wage Spending "\code{g}" and Government Wage Bill "\code{w2}" with respect of Consumption "\code{cn}" and Gross National Product "\code{y}" in the year 1941 by using the previously estimated model: \\ \\
 \begin{footnotesize}
 <<>>=
-kleinModel=MULTMATRIX(kleinModel,
+kleinModel <- MULTMATRIX(kleinModel,
                         TSRANGE=c(1941,1,1941,1),
                         INSTRUMENT=c('w2','g'),
                         TARGET=c('cn','y')
@@ -832,7 +832,7 @@ An interim-multiplier example follows:
 \begin{footnotesize}
 <<>>=
 #multi-period interim multipliers
-kleinModel=MULTMATRIX(kleinModel,
+kleinModel <- MULTMATRIX(kleinModel,
                    TSRANGE=c(1940,1,1941,1),
                    INSTRUMENT=c('w2','g'),
                    TARGET=c('cn','y'))
@@ -844,7 +844,7 @@ kleinModel$MultiplierMatrix
 \end{footnotesize}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
 \subsection{Renormalization}
-The renormalization\footnote{On the Theory of Economic Policy - Tinbergen J. 1952} of econometric models consists of solving the model while interchanging the role of one or more endogenous variables with an equal number of exogenous variables.\\ \\ The BIMETS \code{RENORM()} procedure determines the values for the \code{INSTRUMENT} exogenous variables which allow the objective \code{TARGET} endogenous variables to be achieved, with respect to the constraints given by the model \code{MDL} definition.\\ \\
+The renormalization\footnote{On the Theory of Economic Policy - Tinbergen J. 1952} of econometric models consists of solving the model while interchanging the role of one or more endogenous variables with an equal number of exogenous variables.\\ \\ The \pkg{bimets} \code{RENORM()} procedure determines the values for the \code{INSTRUMENT} exogenous variables which allow the objective \code{TARGET} endogenous variables to be achieved, with respect to the constraints given by the model \code{MDL} definition.\\ \\
 This is an approach to economic and monetary policy analysis, and is based on two assumptions:
 \begin{enumerate}
 \item there exists a desired level for a set of \code{n} endogenous variables defined as \code{TARGET};
@@ -865,7 +865,7 @@ Back to our Klein's model example, we can perform the renormalization of the pre
 <<>>=
 #we want an arbitrary value on Consumption of 66 in 1940 and 78 in 1941
 #we want an arbitrary value on GNP of 77 in 1940 and 98 in 1941
-kleinTargets = list(
+kleinTargets <- list(
               cn = TIMESERIES(66,78,START=c(1940,1),FREQ=1),
               y  = TIMESERIES(77,98,START=c(1940,1),FREQ=1)
               )
@@ -874,7 +874,7 @@ kleinTargets = list(
 Then, we can perform the model renormalization by using the "\code{w2}" (Wage Bill of the Government Sector) and the "\code{g}" (Government non-Wage Spending) exogenous variables as \code{INSTRUMENT}, in the years 1940 and 1941 (output omitted):
 \begin{footnotesize}
 <<computation>>=
-kleinModel=RENORM(kleinModel
+kleinModel <- RENORM(kleinModel
                    ,INSTRUMENT = c('w2','g')
                    ,TARGET = kleinTargets
                    ,TSRANGE = c(1940,1,1941,1)
@@ -900,15 +900,15 @@ Let's verify:
 \begin{footnotesize}
 <<>>=
 #create a new model
-kleinRenorm=kleinModel
+kleinRenorm <- kleinModel
 @
 <<>>=
 #get instruments to be used
-newInstruments=kleinModel$renorm$INSTRUMENT
+newInstruments <- kleinModel$renorm$INSTRUMENT
 @
 <<>>=
-#change exogenous by using new instruments
-kleinRenorm$modelData=within(kleinRenorm$modelData,
+#change exogenous by using new instruments data
+kleinRenorm$modelData <- within(kleinRenorm$modelData,
                  {
                    w2[[1940,1]]=newInstruments$w2[[1940,1]]
                    w2[[1941,1]]=newInstruments$w2[[1941,1]]
@@ -917,11 +917,11 @@ kleinRenorm$modelData=within(kleinRenorm$modelData,
                  }
                 )
 #users can also replace last two commands with:
-#kleinRenorm$modelData=kleinRenorm$renorm$modelData
+#kleinRenorm$modelData <- kleinRenorm$renorm$modelData
 @
 <<>>=
 #simulate the new model
-kleinRenorm=SIMULATE(kleinRenorm
+kleinRenorm <- SIMULATE(kleinRenorm
                       ,TSRANGE=c(1940,1,1941,1)
                       ,simConvergence=0.00001
                       ,simIterLimit=100

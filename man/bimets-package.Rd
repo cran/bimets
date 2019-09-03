@@ -4,23 +4,23 @@
 
 \docType{package}
 \title{
-BIMETS :: Time Series And Econometric Modeling In R
+bimets :: Time Series And Econometric Modeling In R
 }
 \description{
 
 \if{html}{(Note: this is the html version of the reference manual. Please consider reading the pdf version of this reference manual, wherein there are figures and the mathematical expressions are better formatted than in html.)\cr\cr}
 
-BIMETS is a software framework developed by using \code{R} language and designed for time series analysis and econometric modeling, which allows creating and manipulating time series, specifying simultaneous equation models of any size by using a kind of high-level description language, and performing model estimation, simulation and forecasting.\cr\cr
-In addition, BIMETS computational capabilities provide many tools to pre-process data and post-process results, designed for statisticians and economists. These operations are fully integrated with the \code{R} environment.\cr \cr
-BIMETS estimation and simulation results have been compared to the output results of leading commercial econometric software, by using several large and complex models.\cr\cr
+\bold{bimets} is a software framework developed by using \code{R} language and designed for time series analysis and econometric modeling, which allows creating and manipulating time series, specifying simultaneous equation models of any size by using a kind of high-level description language, and performing model estimation, simulation and forecasting.\cr\cr
+In addition, \bold{bimets} computational capabilities provide many tools to pre-process data and post-process results, designed for statisticians and economists. These operations are fully integrated with the \code{R} environment.\cr \cr
+\bold{bimets} estimation and simulation results have been compared to the output results of leading commercial econometric software, by using several large and complex models.\cr\cr
 The models used in the comparison have more than:\cr\cr
 +100  behavioral equations;\cr
 +700  technical identities;\cr
 +500  coefficients;\cr
 +1000 time series of endogenous and exogenous variables;\cr\cr
-In these models we can find equations with restricted coefficients, polynomial distributed lags, error autocorrelation and conditional evaluation of technical identities; all models have been simulated in \emph{static}, \emph{dynamic}, and \emph{forecast} mode, with exogenization and constant adjustments of endogenous variables through the use of BIMETS capabilities.\cr\cr
-In the +800 endogenous simulated time series over the +20 simulated periods (i.e. more than 16.000 simulated observations), the average \emph{percentage} difference between BIMETS and leading commercial software results has a magnitude of \eqn{10^{-7} \% }{10^(-7) \%}. The difference between results calculated by using different commercial software has the same average magnitude.\cr\cr
-BIMETS stands for Bank of Italy Model Easy Time Series; it does not depend on compilers or third-party software so it can be freely downloaded and installed on Linux, MS Windows(R) and Mac OSX(R), without any further requirements. \cr\cr
+In these models we can find equations with restricted coefficients, polynomial distributed lags, error autocorrelation and conditional evaluation of technical identities; all models have been simulated in \emph{static}, \emph{dynamic}, and \emph{forecast} mode, with exogenization and constant adjustments of endogenous variables through the use of \bold{bimets} capabilities.\cr\cr
+In the +800 endogenous simulated time series over the +20 simulated periods (i.e. more than 16.000 simulated observations), the average \emph{percentage} difference between \bold{bimets} and leading commercial software results has a magnitude of \eqn{10^{-7} \% }{10^(-7) \%}. The difference between results calculated by using different commercial software has the same average magnitude.\cr\cr
+\bold{bimets} stands for Bank of Italy Model Easy Time Series; it does not depend on compilers or third-party software so it can be freely downloaded and installed on Linux, MS Windows(R) and Mac OSX(R), without any further requirements. \cr\cr
 The package can be installed and loaded in \code{R} with the following commands (with \code{R>} as the \code{R} command prompt):
 \preformatted{
 R> install.packages('bimets')
@@ -32,7 +32,7 @@ R> library(bimets)
 
 
 
-BIMETS supports daily, weekly, monthly, quarterly, semiannual and yearly time series. Time series with a frequency of 24 and 36 periods per year are also supproted. The time series are created by the \code{\link[=TIMESERIES]{TIMESERIES}} function.\cr\cr
+\bold{bimets} supports daily, weekly, monthly, quarterly, semiannual and yearly time series. Time series with a frequency of 24 and 36 periods per year are also supproted. The time series are created by the \code{\link[=TIMESERIES]{TIMESERIES}} function.\cr\cr
 Example: 
 \preformatted{
 R> #yearly time series
@@ -42,7 +42,7 @@ R> #monthly time series
 R> myTS=TIMESERIES(1:10,START=c(2002,3),FREQ='M')
 }
 
-The main BIMETS time series capabilities are:\cr\cr
+The main \bold{bimets} time series capabilities are:\cr\cr
 - \emph{Indexing}\cr
 - \emph{Aggregation / Disaggregation}\cr
 - \emph{Manipulation}\cr
@@ -50,7 +50,7 @@ The main BIMETS time series capabilities are:\cr\cr
 \tabular{c}{\emph{Time Series Indexing} }
 
 
-The BIMETS package extends R indexing capabilities in order to ease time series analysis and manipulation. Users can access and modify time series data:\cr\cr
+The \bold{bimets} package extends R indexing capabilities in order to ease time series analysis and manipulation. Users can access and modify time series data:\cr\cr
 - \emph{by date}:  users can select and modify a single observation by date by using the syntax \code{ts['Date']}, or multiple observations by using \code{ts['StartDate/EndDate']}; \cr\cr
 - \emph{by year-period}: users can select and modify observations by providing the year and the period requested, i.e. \code{ts[[Year,Period]]};\cr\cr
 - \emph{by observation index}: users can select and modify observations by simply providing the array of requested indexes, i.e. \code{ts[indexes]};\cr\cr
@@ -71,7 +71,7 @@ R> myTS[[2000,100]] = c(-1,-2,-3) #extend time series starting from period 100
 
 }
 \tabular{c}{\emph{Time Series Aggregation/Disaggregation} }
-The BIMETS package provides advanced (dis)aggregation capabilities, with several linear interpolation capabilities in disaggregation, and many aggregation functions (e.g. \code{STOCK}, \code{SUM}, \code{AVE}, etc.) while reducing the time series frequency. \cr\cr
+The \bold{bimets} package provides advanced (dis)aggregation capabilities, with several linear interpolation capabilities in disaggregation, and many aggregation functions (e.g. \code{STOCK}, \code{SUM}, \code{AVE}, etc.) while reducing the time series frequency. \cr\cr
 Example:
 \preformatted{
 R> #create a monthly time series
@@ -93,7 +93,7 @@ R> myDailyTS=DAILY(myMonthlyTS,'INTERP_CENTER')
 \tabular{c}{\emph{Time Series Manipulation} }
 
 
-The BIMETS package provides, among others, the following time series manipulation capabilities:\cr\cr
+The \bold{bimets} package provides, among others, the following time series manipulation capabilities:\cr\cr
 - Time series extension \code{\link[=TSEXTEND]{TSEXTEND}} \cr 
 - Time series merging \code{\link[=TSMERGE]{TSMERGE}} \cr
 - Time series projection \code{\link[=TSPROJECT]{TSPROJECT}} \cr
@@ -146,7 +146,7 @@ Dec 2004, 12 , 3.706247   , 60
 
 \tabular{c}{\bold{ECONOMETRIC MODELING} } 
 
-BIMETS econometric modeling capabilities comprehend:\cr\cr
+\bold{bimets} econometric modeling capabilities comprehend:\cr\cr
 - \emph{Model Definition Language} \cr
 - \emph{Estimation} \cr
 - \emph{Simulation} \cr
@@ -155,7 +155,7 @@ BIMETS econometric modeling capabilities comprehend:\cr\cr
 We will go through each item of the list with a simple Tinbergen-Klein model example. \cr
 \tabular{c}{\emph{Model Definition Language} }
 
-BIMETS provides a language to unambiguously specify an econometric model. This section describes how to create a model and its general structure. The specification of an econometric model is translated and identified by keyword statements which are grouped in a model file, i.e. a plain text file with a specific syntax. Collectively, these keyword statements constitute the BIMETS Model Description Language (from now on \code{\link[=MDL]{MDL}}). The model specifications consist of groups of statements. Each statement begins with a keyword. The keyword classifies the component of the model which is beign specified.\cr\cr
+\bold{bimets} provides a language to unambiguously specify an econometric model. This section describes how to create a model and its general structure. The specification of an econometric model is translated and identified by keyword statements which are grouped in a model file, i.e. a plain text file with a specific syntax. Collectively, these keyword statements constitute the \bold{bimets} Model Description Language (from now on \code{\link[=MDL]{MDL}}). The model specifications consist of groups of statements. Each statement begins with a keyword. The keyword classifies the component of the model which is beign specified.\cr\cr
 Below is an example of Klein's model, that can either be stored in an \code{R} variable of class \code{character} or in a plain text file with a \code{MDL} compliant syntax. \cr\cr
 The content of the \emph{klein1.txt} variable  is:
 \preformatted{
@@ -197,7 +197,7 @@ END
 }
 
 Please note that there are circular dependencies between equations of the model,\cr i.e. \code{cn <- w1 <- y <- cn}. Circular dependencies imply that the model simulation must be solved with an iterative algorithm.\cr\cr
-As shown, the model definition is quite intuitive. The first keyword is \code{MODEL}, while at the end of the model definition we can find the \code{END} keyword. Available tags in the definition of a generic BIMETS model are: 
+As shown, the model definition is quite intuitive. The first keyword is \code{MODEL}, while at the end of the model definition we can find the \code{END} keyword. Available tags in the definition of a generic \bold{bimets} model are: 
 
 
 
@@ -219,8 +219,8 @@ The mathematical expression in the EQ> and IF> definitions can include the stand
 - \code{EXP(ts)}: exponential of the \code{ts} time series; \cr \cr
 - \code{ABS(ts)}: absolute values of the \code{ts} time series;\cr \cr
 
-More details are available in \code{\link[=MDL]{MDL}} and \code{\link[=LOAD_MODEL]{LOAD_MODEL}} help pages. \code{LOAD_MODEL()} is the BIMETS function that reads an MDL model file and creates an equivalent R data structure.\cr \cr
-Back to Klein's model example, the BIMETS \code{\link[=LOAD_MODEL]{LOAD_MODEL}} function reads the \emph{klein1.txt} model as previously defined:
+More details are available in \code{\link[=MDL]{MDL}} and \code{\link[=LOAD_MODEL]{LOAD_MODEL}} help pages. \code{LOAD_MODEL()} is the \bold{bimets} function that reads an MDL model file and creates an equivalent R data structure.\cr \cr
+Back to Klein's model example, the \bold{bimets} \code{\link[=LOAD_MODEL]{LOAD_MODEL}} function reads the \emph{klein1.txt} model as previously defined:
 \preformatted{
 R> kleinModel=LOAD_MODEL(modelText = klein1.txt)
 
@@ -234,7 +234,7 @@ Loaded model "klein1.txt":
 ...LOAD MODEL OK
 }
 
-As shown in the output, BIMETS counted 3 behavioral equations, 3 identities and 12 coefficients. Now in the \code{R} session there is a variable named \emph{kleinModel} that contains the model structure defined in the \emph{klein1.txt} variable. From now on, the user can ask BIMETS about any details of this model.\cr\cr
+As shown in the output, \bold{bimets} counted 3 behavioral equations, 3 identities and 12 coefficients. Now in the \code{R} session there is a variable named \emph{kleinModel} that contains the model structure defined in the \emph{klein1.txt} variable. From now on, the user can ask \bold{bimets} about any details of this model.\cr\cr
 For example, to gather information on the "\code{cn}" Consumption behavioral equation: 
 \preformatted{
 R> kleinModel$behaviorals$cn
@@ -292,7 +292,7 @@ R> kleinModel$vpost
 
 }
 
-While simulating the Klein's model, BIMETS will iterate on the computation of, in order,\cr \code{w1 -> p -> cn -> i -> y} (the \code{vsim} variables), by looking for convergence on \code{y} (the \code{vfeed} variable, only one in this example) that is the feedback variable. If the convergence is achieved, it will calculate \code{k} (the \code{vpost} variable). The \code{vpre} array in this example is empty, that is no equation has to be evaluated before the iterative algorithm.\cr\cr
+While simulating the Klein's model, \bold{bimets} will iterate on the computation of, in order,\cr \code{w1 -> p -> cn -> i -> y} (the \code{vsim} variables), by looking for convergence on \code{y} (the \code{vfeed} variable, only one in this example) that is the feedback variable. If the convergence is achieved, it will calculate \code{k} (the \code{vpost} variable). The \code{vpre} array in this example is empty, that is no equation has to be evaluated before the iterative algorithm.\cr\cr
 More details on the equations reordering are available in \code{\link[=MDL]{MDL}} and \code{\link[=LOAD_MODEL]{LOAD_MODEL}} help pages.\cr\cr
 Once the model has been parsed, users needs to load the data of all the time series involved in the model, by using the \code{\link[=LOAD_MODEL_DATA]{LOAD_MODEL_DATA}} function. In the following example, the code defines a list of time series and loads this list into the Klein's model previously defined:
 \preformatted{
@@ -332,10 +332,10 @@ R> kleinModelData=list(
 
 R> kleinModel=LOAD_MODEL_DATA(kleinModel,kleinModelData)
 }
-Since time series and other data (e.g. regressor coefficients, error coefficients, constant adjustments, targets, instruments, etc...) are stored into the model object, users can define multiple model objects - each with its own arbitrary data - in the same \code{R} session. BIMETS makes it possible to estimate, simulate and compare results from different models with different data sets. Furthermore, users can easily save an estimated or a simulated model as a standard \code{R} variable, thus reloading it later, having all available data and time series stored into it, i.e. endogenous and exogenous time series, estimated coefficients, constant adjustments, simulation options, simulated time series, calculated instruments, targets, etc. (see also \code{\link[=RENORM]{RENORM}} and \code{\link[=SIMULATE]{SIMULATE}})\cr\cr
+Since time series and other data (e.g. regressor coefficients, error coefficients, constant adjustments, targets, instruments, etc...) are stored into the model object, users can define multiple model objects - each with its own arbitrary data - in the same \code{R} session. \bold{bimets} makes it possible to estimate, simulate and compare results from different models with different data sets. Furthermore, users can easily save an estimated or a simulated model as a standard \code{R} variable, thus reloading it later, having all available data and time series stored into it, i.e. endogenous and exogenous time series, estimated coefficients, constant adjustments, simulation options, simulated time series, calculated instruments, targets, etc. (see also \code{\link[=RENORM]{RENORM}} and \code{\link[=SIMULATE]{SIMULATE}})\cr\cr
 
 \tabular{c}{\emph{Estimation} }
-The BIMETS \code{\link[=ESTIMATE]{ESTIMATE}} function estimates equations that are linear in the coefficients, as specified in the behavioral equations of the model object. Coefficients can be estimated for single equations or blocks of simultaneous equations. The estimation function supports:\cr\cr
+The \bold{bimets} \code{\link[=ESTIMATE]{ESTIMATE}} function estimates equations that are linear in the coefficients, as specified in the behavioral equations of the model object. Coefficients can be estimated for single equations or blocks of simultaneous equations. The estimation function supports:\cr\cr
 - \emph{Ordinary Least Squares};\cr
 - \emph{Instrumental Variables};\cr
 - \emph{Deterministic linear restrictions on the coefficients};\cr
@@ -664,7 +664,7 @@ Signif. codes: *** 0.001 ** 0.01 * 0.05
 
 
 The simulation of an econometric model basically consists in solving the system of the equations describing the model for each time period in the specified time interval. Since the equations may also not be linear in the variables, and since the graph derived from the incidence matrix may be cyclic, the usual methods based on linear algebra are not applicable, and the simulation must be solved by using an iterative algorithm. \cr \cr
-BIMETS simulation capabilities support:\cr\cr
+\bold{bimets} simulation capabilities support:\cr\cr
 - \emph{Static simulations}: a static multiple equation simulation, in which the historical values for the lagged endogenous variables are used in the solutions of subsequent periods; \cr\cr
 - \emph{Dynamic simulations}: a dynamic simulation, in which the simulated values for the lagged endogenous variables are used in the solutions of subsequent periods;\cr\cr
 - \emph{Forecast simulations}: similar to dynamic simulation, but during the initialization of the iterative algorithm the starting values of endogenous variables in a period are set equal to the simulated values of the previous period. This allows the simulation of future endogenous observations, i.e. the forecast;  \cr\cr
@@ -674,7 +674,7 @@ BIMETS simulation capabilities support:\cr\cr
 - \emph{Backfill of simulated time series}: specifies the periods of historical data prior to the simulation time interval which are to be included in the simulation results;\cr\cr
 More details are available in the \code{\link[=SIMULATE]{SIMULATE}} help page. \cr \cr
 
-Back to Kelin's model example, let's forecast the GNP (i.e. the "\code{y}" endogenous variable) by using the BIMETS simulation capabilities, up to 1943: 
+Back to Kelin's model example, let's forecast the GNP (i.e. the "\code{y}" endogenous variable) up to 1943: 
 \preformatted{
 R> #FORECAST GNP in 1942 and 1943 
 
@@ -744,14 +744,14 @@ R> kleinModel=SIMULATE(kleinModel
 
 
 \tabular{c}{\emph{Multipliers Analysis}}
-The BIMETS \code{\link[=MULTMATRIX]{MULTMATRIX}} function computes the matrix of both impact and interim multipliers, for a selected set of endogenous variables (i.e. \code{TARGET}) with respect to a selected set of exogenous variables (i.e. \code{INSTRUMENT}), by subtracting the results from different simulations in each period of the provided time range (i.e. \code{TSRANGE}). The simulation algorithms are the same as those used for the \code{\link[=SIMULATE]{SIMULATE}} operation. \cr\cr
+The \bold{bimets} \code{\link[=MULTMATRIX]{MULTMATRIX}} function computes the matrix of both impact and interim multipliers, for a selected set of endogenous variables (i.e. \code{TARGET}) with respect to a selected set of exogenous variables (i.e. \code{INSTRUMENT}), by subtracting the results from different simulations in each period of the provided time range (i.e. \code{TSRANGE}). The simulation algorithms are the same as those used for the \code{\link[=SIMULATE]{SIMULATE}} operation. \cr\cr
 The \code{MULTMATRIX()} procedure is articulated as follows:\cr\cr
 1. simultaneous simulations are done;\cr\cr
 2. the first simulation establishes the base line solution (without shocks);\cr\cr
 3. the other simulations are done with shocks applied to each of the \code{INSTRUMENT} one at a time for every period in \code{TSRANGE};\cr\cr
 4. each simulation follows the defaults described in the \emph{Simulation} section, but has to be \code{STATIC} for the IMPACT multipliers and \code{DYNAMIC} for INTERIM multipliers;\cr\cr
 5. given the \code{MM_SHOCK} shock amount as a very small positive number, derivatives are computed by subtracting the base line solution of the \code{TARGET} from the shocked solution, then dividing by the value of the base line \code{INSTRUMENT} times the \code{MM_SHOCK};\cr\cr\cr
-BIMETS users can also declare an endogenous variable as the \code{INSTRUMENT} variable. In this case, the constant adjustment related to the provided endogenous variable will be used as the \code{INSTRUMENT} exogenous variable. \cr\cr
+\bold{bimets} users can also declare an endogenous variable as the \code{INSTRUMENT} variable. In this case, the constant adjustment related to the provided endogenous variable will be used as the \code{INSTRUMENT} exogenous variable. \cr\cr
 Back to our Klein's model example, we can calculate impact multipliers of Government non-Wage Spending "\code{g}" and Government Wage Bill "\code{w2}" with respect of Consumption "\code{cn}" and Gross National Product "\code{y}" in the year 1941 by using the previously estimated model: 
 \preformatted{
 R> kleinModel=MULTMATRIX(kleinModel,
@@ -798,7 +798,7 @@ y_2   -0.6251177  2.843960  0.2532000 3.653260
 
 
 The renormalization of econometric models consists of solving the model while interchanging the role of one or more endogenous variables with an equal number of exogenous variables.\cr\cr
-The BIMETS \code{\link[=RENORM]{RENORM}}  procedure determines the values for the \code{INSTRUMENT} exogenous variables which allow the objective \code{TARGET} endogenous variables to be achieved, with respect to the constraints given by the model \code{MDL} definition.\cr\cr
+The \bold{bimets} \code{\link[=RENORM]{RENORM}}  procedure determines the values for the \code{INSTRUMENT} exogenous variables which allow the objective \code{TARGET} endogenous variables to be achieved, with respect to the constraints given by the model \code{MDL} definition.\cr\cr
 This is an approach to economic and monetary policy analysis, and is based on two assumptions:\cr\cr
 1. there exists a desired level for a set of \code{n} endogenous variables of the model defined as \code{TARGET};\cr
 2. there exists a set of \code{n} exogenous variables defined as \code{INSTRUMENT};\cr\cr
@@ -860,7 +860,7 @@ R> kleinRenorm=kleinModel
 R> #get instruments to be used
 R> newInstruments=kleinModel$renorm$INSTRUMENT
 
-R> #change exogenous by using new instruments
+R> #change exogenous by using new instruments data
 R> kleinRenorm$modelData=within(kleinRenorm$modelData,
                  {
                    w2[[1940,1]]=newInstruments$w2[[1940,1]]
@@ -907,7 +907,7 @@ More details in:\cr\cr
 }
 \details{
 \tabular{ll}{
-Package: \tab BIMETS - Time Series And Econometric Modeling In R\cr
+Package: \tab bimets - Time Series And Econometric Modeling In R\cr
 Type: \tab Package\cr
 License: \tab EUPL\cr
 } 

@@ -1048,7 +1048,7 @@ LOAD_MODEL <- function(modelFile=NULL,
   
   #main output
   model=list();
-  attr(model,'class')='BIMETS_MODEL';
+  class( model )='BIMETS_MODEL';
   
   
   #get regex definitions
@@ -2149,12 +2149,12 @@ LOAD_MODEL <- function(modelFile=NULL,
       #}
       
     }
-    
+    #browser()
     #replace fun names
     outRHS=.MODEL_MOD_FUNC_NAMES(outRHS);
     
     #add constant adjustment
-    outRHS=paste0(currentVendog,'_ADDFACTOR+',outRHS);
+    outRHS=paste0(currentVendog,'_ADDFACTOR',outRHS);
     
     #adapt eqRHS to autocorrelation if required
     if (! is.null(model$behaviorals[[idxB]]$errorType) && model$behaviorals[[idxB]]$errorType=='AUTO')
@@ -2756,7 +2756,7 @@ LOAD_MODEL_DATA <- function(model=NULL,
 {
   #check args
   if (is.null(model)) stop('LOAD_MODEL_DATA(): NULL model argument.');  
-  if (!(attr(model,'class')=='BIMETS_MODEL')) stop('LOAD_MODEL_DATA(): model must be instance of BIMETS_MODEL class.');
+  if (!(class( model )=='BIMETS_MODEL')) stop('LOAD_MODEL_DATA(): model must be instance of BIMETS_MODEL class.');
   
   #check arg
   if (!(is.logical(quietly))) stop('LOAD_MODEL_DATA(): "quietly" must be TRUE or FALSE.')
@@ -2783,7 +2783,7 @@ LOAD_MODEL_DATA <- function(model=NULL,
   #check args
   
   if (is.null(model)) stop('.CHECK_MODEL_DATA(): NULL model argument.');  
-  if (!(attr(model,'class')=='BIMETS_MODEL')) stop('.CHECK_MODEL_DATA(): model must be instance of BIMETS_MODEL class.');
+  if (!(class( model )=='BIMETS_MODEL')) stop('.CHECK_MODEL_DATA(): model must be instance of BIMETS_MODEL class.');
   
   if (is.null(model$vendog))  stop('.CHECK_MODEL_DATA(): list of endogenous variables not found.');
   if (is.null(model$vexog))  stop('.CHECK_MODEL_DATA(): list of exogenous variables not found.');
@@ -2840,7 +2840,7 @@ ESTIMATE <- function(model=NULL,
   #check args
   if (is.null(estTech) || ((estTech!='OLS') && (estTech!='IV'))) stop('ESTIMATE(): estimation technique not supported.');
   if (is.null(model) ) stop('ESTIMATE(): NULL model.');
-  if (!(attr(model,'class')=='BIMETS_MODEL')) stop('ESTIMATE(): model must be instance of BIMETS_MODEL class.');
+  if (!(class( model )=='BIMETS_MODEL')) stop('ESTIMATE(): model must be instance of BIMETS_MODEL class.');
   
   if (estTech=='IV' && is.null(IV)) stop('ESTIMATE(): please provide instrumental variables IV.')
   if (!(is.null(IV)) && (length(IV)==0 || !(is.character(IV)) )) stop('ESTIMATE(): misspecified IV.')
@@ -4308,7 +4308,7 @@ RENORM <- function(model=NULL,
   
   #checks...
   if (is.null(model) ) stop('RENORM(): NULL model.');
-  if (is.null(attr(model,'class')) || !(attr(model,'class')=='BIMETS_MODEL')) 
+  if (is.null(class( model )) || !(class( model )=='BIMETS_MODEL')) 
     stop('RENORM(): model must be instance of BIMETS_MODEL class.');
   if (! (
     is.numeric(renormIterLimit) &&  (renormIterLimit > 0) 
@@ -4714,7 +4714,7 @@ SIMULATE <- function(model=NULL,
   if (is.null(algo) || (algo!='MGS')) stop('SIMULATE(): simulation algorithm not supported.');
   if (is.null(model) ) stop('SIMULATE(): NULL model.');
   if (is.null(TSRANGE) ) stop('SIMULATE(): TSRANGE must be defined.');
-  if (is.null(attr(model,'class')) || !(attr(model,'class')=='BIMETS_MODEL')) 
+  if (is.null(class( model )) || !(class( model )=='BIMETS_MODEL')) 
     stop('SIMULATE(): model must be instance of BIMETS_MODEL class.');
   if (! (
     is.numeric(simIterLimit) &&  (simIterLimit > 0) 

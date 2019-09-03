@@ -66,11 +66,11 @@ The mathematical expression can include the standard arithmetic operators, paren
 \code{COEFF> coeff0 coeff1 coeff2 ... coeffn}. \cr The coefficients order in this statement must be the same as it appears in the behavioral equation.\cr\cr
 - \bold{ERROR>} specifies an autoregressive process of a given order for the regression error. The error statement general form is:\cr
 \code{ERROR> AUTO(n)} \cr where \code{n} is the order of the autoregressive process for the error.\cr\cr During an estimation, users must ensure that the required data is available for the specified error structure: \code{n} periods of data prior to the time interval specified by \code{TSRANGE} are requested in any time series involved in the regression.\cr\cr The solution requires an iterative algorithm. Given \eqn{Y_{1}=\beta_{1}*X_{1}+\epsilon_{1}}{Y_1 = b_1 * X_1 + RES_1}, where \eqn{Y_{1}}{Y_1} are the historical values of the dependent variable and \eqn{X_{1}}{X_1} are the historical values of the regressors, the iterative algorithm is based on the Cochrane-Orcutt procedure:\cr \cr
-1) Make an initial estimation by using the original TSRANGE extended backward \code{n} periods (given \code{n} the autocorrelation order).\cr\cr
+1) Make an initial estimation by using the original TSRANGE extended backward \code{n} periods (given \code{n} as the autocorrelation order).\cr\cr
 2) estimate the error autocorrelation coefficients \eqn{\rho_{i}=\rho_{i,1},...,\rho_{i,n}}{RHO_i=RHO_i[1],...,RHO_i[n]} with \eqn{i=1} by regressing the residuals \eqn{\epsilon_{i}}{RES_i} on their lagged values by using the auxiliary model: \cr \eqn{\epsilon_{i}=\rho_{i,1}*TSLAG(\epsilon_{i},1)+...+\rho_{i,n}*TSLAG(\epsilon_{i},n)}{RES_i=RHO_i[1]*TSLAG(RES_i,1)+...+RHO_i[n]*TSLAG(RES_i,n)}\cr\cr
-3) transform the data for the dependent and the independent variables by using the estimated \eqn{\rho_{i}}{RHO_i}. The new dependent variable will be: \eqn{Y_{i+1}=P*Y_i}{Y[i+1]=P*Y[i]}, and the new independent variables will be \eqn{X_{i+1}=P*X_i}{X[i+1]=P*X[i]} with the matrix \eqn{P}{P} defined as:
+3) transform the data for the dependent and the independent variables by using the estimated \eqn{\rho_{i}}{RHO_i}. The new dependent variable will be: \eqn{Y_{i+1}=P_i*Y_i}{Y_(i+1)=P_i*Y_i}, and the new independent variables will be \eqn{X_{i+1}=P_i*X_i}{X_(i+1)=P_i*X_i} with the matrix \eqn{P_i}{P_i} defined as:
 
-\if{latex}{\deqn{ P=\begin{pmatrix}
+\if{latex}{\deqn{ P_i=\begin{pmatrix}
 {
 1 & 0 & 0 & 0 & ... & 0 & 0 \cr 
 -\rho_{i,1} & 1 & 0 & 0 & ... & 0 & 0 \cr 
@@ -82,7 +82,7 @@ The mathematical expression can include the standard arithmetic operators, paren
 \if{html}{\tabular{ccccccccc}{
 \tab \tab 1 \tab 0 \tab 0 \tab 0 \tab ... \tab 0 \tab 0\cr
 \tab  \tab -RHO_i[1] \tab 1 \tab 0 \tab 0 \tab ... \tab 0 \tab 0 \cr
-P\tab = \tab -RHO_i[2] \tab -RHO_i[1] \tab 1 \tab 0 \tab ... \tab 0 \tab 0 \cr
+P_i\tab = \tab -RHO_i[2] \tab -RHO_i[1] \tab 1 \tab 0 \tab ... \tab 0 \tab 0 \cr
 \tab \tab \tab \tab ... \cr 
 \tab \tab 0 \tab 0 \tab ... \tab -RHO_i[n] \tab ... \tab -RHO_i[1] \tab 1
 }}
@@ -91,10 +91,10 @@ P\tab = \tab -RHO_i[2] \tab -RHO_i[1] \tab 1 \tab 0 \tab ... \tab 0 \tab 0 \cr
 6) carry out the convergence check through a comparison among the previous \eqn{\rho_{i}}{RHO_i} and the new ones arising from steps 5. \cr If \eqn{all(abs(\rho_{i+1}-\rho_{i})<\delta)}{all(abs(RHO_(i+1)-RHO_i) < d)}, where \eqn{\rho_{i}}{RHO_i} is the \eqn{\rho}{RHO} vector at the iteration \eqn{i} and \eqn{\delta}{d} is a small convergence factor, then exit otherwise repeat from step 3 with \code{i <- i+1}. \cr\cr
 - \bold{RESTRICT>} is a keyword that can be used to specify linear coefficient restrictions. A deterministic restriction can be applied to any equation coefficient. Any number of \code{RESTRICT>} keywords is allowed for each behavioral equation.\cr\cr A deterministic (exact) coefficient restriction sets a linear expression containing one or more coefficients equal to a constant. The restriction only affects the coefficients of the behavioral equation in which it is specified. The restriction statement general form is:
 \preformatted{
-RESTRICT> linear_combination_of coefficients_1 = value_1
+RESTRICT> linear_combination_of_coefficients_1 = value_1
 ...
-linear_combination_of coefficients_n = value_n
-} where \code{linear_combination_of coefficients_i, i=1..n} is a linear combination of the coefficient(s) to be restricted and \code{value_i} is the in-place scalar value to which the linear combination of the coefficients is set equal. Each linear combination can be set equal to a different value.\cr\cr MDL example:
+linear_combination_of_coefficients_n = value_n
+} where \code{linear_combination_of_coefficients_i, i=1..n} is a linear combination of the coefficient(s) to be restricted and \code{value_i} is the in-place scalar value to which the linear combination of the coefficients is set equal. Each linear combination can be set equal to a different value.\cr\cr MDL example:
 \preformatted{
 RESTRICT> coeff1 = 0
 coeff2 = 10.5
@@ -205,7 +205,7 @@ and \cr \cr
 r\tab = \tab 0  \cr
 \tab \tab 0 
 }} \cr\cr \cr
-The expanded regressors are: \code{X1, X2, TSLAG(X2,1), TSLAG(X2,2), TSLAG(X2,3), TSLAG(X2,4), X3}.\cr\cr The scaling factor is given, as in the standard restriction case, by: \eqn{mean(R) / max(abs(R[i,]))}{mean(R) / max(abs(R[i,]))} \cr\cr
+The expanded regressors are: \code{X1, X2, TSLAG(X2,1), TSLAG(X2,2), TSLAG(X2,3), TSLAG(X2,4), X3}.\cr\cr The scaling factor is given, as in the standard restriction case, by: \eqn{mean(X' X) / max(abs(R[i,]))}{mean(X' X) / max(abs(R[i,]))} \cr\cr
 
 - \bold{IF>} keyword is used to conditionally evaluate an identity during a simulation, depending on the value of a logical expression. Thus, it is possible to have a model alternating between two or more identity specifications for each simulation period, depending upon results from other equations.\cr \cr
 The IF> statement general form is:\cr

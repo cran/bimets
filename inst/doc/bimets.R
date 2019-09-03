@@ -23,21 +23,21 @@ library(bimets)
 ### code chunk number 4: bimets.Rnw:97-99
 ###################################################
 #yearly time series
-myTS=TIMESERIES(1:10,START=as.Date('2000-01-01'),FREQ=1)
+myTS <- TIMESERIES(1:10,START=as.Date('2000-01-01'),FREQ=1)
 
 
 ###################################################
 ### code chunk number 5: bimets.Rnw:102-104
 ###################################################
 #monthly time series
-myTS=TIMESERIES(1:10,START=c(2002,3),FREQ='M')
+myTS <- TIMESERIES(1:10,START=c(2002,3),FREQ='M')
 
 
 ###################################################
 ### code chunk number 6: bimets.Rnw:124-126
 ###################################################
 #create a daily time series
-myTS=TIMESERIES((1:100),START=c(2000,1),FREQ='D')
+myTS <- TIMESERIES((1:100),START=c(2000,1),FREQ='D')
 
 
 ###################################################
@@ -48,74 +48,74 @@ myTS['2000-01-12']             #get Jan 12, 2000 data
 myTS['2000-02-03/2000-02-14']  #get Feb 3 up to Feb 14
 myTS[[2000,14]]                #get year 2000 period 14
 
-myTS['2000-01-15'] = NA        #assign to Jan 15, 2000
-myTS[[2000,42]] = NA           #assign to Feb 11, 2000
-myTS[[2000,100]] = c(-1,-2,-3) #extend time series starting from period 100
+myTS['2000-01-15'] <- NA        #assign to Jan 15, 2000
+myTS[[2000,42]] <- NA           #assign to Feb 11, 2000
+myTS[[2000,100]] <- c(-1,-2,-3) #extend time series starting from period 100
 
 
 ###################################################
 ### code chunk number 8: bimets.Rnw:145-147
 ###################################################
 #create a monthly time series
-myMonthlyTS=TIMESERIES(1:100,START=c(2000,1),FREQ='M')
+myMonthlyTS <- TIMESERIES(1:100,START=c(2000,1),FREQ='M')
 
 
 ###################################################
 ### code chunk number 9: bimets.Rnw:149-151
 ###################################################
 #convert to annual time series using the average as aggregation fun
-myAnnualTS=ANNUAL(myMonthlyTS,'AVE')
+myAnnualTS <- ANNUAL(myMonthlyTS,'AVE')
 
 
 ###################################################
 ### code chunk number 10: bimets.Rnw:153-155
 ###################################################
 #convert to daily using central interpolation as disaggregation fun
-myDailyTS=DAILY(myMonthlyTS,'INTERP_CENTER')
+myDailyTS <- DAILY(myMonthlyTS,'INTERP_CENTER')
 
 
 ###################################################
 ### code chunk number 11: bimets.Rnw:175-178
 ###################################################
 #define two time series
-myTS1=TIMESERIES(1:100,START=c(2000,1),FREQ='M')
-myTS2=TIMESERIES(-(1:100),START=c(2005,1),FREQ='M')
+myTS1 <- TIMESERIES(1:100,START=c(2000,1),FREQ='M')
+myTS2 <- TIMESERIES(-(1:100),START=c(2005,1),FREQ='M')
 
 
 ###################################################
 ### code chunk number 12: bimets.Rnw:180-182
 ###################################################
 #extend time series up to Apr 2020 with quadratic formula
-myExtendedTS=TSEXTEND(myTS1,UPTO = c(2020,4),EXTMODE = 'QUADRATIC')
+myExtendedTS <- TSEXTEND(myTS1,UPTO = c(2020,4),EXTMODE = 'QUADRATIC')
 
 
 ###################################################
 ### code chunk number 13: bimets.Rnw:184-186
 ###################################################
 #merge two time series with sum
-myMergedTS=TSMERGE(myExtendedTS,myTS2,fun = 'SUM')
+myMergedTS <- TSMERGE(myExtendedTS,myTS2,fun = 'SUM')
 
 
 ###################################################
 ### code chunk number 14: bimets.Rnw:188-190
 ###################################################
 #project time series on arbitrary time range
-myProjectedTS=TSPROJECT(myMergedTS,TSRANGE = c(2004,2,2006,4))
+myProjectedTS <- TSPROJECT(myMergedTS,TSRANGE = c(2004,2,2006,4))
 
 
 ###################################################
 ### code chunk number 15: bimets.Rnw:192-195
 ###################################################
 #lag and delta% time series
-myLagTS=TSLAG(myProjectedTS,2)
-myDeltaPTS=TSDELTAP(myLagTS,2)
+myLagTS <- TSLAG(myProjectedTS,2)
+myDeltaPTS <- TSDELTAP(myLagTS,2)
 
 
 ###################################################
 ### code chunk number 16: bimets.Rnw:197-199
 ###################################################
 #moving average
-myMovAveTS=MOVAVG(myDeltaPTS,5)
+myMovAveTS <- MOVAVG(myDeltaPTS,5)
 
 
 ###################################################
@@ -131,7 +131,7 @@ TABIT(myMovAveTS,
 ###################################################
 ### code chunk number 18: bimets.Rnw:232-267
 ###################################################
-klein1.txt="
+klein1.txt <- "
 MODEL 
 
 COMMENT> Consumption
@@ -171,7 +171,7 @@ END
 ###################################################
 ### code chunk number 19: bimets.Rnw:467-468
 ###################################################
-kleinModel=LOAD_MODEL(modelText = klein1.txt)
+kleinModel <- LOAD_MODEL(modelText = klein1.txt)
 
 
 ###################################################
@@ -193,7 +193,7 @@ kleinModel$vpost
 ###################################################
 ### code chunk number 22: bimets.Rnw:497-532
 ###################################################
-kleinModelData=list(  
+kleinModelData <- list(  
     cn  =TIMESERIES(39.8,41.9,45,49.2,50.6,52.6,55.1,56.2,57.3,57.8,
                  55,50.9,45.6,46.5,48.7,51.3,57.7,58.7,57.5,61.6,65,69.7, 	
                  START=c(1920,1),FREQ=1),
@@ -227,19 +227,19 @@ kleinModelData=list(
                  START=c(1920,1),FREQ=1)
 	)
 
-kleinModel=LOAD_MODEL_DATA(kleinModel,kleinModelData)
+kleinModel <- LOAD_MODEL_DATA(kleinModel,kleinModelData)
 
 
 ###################################################
 ### code chunk number 23: bimets.Rnw:553-554
 ###################################################
-kleinModel=ESTIMATE(kleinModel, quietly=TRUE)
+kleinModel <- ESTIMATE(kleinModel, quietly=TRUE)
 
 
 ###################################################
 ### code chunk number 24: bimets.Rnw:559-560
 ###################################################
-kleinModel=ESTIMATE(kleinModel, eqList=c('cn'))
+kleinModel <- ESTIMATE(kleinModel, eqList=c('cn'))
 
 
 ###################################################
@@ -261,7 +261,7 @@ kleinModel$behaviorals$cn$statistics$LogLikelihood
 ### code chunk number 26: bimets.Rnw:583-628
 ###################################################
 #define model
-advancedKlein1.txt=
+advancedKlein1.txt <- 
 "MODEL
 
 COMMENT> Modified Klein Model 1 of the U.S. Economy with PDL, 
@@ -311,15 +311,15 @@ END"
 ### code chunk number 27: bimets.Rnw:630-633
 ###################################################
 #load model and data
-advancedKleinModel=LOAD_MODEL(modelText=advancedKlein1.txt)
-advancedKleinModel=LOAD_MODEL_DATA(advancedKleinModel,kleinModelData)
+advancedKleinModel <- LOAD_MODEL(modelText=advancedKlein1.txt)
+advancedKleinModel <- LOAD_MODEL_DATA(advancedKleinModel,kleinModelData)
 
 
 ###################################################
 ### code chunk number 28: bimets.Rnw:635-637
 ###################################################
 #estimate model
-advancedKleinModel=ESTIMATE(advancedKleinModel)
+advancedKleinModel <- ESTIMATE(advancedKleinModel)
 
 
 ###################################################
@@ -327,7 +327,7 @@ advancedKleinModel=ESTIMATE(advancedKleinModel)
 ###################################################
 #FORECAST GNP in 1942 and 1943 
 #we need to extend exogenous variables in 1942 and 1943
-kleinModel$modelData=within(kleinModel$modelData,{
+kleinModel$modelData <- within(kleinModel$modelData,{
                     w2   = TSEXTEND(w2,  UPTO=c(1943,1))
                     t    = TSEXTEND(t,   UPTO=c(1943,1))
                     g    = TSEXTEND(g,   UPTO=c(1943,1))
@@ -337,7 +337,7 @@ kleinModel$modelData=within(kleinModel$modelData,{
 
  
 #simulate model
-kleinModel=SIMULATE(kleinModel
+kleinModel <- SIMULATE(kleinModel
                   ,simType='FORECAST'
                   ,TSRANGE=c(1940,1,1943,1)
                   ,simConvergence=0.00001
@@ -355,19 +355,19 @@ TABIT(kleinModel$simulation$y)
 #define exogenization list
 #'cn' exogenized in 1923-1925
 #'i' exogenized in the whole TSRANGE
-exogenizeList=list(
+exogenizeList <- list(
                 cn = c(1923,1,1925,1),
                 i  = TRUE
               )
  
 #define add-factor list
-constantAdjList=list(
+constantAdjList <- list(
                cn = TIMESERIES(1,-1,START=c(1923,1),FREQ='A'),
                y  = TIMESERIES(0.1,-0.1,-0.5,START=c(1926,1),FREQ='A')
               )
  
 #simulate model
-kleinModel=SIMULATE(kleinModel
+kleinModel <- SIMULATE(kleinModel
                   ,simType='STATIC'
                   ,TSRANGE=c(1923,1,1941,1)
                   ,simConvergence=0.00001
@@ -380,7 +380,7 @@ kleinModel=SIMULATE(kleinModel
 ###################################################
 ### code chunk number 31: bimets.Rnw:820-827
 ###################################################
-kleinModel=MULTMATRIX(kleinModel,
+kleinModel <- MULTMATRIX(kleinModel,
                         TSRANGE=c(1941,1,1941,1),
                         INSTRUMENT=c('w2','g'),
                         TARGET=c('cn','y')
@@ -393,7 +393,7 @@ kleinModel$MultiplierMatrix
 ### code chunk number 32: bimets.Rnw:833-842
 ###################################################
 #multi-period interim multipliers
-kleinModel=MULTMATRIX(kleinModel,
+kleinModel <- MULTMATRIX(kleinModel,
                    TSRANGE=c(1940,1,1941,1),
                    INSTRUMENT=c('w2','g'),
                    TARGET=c('cn','y'))
@@ -408,7 +408,7 @@ kleinModel$MultiplierMatrix
 ###################################################
 #we want an arbitrary value on Consumption of 66 in 1940 and 78 in 1941
 #we want an arbitrary value on GNP of 77 in 1940 and 98 in 1941
-kleinTargets = list(
+kleinTargets <- list(
               cn = TIMESERIES(66,78,START=c(1940,1),FREQ=1),
               y  = TIMESERIES(77,98,START=c(1940,1),FREQ=1)
               )
@@ -417,7 +417,7 @@ kleinTargets = list(
 ###################################################
 ### code chunk number 34: computation
 ###################################################
-kleinModel=RENORM(kleinModel
+kleinModel <- RENORM(kleinModel
                    ,INSTRUMENT = c('w2','g')
                    ,TARGET = kleinTargets
                    ,TSRANGE = c(1940,1,1941,1)
@@ -441,21 +441,21 @@ with(kleinModel,TABIT(modelData$w2,
 ### code chunk number 36: bimets.Rnw:901-903
 ###################################################
 #create a new model
-kleinRenorm=kleinModel
+kleinRenorm <- kleinModel
 
 
 ###################################################
 ### code chunk number 37: bimets.Rnw:905-907
 ###################################################
 #get instruments to be used
-newInstruments=kleinModel$renorm$INSTRUMENT
+newInstruments <- kleinModel$renorm$INSTRUMENT
 
 
 ###################################################
 ### code chunk number 38: bimets.Rnw:909-920
 ###################################################
-#change exogenous by using new instruments
-kleinRenorm$modelData=within(kleinRenorm$modelData,
+#change exogenous by using new instruments data
+kleinRenorm$modelData <- within(kleinRenorm$modelData,
                  {
                    w2[[1940,1]]=newInstruments$w2[[1940,1]]
                    w2[[1941,1]]=newInstruments$w2[[1941,1]]
@@ -464,14 +464,14 @@ kleinRenorm$modelData=within(kleinRenorm$modelData,
                  }
                 )
 #users can also replace last two commands with:
-#kleinRenorm$modelData=kleinRenorm$renorm$modelData
+#kleinRenorm$modelData <- kleinRenorm$renorm$modelData
 
 
 ###################################################
 ### code chunk number 39: bimets.Rnw:922-928
 ###################################################
 #simulate the new model
-kleinRenorm=SIMULATE(kleinRenorm
+kleinRenorm <- SIMULATE(kleinRenorm
                       ,TSRANGE=c(1940,1,1941,1)
                       ,simConvergence=0.00001
                       ,simIterLimit=100

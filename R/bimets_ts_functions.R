@@ -34,12 +34,12 @@
 #called when pkg is attached
 .onAttach <- function(...) {
   
-  if (! exists('bimets_366_YP2D__') ) {stop('BIMETS: required cache files are missing. Please reinstall BIMETS.'); } 
+  if (! exists('bimets_366_YP2D__') ) {stop('bimets: required cache files are missing. Please reinstall BIMETS.'); } 
   
   #clear console
   packageStartupMessage("\014 ");
   
-  packageStartupMessage(gsub("\\$","",'BIMETS is active - version 1.4.0\nFor help type \'?bimets\'\n'))
+  packageStartupMessage(gsub("\\$","",'bimets is active - version 1.4.1\nFor help type \'?bimets\'\n'))
   
   #packageStartupMessage('Loading required libraries...OK'); 
   #packageStartupMessage('\nBIMETS is active.\n');
@@ -279,7 +279,7 @@
         
         startXTS=index(x)[1];
         
-        if (attr(startXTS,'class')=='yearqtr') 
+        if (class( startXTS )=='yearqtr') 
           
           startXTSYP=NULL;
         
@@ -288,11 +288,11 @@
         
         tryCatch({
           
-          if (attr(startXTS,'class')=='Date')     startXTSYP=date2yp(startXTS,xtsF);
-          if (attr(startXTS,'class')=='yearqtr')  startXTSYP=yq2yp(startXTS);
-          if (attr(startXTS,'class')=='yearmon')  startXTSYP=ym2yp(startXTS);
+          if (class( startXTS )=='Date')     startXTSYP=date2yp(startXTS,xtsF);
+          if (class( startXTS )=='yearqtr')  startXTSYP=yq2yp(startXTS);
+          if (class( startXTS )=='yearmon')  startXTSYP=ym2yp(startXTS);
           
-          if (is.null(startXTSYP)) stop('unknown .indexClass');
+          if (is.null(startXTSYP)) stop('unknown xts tclass()');
           
         },error=function(e){stop('xts[[year,period]]: unable to convert start date. ',e$message)});
         
@@ -421,13 +421,13 @@ as.bimets <- function(x=NULL,FILLVALUE=NA,VERBOSE=FALSE,...)
     endDate=c();
     indexDates=c();
     
-    if (attr(x,'.indexCLASS')=='yearqtr' || attr(x,'.indexCLASS')=='yearmon')
+    if (tclass( x )=='yearqtr' || tclass( x )=='yearmon')
     {
       startDate=as.Date(start(x));
       endDate=as.Date(end(x));  
       indexDates=as.Date(index(x));
       
-    } else if (attr(x,'.indexCLASS')=='Date')
+    } else if (tclass( x )=='Date')
     {
       startDate=start(x);
       endDate=end(x); 
@@ -952,9 +952,9 @@ frequency.xts <- function(x=NULL, ...)
   	}
     else if(length(x)==1)
     {
-      if (attr(x,'.indexCLASS')=='yearqtr') { scale <- "trimestral"   	; value <- 8 		; relFrequency = 4;					}
-      if (attr(x,'.indexCLASS')=='yearmon') { scale <- "month"    			; value <- 7		; relFrequency = 12;				}
-      if (attr(x,'.indexCLASS')=='Date')    { scale <- "day"      		  ; value <- 3		; relFrequency = 366;				}
+      if (tclass( x )=='yearqtr') { scale <- "trimestral"   	; value <- 8 		; relFrequency = 4;					}
+      if (tclass( x )=='yearmon') { scale <- "month"    			; value <- 7		; relFrequency = 12;				}
+      if (tclass( x )=='Date')    { scale <- "day"      		  ; value <- 3		; relFrequency = 366;				}
 
     }
   } else
@@ -1105,21 +1105,21 @@ frequency.xts <- function(x=NULL, ...)
 	
 	if (!.isUnivariate(x)) stop('.isCompliantXTS(): input needs to be univariate with at least one observation.');
 	
-	if(is.null(attr(x,'.indexCLASS')) ) stop(".isCompliantXTS(): input needs to be instance of xts() class.");
+	if(is.null(tclass( x )) ) stop(".isCompliantXTS(): input needs to be instance of xts() class.");
 	
-	if ((attr(x,'.indexCLASS')=='yearmon') || (attr(x,'.indexCLASS')=='yearqtr')) #monthly&quarterly
+	if ((tclass( x )=='yearmon') || (tclass( x )=='yearqtr')) #monthly&quarterly
 	{
-		if ((! is.regular(x,strict=TRUE)) && (length(x)>1)) stop(paste('.isCompliantXTS(): input of class',attr(x,'.indexCLASS'),'is not strictly regular.'));
+		if ((! is.regular(x,strict=TRUE)) && (length(x)>1)) stop(paste('.isCompliantXTS(): input of class',tclass( x ),'is not strictly regular.'));
 		if ((length(x)>1) && (min(diff(.index(x)))==0)) stop(".isCompliantXTS(): there are duplicated observations at position ",which.min(diff(.index(x))));
     
 	   
-		if (attr(x,'.indexCLASS')=='yearmon')
+		if (tclass( x )=='yearmon')
     {
       start=ym2yp(start(x));
 		  end=ym2yp(end(x));
 		}
 		
-		if (attr(x,'.indexCLASS')=='yearqtr')
+		if (tclass( x )=='yearqtr')
 		{
 		  start=yq2yp(start(x));
 		  end=yq2yp(end(x));
@@ -1135,7 +1135,7 @@ frequency.xts <- function(x=NULL, ...)
 		
 		
   }
-	else if ((attr(x,'.indexCLASS')=='Date'))
+	else if ((tclass( x )=='Date'))
 	{ 
 		fXTS=frequency(x);
     
@@ -1183,7 +1183,7 @@ ym2yp <- function(x=NULL)
 	if (is.null(x)) stop('ym2yp(): input needs to be instance of yearmon class.');
 	outF=NA;
 	
-	if ( any(is.na(x)) || any(is.null(attr(x,'class'))) || !(all(attr(x,'class')=='yearmon'))) stop('ym2yp(): input needs to be instance of class yearmon.');
+	if ( any(is.na(x)) || any(is.null(class( x ))) || !(all(class( x )=='yearmon'))) stop('ym2yp(): input needs to be instance of class yearmon.');
 	
 	tryCatch({
 	  
@@ -1203,7 +1203,7 @@ yq2yp <- function(x=NULL)
 	if (is.null(x)) stop('yq2yp(): input needs to be instance of yearqtr class.');
 	outF=NA;
 	
-	if ( any(is.na(x)) || any(is.null(attr(x,'class'))) || !(all(attr(x,'class')=='yearqtr'))) stop('yq2yp(): input needs to be instance of class yearqtr.');
+	if ( any(is.na(x)) || any(is.null(class( x ))) || !(all(class( x )=='yearqtr'))) stop('yq2yp(): input needs to be instance of class yearqtr.');
 	
 	tryCatch({
 	  
@@ -1225,7 +1225,7 @@ date2yp <- function(x=NULL,f=1)
   if (is.null(x)) stop('date2yp(): input needs to be instance of class Date().');
 	outF=NA;
 	
-	if (any(is.na(x)) || any(is.null(attr(x,'class'))) || !(all(attr(x,'class')=='Date'))  ) stop('date2yp(): input needs to be instance of class Date().');
+	if (any(is.na(x)) || any(is.null(class( x ))) || !(all(class( x )=='Date'))  ) stop('date2yp(): input needs to be instance of class Date().');
 
   if (!(f %in% (c(1,2,4,3,12,24,36,53,366)))) stop('date2yp(): frequency f needs to be 1, 2, 3, 4, 12, 24, 36, 53 or 366.');
 	

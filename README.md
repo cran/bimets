@@ -1,16 +1,16 @@
-# BIMETS - Time Series And Econometric Modeling In R
+# bimets - Time Series And Econometric Modeling In R
 
 
-BIMETS is an R package developed with the aim of easing time series analysis and building up a framework that facilitates the definition, estimation and simulation of simultaneous equation models.
+**bimets** is an R package developed with the aim of easing time series analysis and building up a framework that facilitates the definition, estimation and simulation of simultaneous equation models.
 
-BIMETS does not depend on compilers or third-party software so it can be freely downloaded and installed on Linux, MS Windows(R) and Mac OSX(R), without any further requirements. 
+**bimets** does not depend on compilers or third-party software so it can be freely downloaded and installed on Linux, MS Windows(R) and Mac OSX(R), without any further requirements. 
 
-<!-- For an introduction and examples, visit the [BIMETS Dev Center](http://bimets.github.com/). 
+<!-- For an introduction and examples, visit the [bimets Dev Center](http://bimets.github.com/). 
 
 For bug reports, please use the [issue tracker](https://github.com/bimets/issues
 -->
 
-If you have general questions about using BIMETS, or for bug reports, please write to the mantainer: [Andrea.Luciani@bancaditalia.it](mailto:andrea.luciani@bancaditalia.it)
+If you have general questions about using **bimets**, or for bug reports, please write to the mantainer: [Andrea.Luciani@bancaditalia.it](mailto:andrea.luciani@bancaditalia.it)
 
 ## Features
 
@@ -19,9 +19,9 @@ If you have general questions about using BIMETS, or for bug reports, please wri
 **TIME SERIES:**
 
 - supports daily, weekly, monthly, quarterly, semiannual, yearly time series, and frequency of 24 and 36 periods per year.
-- indexing *by dates* - users can select and modify a single observation by using the syntax `ts['Date']`, or multiple observations by using `ts['StartDate/EndDate']`.
+- indexing *by date* - users can select and modify a single observation by using the syntax `ts['Date']`, or multiple observations by using `ts['StartDate/EndDate']`.
 - indexing *by year-period* - users can select and modify observations by providing a two-dimensional numerical array composed by the year and the period, e.g. `ts[[Year,Period]]`.
-- indexing *by observation indexes* - users can select and modify observations by providing the array of requested indexes (core R), e.g. `ts[indexes]`.
+- indexing *by observation index* - users can select and modify observations by providing the array of requested indexes (core R), e.g. `ts[indexes]`.
 - *Aggregation/Disaggregation* - the package provides advanced (dis)aggregation capabilities, with several linear interpolation capabilities in disaggregation, and many aggregation functions (e.g. `STOCK`, `SUM`, `AVE`, etc.) while reducing the time series frequency.
 - *Manipulation* - the package provides, among others, the following time series manipulation capabilities: 
 time series extension `TSEXTEND()`, 
@@ -99,9 +99,9 @@ TABIT(myMovAveTS,myTS1);
 
 **MODELING:**
 
-BIMETS econometric modeling capabilities comprehend: 
+**bimets** econometric modeling capabilities comprehend: 
 
-- *Model Definition Language* - the specification of an econometric model is translated and identified by keywords statements which are grouped in a model file, i.e. a plain text file or a `character` R variable with a specific syntax. Collectively, these keyword statements constitute a kind of a BIMETS Model Description Language (i.e. `MDL`). The MDL syntax allows to define behaviorals equations, technical equations, conditional evaluations during the simulation, and other model properties. 
+- *Model Definition Language* - the specification of an econometric model is translated and identified by keywords statements which are grouped in a model file, i.e. a plain text file or a `character` R variable with a specific syntax. Collectively, these keyword statements constitute a kind of a **bimets** Model Description Language (i.e. `MDL`). The MDL syntax allows to define behaviorals equations, technical equations, conditional evaluations during the simulation, and other model properties. 
 - *Estimation* - the estimation function `ESTIMATE()` supports Ordinary Least Squares, Instrumental Variables, deterministic linear restrictions on the coefficients, Almon Polynomial Distributed Lags (i.e. `PDL`), autocorrelation of the errors.
 - *Simulation* - the simulation function `SIMULATE()` supports static, dynamic and forecast simulations, residuals check, partial or total exogenization of endogenous variables, constant adjustment of endogenous variables (i.e. add-factors).
 - *Multipliers Evaluation* - the multipliers evaluation function `MULTMATRIX()` computes the matrix of both impact and interim multipliers for a selected set of endogenous variables, i.e. the `TARGET`, with respect to a selected set of exogenous variables, i.e. the `INSTRUMENT`.
@@ -404,7 +404,7 @@ with(kleinRenorm$simulation,
 
 ```
 
-BIMETS estimation and simulation results have been compared to the output results of leading commercial econometric software, by using several large and complex models.
+**bimets** estimation and simulation results have been compared to the output results of leading commercial econometric software, by using several large and complex models.
 
 The models used in the comparison have more than:
 
@@ -413,9 +413,9 @@ The models used in the comparison have more than:
 - +500  coefficients;
 - +1000 time series of endogenous and exogenous variables;
 
-In these models we can find equations with restricted coefficients, polynomial distributed lags, error autocorrelation and conditional evaluation of technical identities; all models have been simulated in static, dynamic, and forecast mode, with exogenization and constant adjustments of endogenous variables, through the use of BIMETS capabilities.
+In these models we can find equations with restricted coefficients, polynomial distributed lags, error autocorrelation and conditional evaluation of technical identities; all models have been simulated in static, dynamic, and forecast mode, with exogenization and constant adjustments of endogenous variables, through the use of **bimets** capabilities.
 
-In the +800 endogenous simulated time series over the +20 simulated periods (i.e. more than 16.000 simulated observations), the average percentage difference between BIMETS and leading commercial software results has a magnitude of `10E-7 %`. The difference between results calculated by using different commercial software has the same average magnitude.
+In the +800 endogenous simulated time series over the +20 simulated periods (i.e. more than 16.000 simulated observations), the average percentage difference between **bimets** and leading commercial software results has a magnitude of `10E-7 %`. The difference between results calculated by using different commercial software has the same average magnitude.
 
 ## Installation
 
@@ -437,10 +437,10 @@ devtools::install_github("bimets")
 
 ## Guidelines for contributing
 
-We welcome contributions to the **BIMETS** package. In the case please write to the mantainer: [Andrea.Luciani@bancaditalia.it](mailto:andrea.luciani@bancaditalia.it). 
+We welcome contributions to the **bimets** package. In the case please write to the mantainer: [Andrea.Luciani@bancaditalia.it](mailto:andrea.luciani@bancaditalia.it). 
 
 ## License
 
-The BIMETS package is licensed under the EUPL
+The **bimets** package is licensed under the EUPL
 
 Disclaimer: *The views and opinions expressed in these pages are those of the authors and do not necessarily reflect the official policy or position of the Bank of Italy. Examples of analysis performed within these pages are only examples. They should not be utilized in real-world analytic products as they are based only on very limited and dated open source information. Assumptions made within the analysis are not reflective of the position of the Bank of Italy.*
