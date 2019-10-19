@@ -441,6 +441,6 @@ We welcome contributions to the **bimets** package. In the case please write to 
 
 ## License
 
-The **bimets** package is licensed under the EUPL
+The **bimets** package is licensed under the GPL-3
 
 Disclaimer: *The views and opinions expressed in these pages are those of the authors and do not necessarily reflect the official policy or position of the Bank of Italy. Examples of analysis performed within these pages are only examples. They should not be utilized in real-world analytic products as they are based only on very limited and dated open source information. Assumptions made within the analysis are not reflective of the position of the Bank of Italy.*

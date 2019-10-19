@@ -1,10 +1,16 @@
 
 **bimets Change-Log**
 
+bimets ver. 1.4.2 - Oct. 2019
+==============================
+
+* Licensed under GPL-3
+
 bimets ver. 1.4.1 - Jun. 2019
 ==============================
 
 * Fixed typos on *.Rnw
+
 * Added support to xts 0.12
 
 

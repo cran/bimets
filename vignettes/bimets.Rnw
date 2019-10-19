@@ -729,6 +729,7 @@ kleinModel <- SIMULATE(kleinModel
 TABIT(kleinModel$simulation$y)
 @
 \end{footnotesize}
+Historical GNP was 166.36 in 1942 and 203.41 in 1943 (source FRED - Federal Reserve Bank of St. Louis).\\ \\
 In the following figure you will find the historical consumption, the dynamic simulated consumption and the RHS computation of the consumption equation, from 1921 to 1941: \\ \\
 \includegraphics[width=6in]{CnSim.png}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
