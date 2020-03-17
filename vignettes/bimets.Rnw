@@ -637,7 +637,48 @@ advancedKleinModel <- LOAD_MODEL_DATA(advancedKleinModel,kleinModelData)
 advancedKleinModel <- ESTIMATE(advancedKleinModel)
 @
 \end{footnotesize}
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
+\subsection{Structural Stability}
+One of the main purposes of the econometric modeling is its use for forecast and policy evaluation and, to this end, the stability of a behavioral equation parameters over time should be verified. In order to check for structural stability two different procedures, which can be derived from the so called Chow-tests\footnote{G. C. Chow, \textit{ Tests of equality between sets of coefficients in two linear regressions}. Econometrica, Vol 28, 4. July 1960}, are applied.\\
+ \\
+Given a sample of \({T_{0} = t_{k},...,t_{n}}\) observations (i.e. the base \code{TSRANGE}) and selecting an arbitrary forward extension in \({T_{1} = t_{k},...,t_{n},...,t_{m}}\) observations (i.e. the extended \code{TSRANGE})  we have the following two regressions: 
+\begin{enumerate}
+\item \({Y_{0} = \beta_{0}*X_{0}+\epsilon_{0},  \quad    \epsilon_{0} \sim \mathcal{N}(0,\,\sigma_{0}^{2}) }\), having time series projected on the base \code{TSRANGE}
+\item \({Y_{1} = \beta_{1}*X_{1}+\epsilon_{1},  \quad    \epsilon_{1} \sim \mathcal{N}(0,\,\sigma_{1}^{2}) }\), having time series projected on the extended \code{TSRANGE}
+\end{enumerate}
+In general a stability analysis is carried on in the following ways:
+\begin{itemize}
+\item[--] comparing the parameter estimates arising from the two regressions: this is known as the covariance analysis;
+\item[--] checking the accuracy of the forecast for the dependent variable in the extended \code{TSRANGE}, using the estimates produced in the base \code{TSRANGE}: this is known as the predictive power test.
+\end{itemize}
+The first Chow test (i.e. \textit{predictive failure}) is calculated as:\\ \\
+\({\tau = \frac{SSR_{1}-SSR_{0}}{SSR_{0}} \frac{DoF_{1}}{DoF_{1}-DoF_{0}} }\), \\ \\ with \({SSR_{i}}\) as the sum of squared residuals and \({DoF_{i}}\) as the number of degrees of fredoom in the regression \({i=0,1}\). \\ \\
+The test is completed by calculating the following time series on the extended \code{TSRANGE}:
+\begin{itemize} 
+\item[--] the forecast error;
+\item[--] the standard error of forecast;
+\item[--] the t-statistic for the error;
+\end{itemize}
+The standard error of the forecast for the \(t_{j}\) observation in the extended \code{TSRANGE} is computed according to: \\ \\
+% book formula \({SE_{j} = \sigma_{0} \sqrt{1+x_j^\top * ( X_{0}^\top * X_{0}^{ })^{-1} * x_j} }\) \\ \\
+%spk formula \({SE_{j} = \sigma_{1} \sqrt{1+x_j^\top * ( X_{1}^\top * X_{1}^{ })^{-1} * x_j} }\) \\ \\
+\({SE_{j} = \sigma_{0} \sqrt{1+x_j^\top * ( X_{0}^\top * X_{0}^{ })^{-1} * x_j} }\) \\ \\
+having \(x_j\) as the independent values (i.e. regressors) on the \(t_{j}\) observation in the \(T_{1}\) extended \code{TSRANGE},  with \(n < j \leq m\). \\ \\
+The null hypothesis for \(\tau \) is: \\ \\
+\( H^{*} : \beta_{1} = \beta_{0}\), given \(\sigma_{1}^{2} = \sigma_{0}^{2} \) \\ \\
+The test statistic \(\tau\) follows the \(F\) distribution with  \({ ( DoF_{1}-DoF_{0} ) }\) and \(DoF_{1}\) degrees of freedom, and can be performed during the \code{ESTIMATE()} function execution by using the \code{CHOWTEST} argument set to \code{TRUE}, and optionally by providing the argument \code{CHOWPAR} as an integer array, i.e. \code{c(year,period)}, built by the year and the period of the last required observation in the extended \code{TSRANGE}.\\ \\
+Example:
+\begin{footnotesize}
+<<>>=
+#chow test for the consumption equation
+#base TSRANGE set to 1921/1935
+kleinModelChow <- ESTIMATE(kleinModel
+                       ,eqList='cn'
+                       ,TSRANGE=c(1921,1,1935,1)
+                       ,forceTSRANGE=TRUE
+                       ,CHOWTEST=TRUE)
+@
+\end{footnotesize}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
 \subsection{Simulation}
 The simulation of an econometric model basically consists in solving the system of the equations describing the model for each time period in the specified time interval. Since the equations may not be linear in the variables, and since the graph derived from the incidence matrix may be cyclic, the usual methods based on linear algebra are not applicable, and the simulation must be solved by using an iterative algorithm. \\ \\
@@ -943,6 +984,7 @@ with(kleinRenorm$simulation,
 \item Jan Tinbergen \textit{On the theory of economic policy}. North-Holland, Amsterdam, 1952.
 \item Daniel Gabay, Pierre Nepomiastchy, M'Hamed Rachdi and Alain Ravelli \textit{Numerical methods for simulation and optimal control of large-scale macroeconomic models}. Applied stochastic control in econometrics and management science:115-158, 1980
 \item M. R. Garey, D. S. Johnson \textit{Computers and Intractability: a Guide to the Theory of NP-completeness}. San Francisco, Freeman 1979
+\item G. C. Chow, \textit{ Tests of equality between sets of coefficients in two linear regressions}. Econometrica, Vol 28, 4. July 1960
 \end{enumerate}
 \end{document}
 

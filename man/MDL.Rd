@@ -205,7 +205,7 @@ and \cr \cr
 r\tab = \tab 0  \cr
 \tab \tab 0 
 }} \cr\cr \cr
-The expanded regressors are: \code{X1, X2, TSLAG(X2,1), TSLAG(X2,2), TSLAG(X2,3), TSLAG(X2,4), X3}.\cr\cr The scaling factor is given, as in the standard restriction case, by: \eqn{mean(X' X) / max(abs(R[i,]))}{mean(X' X) / max(abs(R[i,]))} \cr\cr
+The expanded regressors are:\cr \code{X1, X2, TSLAG(X2,1), TSLAG(X2,2), TSLAG(X2,3), TSLAG(X2,4), X3}.\cr\cr The scaling factor is given, as in the standard restriction case, by: \eqn{mean(X' X) / max(abs(R[i,]))}{mean(X' X) / max(abs(R[i,]))} \cr\cr
 
 - \bold{IF>} keyword is used to conditionally evaluate an identity during a simulation, depending on the value of a logical expression. Thus, it is possible to have a model alternating between two or more identity specifications for each simulation period, depending upon results from other equations.\cr \cr
 The IF> statement general form is:\cr

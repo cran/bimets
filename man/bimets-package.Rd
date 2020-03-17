@@ -12,15 +12,6 @@ bimets :: Time Series And Econometric Modeling In R
 
 \bold{bimets} is a software framework developed by using \code{R} language and designed for time series analysis and econometric modeling, which allows creating and manipulating time series, specifying simultaneous equation models of any size by using a kind of high-level description language, and performing model estimation, simulation and forecasting.\cr\cr
 In addition, \bold{bimets} computational capabilities provide many tools to pre-process data and post-process results, designed for statisticians and economists. These operations are fully integrated with the \code{R} environment.\cr \cr
-\bold{bimets} estimation and simulation results have been compared to the output results of leading commercial econometric software, by using several large and complex models.\cr\cr
-The models used in the comparison have more than:\cr\cr
-+100  behavioral equations;\cr
-+700  technical identities;\cr
-+500  coefficients;\cr
-+1000 time series of endogenous and exogenous variables;\cr\cr
-In these models we can find equations with restricted coefficients, polynomial distributed lags, error autocorrelation and conditional evaluation of technical identities; all models have been simulated in \emph{static}, \emph{dynamic}, and \emph{forecast} mode, with exogenization and constant adjustments of endogenous variables through the use of \bold{bimets} capabilities.\cr\cr
-In the +800 endogenous simulated time series over the +20 simulated periods (i.e. more than 16.000 simulated observations), the average \emph{percentage} difference between \bold{bimets} and leading commercial software results has a magnitude of \eqn{10^{-7} \% }{10^(-7) \%}. The difference between results calculated by using different commercial software has the same average magnitude.\cr\cr
-\bold{bimets} stands for Bank of Italy Model Easy Time Series; it does not depend on compilers or third-party software so it can be freely downloaded and installed on Linux, MS Windows(R) and Mac OSX(R), without any further requirements. \cr\cr
 The package can be installed and loaded in \code{R} with the following commands (with \code{R>} as the \code{R} command prompt):
 \preformatted{
 R> install.packages('bimets')
@@ -340,7 +331,8 @@ The \bold{bimets} \code{\link[=ESTIMATE]{ESTIMATE}} function estimates equations
 - \emph{Instrumental Variables};\cr
 - \emph{Deterministic linear restrictions on the coefficients};\cr
 - \emph{Almon Polynomial Distributed Lags};\cr
-- \emph{Autocorrelation of the errors};\cr\cr
+- \emph{Autocorrelation of the errors};\cr
+- \emph{Structural stability analysis (Chow tests)};\cr\cr
 Restrictions procedure derives from the theory of Lagrange Multipliers, while the Cochrane-Orcutt method allows to account for residuals autocorrelation. \cr\cr
 The estimation of the previously defined Klein's model is shown in the following example:  
 \preformatted{
@@ -547,20 +539,20 @@ Rho           Std. Error          T-stat.
  0.007785936   0.2647013           0.02941404
 
 STATs:
-R-Squared                       : 0.985263
-Adjusted R-Squared              : 0.979595
-Durbin-Watson Statistic         : 1.966609
-Sum of squares of residuals     : 9.273455
-Standard Error of Regression    : 0.8445961
-Log of the Likelihood Function  : -20.14564
-F-statistic                     : 173.8271
-F-probability                   : 1.977107e-11
-Akaike's IC                     : 54.29129
-Schwarz's IC                    : 60.90236
-Mean of Dependent Variable      : 55.71765
-Number of Observations          : 19
-Number of Degrees of Freedom    : 13
-Current Sample (year-period)    : 1925-1 / 1941-1
+R-Squared                      : 0.985263    
+Adjusted R-Squared             : 0.9785644   
+Durbin-Watson Statistic        : 1.966609    
+Sum of squares of residuals    : 9.273455    
+Standard Error of Regression   : 0.9181728   
+Log of the Likelihood Function : -18.97047   
+F-statistic                    : 147.0844    
+F-probability                  : 1.090551e-09
+Akaike's IC                    : 51.94093    
+Schwarz's IC                   : 57.77343    
+Mean of Dependent Variable     : 55.71765    
+Number of Observations         : 17
+Number of Degrees of Freedom   : 11
+Current Sample (year-period)   : 1925-1 / 1941-1
 
 Signif. codes: *** 0.001 ** 0.01 * 0.05
 
@@ -659,7 +651,90 @@ Signif. codes: *** 0.001 ** 0.01 * 0.05
 ...ESTIMATE OK
 }
 
+\tabular{c}{\emph{Structural Stability} }
+One of the main purposes of the econometric modeling is its use for forecast and policy evaluation and, to this end, the stability of a behavioral equation parameters over time should be verified. In order to check for structural stability two different procedures, which can be derived from the so called Chow-tests, are applied.\cr \cr
+Given a sample of observations (i.e. the base \code{TSRANGE}) and selecting an arbitrary forward extension (i.e. the extended \code{TSRANGE}) we can perform the same regression by using these two time ranges.\cr\cr
+In general a stability analysis is carried on in the following ways:\cr
+- comparing the parameter estimates arising from the two regressions: this is known as the covariance analysis;\cr
+- checking the accuracy of the forecast for the dependent variable in the extended \code{TSRANGE}, using the estimates produced in the base \code{TSRANGE}: this is known as the predictive power test.\cr\cr
+The test statistic follows the \code{F} distribution  and can be performed during the \code{ESTIMATE()} function execution by using the \code{CHOWTEST} argument set to \code{TRUE} (more details in the \code{\link[=ESTIMATE]{ESTIMATE}} help page).\cr \cr
+Example:
+\preformatted{
+#chow test for the consumption equation
+#base TSRANGE set to 1921/1935
+R> kleinModelChow <- ESTIMATE(kleinModel
+                       ,eqList='cn'
+                       ,TSRANGE=c(1921,1,1935,1)
+                       ,forceTSRANGE=TRUE
+                       ,CHOWTEST=TRUE)
 
+Estimate the Model klein1.txt:
+the number of behavioral equations to be estimated is 1.
+The total number of coefficients is 4.
+
+_________________________________________
+
+BEHAVIORAL EQUATION: cn
+Estimation Technique: OLS
+
+cn                  =   13.1275    
+                        T-stat. 6.5046     ***
+
+                    +   0.16698    p
+                        T-stat. 2.18304    
+
+                    +   0.0885684  TSLAG(p,1)
+                        T-stat. 0.975042   
+
+                    +   0.887964   (w1+w2)
+                        T-stat. 12.61      ***
+
+
+STATs:
+R-Squared                      : 0.978728   
+Adjusted R-Squared             : 0.972926   
+Durbin-Watson Statistic        : 1.38       
+Sum of squares of residuals    : 6.9186     
+Standard Error of Regression   : 0.793072   
+Log of the Likelihood Function : -15.4803   
+F-statistic                    : 168.7      
+F-probability                  : 1.77673e-09
+Akaike's IC                    : 40.9606    
+Schwarz's IC                   : 44.5009    
+Mean of Dependent Variable     : 50.9133    
+Number of Observations         : 15
+Number of Degrees of Freedom   : 11
+Current Sample (year-period)   : 1921-1 / 1935-1
+
+
+Signif. codes:   *** 0.001  ** 0.01  * 0.05  
+
+
+
+STABILITY ANALYSIS:
+Behavioral equation: cn 
+
+Chow test:
+Sample (auto)      : 1936-1 / 1941-1 
+F-value            : 4.48873       
+F-prob(6,17)       : 0.668723      
+
+Predictive Power:
+
+Predictive Power:
+
+DATE, PER, ACTUAL  , PREDICT   , ERROR      , STDERR    , TSTAT         
+
+1936, 1  ,  57.7   ,  56.5544  ,  1.14564   ,  1.01181  ,  1.13227      
+1937, 1  ,  58.7   ,  59.931   , -1.23099   ,  1.0201   , -1.20673      
+1938, 1  ,  57.5   ,  57.9721  , -0.472122  ,  0.968638 , -0.487409     
+1939, 1  ,  61.6   ,  61.5207  ,  0.0793139 ,  1.20048  ,  0.0660685    
+1940, 1  ,  65     ,  65.3957  , -0.395718  ,  1.24227  , -0.318545     
+1941, 1  ,  69.7   ,  73.7965  , -4.09655   ,  1.6693   , -2.45405   
+          
+
+...ESTIMATE OK                      
+}
 \tabular{c}{\emph{Simulation} }
 
 
@@ -842,7 +917,7 @@ R> with(kleinModel,TABIT(modelData$w2,
                       renorm$INSTRUMENT$g,
                       TSRANGE=c(1940,1,1941,1)
                       )
-     )
+          )
      
 DATE, PER, modelData$w2, renorm$INSTRUMENT$w2, modelData$g, renorm$INSTRUMENT$g
 1940,  1 , 8           , 7.413331            , 15.4       , 16.1069
@@ -893,7 +968,16 @@ DATE, PER, cn        , y
 
 }
 
+\bold{bimets} estimation and simulation results have been compared to the output results of leading commercial econometric software, by using several large and complex models.\cr\cr
+The models used in the comparison have more than:\cr\cr
++100  behavioral equations;\cr
++700  technical identities;\cr
++500  coefficients;\cr
++1000 time series of endogenous and exogenous variables;\cr\cr
+In these models we can find equations with restricted coefficients, polynomial distributed lags, error autocorrelation and conditional evaluation of technical identities; all models have been simulated in \emph{static}, \emph{dynamic}, and \emph{forecast} mode, with exogenization and constant adjustments of endogenous variables through the use of \bold{bimets} capabilities.\cr\cr
+In the +800 endogenous simulated time series over the +20 simulated periods (i.e. more than 16.000 simulated observations), the average \emph{percentage} difference between \bold{bimets} and leading commercial software results has a magnitude of \eqn{10^{-7} \% }{10^(-7) \%}. The difference between results calculated by using different commercial software has the same average magnitude.\cr\cr
 
+\bold{bimets} stands for Bank of Italy Model Easy Time Series; it does not depend on compilers or third-party software so it can be freely downloaded and installed on Linux, MS Windows(R) and Mac OSX(R), without any further requirements. \cr\cr
 
 More details in:\cr\cr
 - \code{\link[=MDL]{MDL}}\cr

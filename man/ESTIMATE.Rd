@@ -12,12 +12,16 @@ This function estimates equations that are linear in the coefficients, as specif
 - \emph{Instrumental Variables};\cr
 - \emph{Deterministic linear restrictions on the coefficients};\cr
 - \emph{Almon Polynomial Distributed Lags};\cr
-- \emph{Autocorrelation of the errors};\cr\cr Further details on estimation calculus can be found in \code{\link[=MDL]{MDL}} help page;
+- \emph{Autocorrelation of the errors};\cr
+- \emph{Structural stability analysis (Chow tests)};\cr\cr Further details on estimation calculus can be found in \code{\link[=MDL]{MDL}} help page; further details on Chow test can be found below in this page;
+
+
 }
 \usage{
 ESTIMATE(model=NULL, 
          eqList=NULL, 
          TSRANGE=NULL,
+         forceTSRANGE=FALSE,
          estTech='OLS',
          IV=NULL,
          quietly=FALSE,
@@ -25,6 +29,8 @@ ESTIMATE(model=NULL,
          tol=.Machine$double.eps,
          digits=getOption('digits'),
          centerCOV=TRUE,
+         CHOWTEST=FALSE,
+         CHOWPAR=NULL,
          ...)
 
 }
@@ -38,6 +44,9 @@ ESTIMATE(model=NULL,
   }
   \item{TSRANGE}{
   The time range of the estimation, as a four dimensional numerical array, \cr i.e. \code{TSRANGE=c(start_year, start_period, end_year, end_period)}. The \code{TSRANGE} provided in the behavioral \code{\link[=MDL]{MDL}} definition takes precedence over this function argument.
+  }
+   \item{forceTSRANGE}{
+  If \code{TRUE}, the \code{TSRANGE} defined in the previous argument takes precedence over the \code{TSRANGE} provided in the behavioral \code{\link[=MDL]{MDL}} definition.
   }
    \item{estTech}{
    The estimation technique used in the regression. Ordinary Least Squares \code{OLS} and Instrumental Variables estimation \code{IV} are supported.
@@ -59,6 +68,12 @@ ESTIMATE(model=NULL,
   }
   \item{centerCOV}{
   If \code{TRUE}, the function subtracts the mean from the residuals before calculating the residual covariance matrix.
+  }
+  \item{CHOWTEST}{
+  If \code{TRUE}, the structural stability analysis will be performed.
+  }
+  \item{CHOWPAR}{
+  Indicates the last year-period where the stability test is performed. If \code{NULL} it will be automatically calculated by using all available time series data. It must be provided as an integer array, e.g. \code{year,period}.
   }
    \item{...}{
 Backward compatibility.
@@ -108,8 +123,59 @@ For each behavioral in the \code{eqList} this function will add 4 new named elem
 - \code{FtestRestrProbability}: F-test probability for the restrictions;\cr
 - \code{AIC}: Akaike's Information Criterion;\cr
 - \code{BIC}: Schwarz's Information Criterion;\cr
+- \code{matrixX}: the regressors matrix;\cr
+- \code{vectorY}: the dependent variable;\cr
+- \code{matrixX_error_corrected}: the regressors matrix arising from the Cochrane-Orcutt procedure;\cr
 - etc.
 \cr\cr
+
+\emph{Structural Stability - Chow test}\cr\cr
+One of the main purposes of the econometric modeling is its use for forecast and policy evaluation and, to this end, the stability of a behavioral equation parameters over time should be verified. In order to check for structural stability two different procedures, which can be derived from the so called Chow-tests, are applied.\cr\cr
+\if{html}{
+Given a sample of \eqn{T_0 = t_k,...,t_n} observations (i.e. the base \code{TSRANGE}) and selecting an arbitrary forward extension in \eqn{T_1 = t_k,...,t_n,...,t_m} observations (i.e. the extended \code{TSRANGE}) in the general case we have the following two regressions: \cr\cr
+1) \eqn{Y_0 = b_0*X_0+eps_0,  eps_0  in N(0,sigma_0^2) }, having time series projected on the base \code{TSRANGE}\cr
+2) \eqn{Y_1 = b_1*X_1+eps_1,  eps_1  in N(0,sigma_1^2) }, having time series projected on the extended \code{TSRANGE}\cr
+}
+\if{latex}{
+Given a sample of \eqn{T_{0} = t_{k},...,t_{n}} observations (i.e. the base \code{TSRANGE}) and selecting an arbitrary forward extension in \eqn{T_{1} = t_{k},...,t_{n},...,t_{m}} observations (i.e. the extended \code{TSRANGE}) in the general case we have the following two regressions: \cr\cr
+1) \eqn{Y_{0} = \beta_{0}*X_{0}+\epsilon_{0},  \quad    \epsilon_{0} \sim \mathcal{N}(0,\,\sigma_{0}^{2}) }, having time series projected on the base \code{TSRANGE}\cr
+2) \eqn{Y_{1} = \beta_{1}*X_{1}+\epsilon_{1},  \quad    \epsilon_{1} \sim \mathcal{N}(0,\,\sigma_{1}^{2}) }, having time series projected on the extended \code{TSRANGE}\cr
+}
+In general a stability analysis is carried on in the following ways:\cr
+- comparing the parameter estimates arising from the two regressions: this is known as the covariance analysis;\cr
+- checking the accuracy of the forecast for the dependent variable in the extended \code{TSRANGE}, using the estimates produced in the base \code{TSRANGE}: this is known as the predictive power test.\cr\cr
+The first Chow test is calculated as:
+\if{html}{
+\eqn{tau = ( SSR_1-SSR_0 ) / SSR_0 * DoF_1 / ( DoF_1-DoF_0 ) }, \cr \cr with \eqn{SSR_i} as the sum of squared residuals and \eqn{DoF_i} as the number of degrees of fredoom in the regression \eqn{i=0,1}. \cr
+}
+\if{latex}{
+\eqn{\tau = \frac{SSR_{1}-SSR_{0}}{SSR_{0}} \frac{DoF_{1}}{DoF_{1}-DoF_{0}} }, \cr \cr with \eqn{SSR_{i}} as the sum of squared residuals and \eqn{DoF_{i}} as the number of degrees of fredoom in the regression \eqn{i=0,1}. \cr
+}
+
+The test is completed by calculating the following time series on the extended \code{TSRANGE}:\cr
+- the forecast error;\cr
+- the standard error of forecast;\cr
+- the t-statistic for the error;\cr\cr
+The standard error of the forecast for the \eqn{t_j} observation in the extended \code{TSRANGE} is computed according to: \cr
+
+\if{html}{
+\eqn{SE_j = sigma_0 * sqrt(1+t(x_j) * ( t(X_0) * X_0)^(-1) * x_j) } \cr\cr having \eqn{x_j} as the independent values (i.e. regressors) on the \eqn{t_j} observation in the \eqn{T_1} extended \code{TSRANGE},  with \eqn{n < j <= m}. \cr\cr
+The null hypothesis for \eqn{tau} is: \cr\cr
+\eqn{ H* : beta_1 = beta_0}, given \eqn{sigma_1^2 = sigma_0^2} \cr\cr
+The test statistic \eqn{tau} follows the \eqn{F} distribution with  \eqn{ ( DoF_1-DoF_0 ) } and \eqn{DoF_1} degrees of freedom, and can be performed during the \code{ESTIMATE()} function execution by using the \code{CHOWTEST} argument set to \code{TRUE}.
+}
+\if{latex}{
+\eqn{SE_{j} = \sigma_{0} \sqrt{1+x_j^\top * ( X_{0}^\top * X_{0}^{ })^{-1} * x_j} } \cr\cr having \eqn{x_j} as the independent values (i.e. regressors) on the \eqn{t_{j}} observation in the \eqn{T_{1}} extended \code{TSRANGE},  with \eqn{n < j \leq m}. \cr\cr
+The null hypothesis for \eqn{\tau} is: \cr\cr
+\eqn{ H^{*} : \beta_{1} = \beta_{0}}, given \eqn{\sigma_{1}^{2} = \sigma_{0}^{2}} \cr\cr
+The test statistic \eqn{\tau} follows the \eqn{F} distribution with  \eqn{ ( DoF_{1}-DoF_{0} ) } and \eqn{DoF_{1}} degrees of freedom, and can be performed during the \code{ESTIMATE()} function execution by using the \code{CHOWTEST} argument set to \code{TRUE}.
+
+}
+
+If \code{CHOWTEST=TRUE}, for each behavioral in the \code{eqList} this function will add the following named element into the related behavioral of the output model object:\cr
+- \code{ChowTest}: it will contain the statistics and the time series computed during the last structural analysis performed on the related behavioral.\cr
+
+
 
 
 }
@@ -152,7 +218,7 @@ RESTRICT> b2 + b3 = 1
 COMMENT> Demand for Labor
 BEHAVIORAL> w1
 TSRANGE 1925 1 1941 1
-EQ> w1 = c1 + c2*(y+t-w2) + c3*TSLAG(y+t-w2,1)+c4*time
+EQ> w1 = c1 + c2*(y+t-w2) + c3*TSLAG(y+t-w2,1) + c4*time
 COEFF> c1 c2 c3 c4
 PDL> c3 1 3
 
@@ -428,13 +494,6 @@ myModel$behaviorals$w1$coefficients
 #c3_PDL_2 -0.00619005
 #c4        0.13682057
 
-#get latest estimation parameters
-myModel$estimate_parameters
-#$estTech
-#[1] "OLS"
-#
-#$eqList
-#[1] "cn" "i"  "w1"
 
 #################################################
 #IV case
@@ -448,8 +507,6 @@ myModel=ESTIMATE(myModel,
                       'TSLAG(y)',
                       'TSLAG(w1)*pi+0.5',
                       'exp(w2)'));
-#.CHECK_MODEL_DATA(): warning, there are undefined values in time series "time".
-#
 #Estimate the Model myModelDefinition:
 #the number of behavioral equations to be estimated is 1.
 #The total number of coefficients is 4.
@@ -463,40 +520,40 @@ myModel=ESTIMATE(myModel,
 #Convergence was reached in  7  /  20  iterations.
 #
 #
-#cn                  =   17.93884143014611    
-#                        T-stat. 11.35605608264105    ***
+#cn                  =   18.07073    
+#                        T-stat. 11.72958    ***
 #
-#                    +   0.1594074567906318   p
-#                        T-stat. 0.7524421962971953   
+#                    +   0.2530483   p
+#                        T-stat. 1.583881    
 #
-#                    +   0.1277506382165825   TSLAG(p,1)
-#                        T-stat. 0.9491296499358723   
+#                    +   0.08631646  TSLAG(p,1)
+#                        T-stat. 0.7556204   
 #
-#                    +   0.7596945016016718   (w1+w2)
-#                        T-stat. 13.00631014447263    ***
+#                    +   0.7363227   (w1+w2)
+#                        T-stat. 13.11572    ***
 #
 #ERROR:  AUTO(2) 
 #
 #AUTOREGRESSIVE PARAMETERS:
-#Rho                      Std. Error               T-stat.                  
-# 0.1195212459504091       0.3378062168740853       0.3538160045022491       
-#-0.2124449434554128       0.3005397305932941      -0.7068780657919213       
+#Rho             Std. Error      T-stat.         
+#0.01559806      0.343195        0.04544955      
+#-0.1196327       0.283432       -0.422086        
 #
 #
 #STATs:
-#R-Squared                      : 0.981280540184345    
-#Adjusted R-Squared             : 0.9740807479475546   
-#Durbin-Watson Statistic        : 1.852330110333749    
-#Sum of squares of residuals    : 11.77949537517467    
-#Standard Error of Regression   : 0.9519007452773581   
-#Log of the Likelihood Function : -22.41808505770927   
-#F-statistic                    : 136.2928967825036    
-#F-probability                  : 9.311151849544785e-11
-#Akaike's IC                    : 58.83617011541855    
-#Schwarz's IC                   : 65.44724296958363    
-#Mean of Dependent Variable     : 55.71764705882353    
-#Number of Observations         : 19
-#Number of Degrees of Freedom   : 13
+#R-Squared                      : 0.9843186   
+#Adjusted R-Squared             : 0.9771907   
+#Durbin-Watson Statistic        : 1.917329    
+#Sum of squares of residuals    : 9.867739    
+#Standard Error of Regression   : 0.9471363   
+#Log of the Likelihood Function : -19.49844   
+#F-statistic                    : 138.0938    
+#F-probability                  : 1.532807e-09
+#Akaike's IC                    : 52.99689    
+#Schwarz's IC                   : 58.82938    
+#Mean of Dependent Variable     : 55.71765    
+#Number of Observations         : 17
+#Number of Degrees of Freedom   : 11
 #Current Sample (year-period)   : 1925-1 / 1941-1
 #
 #
@@ -529,38 +586,38 @@ myModel=ESTIMATE(myModel,
 #BEHAVIORAL EQUATION: i
 #Estimation Technique: IV
 #
-#i                   =   34.51754474586971    
-#                        T-stat. 1.264388701353744    
+#i                   =   34.517544    
+#                        T-stat. 1.264388   
 #
-#                    +   0.3216327065477544   p
-#                        T-stat. 0.8648297095197013   
+#                    +   0.3216326   p
+#                        T-stat. 0.8648297   
 #
-#                    +   0.6783672934522457   TSLAG(p,1)
-#                        T-stat. 1.824043940185745    
+#                    +   0.6783672   TSLAG(p,1)
+#                        T-stat. 1.824043    
 #
-#                    -   0.2475568598269819   TSLAG(k,1)
-#                        T-stat. -1.842520302814061   
+#                    -   0.2475568   TSLAG(k,1)
+#                        T-stat. -1.842520   
 #
 #RESTRICTIONS:
 #b2+b3=1
 #
 #RESTRICTIONS F-TEST:
-#F-value            : 2.465920754930322       
-#F-prob(1,15)       : 0.1371905708637959      
+#F-value            : 2.465920       
+#F-prob(1,15)       : 0.137190
 #
 #
 #STATs:
-#R-Squared                      : 0.8057731392963399   
-#Adjusted R-Squared             : 0.7814947817083824   
-#Durbin-Watson Statistic        : 0.9405346241683215   
-#Sum of squares of residuals    : 48.50580729347795    
-#Standard Error of Regression   : 1.741152766371283    
-#Log of the Likelihood Function : -35.86365535226765   
-#F-statistic                    : 33.18894766160036    
-#F-probability                  : 2.025229876911894e-06
-#Akaike's IC                    : 79.7273107045353     
-#Schwarz's IC                   : 83.50506662120105    
-#Mean of Dependent Variable     : 1.310526315789474    
+#R-Squared                      : 0.805773   
+#Adjusted R-Squared             : 0.781494   
+#Durbin-Watson Statistic        : 0.940534   
+#Sum of squares of residuals    : 48.50580  
+#Standard Error of Regression   : 1.741152    
+#Log of the Likelihood Function : -35.86365   
+#F-statistic                    : 33.18894    
+#F-probability                  : 2.025229e-06
+#Akaike's IC                    : 79.72731     
+#Schwarz's IC                   : 83.50506    
+#Mean of Dependent Variable     : 1.310526    
 #Number of Observations         : 19
 #Number of Degrees of Freedom   : 16
 #Current Sample (year-period)   : 1923-1 / 1941-1
@@ -571,5 +628,92 @@ myModel=ESTIMATE(myModel,
 #
 #...ESTIMATE OK
 
+##############################################################
+#CHOW TEST on w1
 
+#base TSRANGE set to 1925 / 1935
+myModel=ESTIMATE(myModel,
+                  eqList='w1',
+                  TSRANGE=c(1925,1,1935,1),
+                  forceTSRANGE=TRUE,
+                  CHOWTEST=TRUE)
+
+#Estimate the Model myModelDefinition:
+#the number of behavioral equations to be estimated is 1.
+#The total number of coefficients is 6.
+#
+#_________________________________________
+#
+#BEHAVIORAL EQUATION: w1
+#Estimation Technique: OLS
+#
+#w1                = -   4.48873    
+#                        T-stat. -2.47402   *
+#
+#                    +   0.545102   (y+t-w2)
+#                        T-stat. 15.3462    ***
+#
+#                    +   c3         TSLAG(y+t-w2,1)
+#                        PDL
+#
+#                    +   0.292018   time
+#                        T-stat. 5.58588    **
+#
+#PDL:
+#c3 1 3
+#
+#Distributed Lag Coefficient: c3
+#Lag     Coeff.        Std. Error    T-stat.       
+#0        0.0413985     0.0336676     1.22963      
+#1        0.0493551     0.00742323    6.64873      ***
+#2        0.0573116     0.0265487     2.15873      
+#SUM      0.148065      0.0222697    
+#
+#RESTRICTIONS F-TEST:
+#F-value            : 3.35954       
+#F-prob(1,5)        : 0.126295      
+#
+#
+#STATs:
+#R-Squared                      : 0.995931   
+#Adjusted R-Squared             : 0.993219   
+#Durbin-Watson Statistic        : 2.43313    
+#Sum of squares of residuals    : 0.737093   
+#Standard Error of Regression   : 0.350498   
+#Log of the Likelihood Function : -0.742173  
+#F-statistic                    : 367.183    
+#F-probability                  : 2.68564e-07
+#Akaike's IC                    : 13.4843    
+#Schwarz's IC                   : 15.8717    
+#Mean of Dependent Variable     : 34.9909    
+#Number of Observations         : 11
+#Number of Degrees of Freedom   : 6
+#Current Sample (year-period)   : 1925-1 / 1935-1
+#
+#
+#Signif. codes:   *** 0.001  ** 0.01  * 0.05  
+#
+#
+#
+#STABILITY ANALYSIS:
+#Behavioral equation: w1 
+#
+#Chow test:
+#Sample (auto)      : 1936-1 / 1941-1 
+#F-value            : 15.3457       
+#F-prob(6,12)       : 0.00534447    
+#
+#Predictive Power:
+#
+#DATE, PER, ACTUAL        , PREDICT       , ERROR         , STDERR        , TSTAT         
+#
+#1936, 1  ,  36.8         ,  38.439       , -1.63901      ,  0.547471     , -2.99378      
+#1937, 1  ,  41           ,  40.824       ,  0.176033     ,  0.630905     ,  0.279017     
+#1938, 1  ,  38.2         ,  39.6553      , -1.4553       ,  0.672192     , -2.165        
+#1939, 1  ,  41.6         ,  45.0547      , -3.45466      ,  0.834433     , -4.14012      
+#1940, 1  ,  45           ,  49.0118      , -4.01179      ,  0.966472     , -4.15096      
+#1941, 1  ,  53.3         ,  56.6727      , -3.37275      ,  1.23486      , -2.73127   
+#     
+#
+#...ESTIMATE OK
 }

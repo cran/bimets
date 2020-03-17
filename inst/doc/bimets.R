@@ -1,5 +1,5 @@
 ### R code from vignette source 'bimets.Rnw'
-### Encoding: ISO8859-15
+### Encoding: ISO8859-1
 
 ###################################################
 ### code chunk number 1: bimets.Rnw:61-62
@@ -323,7 +323,19 @@ advancedKleinModel <- ESTIMATE(advancedKleinModel)
 
 
 ###################################################
-### code chunk number 29: bimets.Rnw:709-729
+### code chunk number 29: bimets.Rnw:672-679
+###################################################
+#chow test for the consumption equation
+#base TSRANGE set to 1921/1935
+kleinModelChow <- ESTIMATE(kleinModel
+                       ,eqList='cn'
+                       ,TSRANGE=c(1921,1,1935,1)
+                       ,forceTSRANGE=TRUE
+                       ,CHOWTEST=TRUE)
+
+
+###################################################
+### code chunk number 30: bimets.Rnw:750-770
 ###################################################
 #FORECAST GNP in 1942 and 1943 
 #we need to extend exogenous variables in 1942 and 1943
@@ -348,7 +360,7 @@ TABIT(kleinModel$simulation$y)
 
 
 ###################################################
-### code chunk number 30: computation
+### code chunk number 31: computation
 ###################################################
 #STATIC SIMULATION EXAMPLE WITH EXOGENIZATION AND CONSTANT ADJUSTMENTS
  
@@ -378,7 +390,7 @@ kleinModel <- SIMULATE(kleinModel
 
 
 ###################################################
-### code chunk number 31: bimets.Rnw:821-828
+### code chunk number 32: bimets.Rnw:862-869
 ###################################################
 kleinModel <- MULTMATRIX(kleinModel,
                         TSRANGE=c(1941,1,1941,1),
@@ -390,7 +402,7 @@ kleinModel$MultiplierMatrix
 
 
 ###################################################
-### code chunk number 32: bimets.Rnw:834-843
+### code chunk number 33: bimets.Rnw:875-884
 ###################################################
 #multi-period interim multipliers
 kleinModel <- MULTMATRIX(kleinModel,
@@ -404,7 +416,7 @@ kleinModel$MultiplierMatrix
 
 
 ###################################################
-### code chunk number 33: bimets.Rnw:866-872
+### code chunk number 34: bimets.Rnw:907-913
 ###################################################
 #we want an arbitrary value on Consumption of 66 in 1940 and 78 in 1941
 #we want an arbitrary value on GNP of 77 in 1940 and 98 in 1941
@@ -415,7 +427,7 @@ kleinTargets <- list(
 
 
 ###################################################
-### code chunk number 34: computation
+### code chunk number 35: computation
 ###################################################
 kleinModel <- RENORM(kleinModel
                    ,INSTRUMENT = c('w2','g')
@@ -426,7 +438,7 @@ kleinModel <- RENORM(kleinModel
 
 
 ###################################################
-### code chunk number 35: bimets.Rnw:888-895
+### code chunk number 36: bimets.Rnw:929-936
 ###################################################
 with(kleinModel,TABIT(modelData$w2,
                       renorm$INSTRUMENT$w2,
@@ -438,21 +450,21 @@ with(kleinModel,TABIT(modelData$w2,
 
 
 ###################################################
-### code chunk number 36: bimets.Rnw:902-904
+### code chunk number 37: bimets.Rnw:943-945
 ###################################################
 #create a new model
 kleinRenorm <- kleinModel
 
 
 ###################################################
-### code chunk number 37: bimets.Rnw:906-908
+### code chunk number 38: bimets.Rnw:947-949
 ###################################################
 #get instruments to be used
 newInstruments <- kleinModel$renorm$INSTRUMENT
 
 
 ###################################################
-### code chunk number 38: bimets.Rnw:910-921
+### code chunk number 39: bimets.Rnw:951-962
 ###################################################
 #change exogenous by using new instruments data
 kleinRenorm$modelData <- within(kleinRenorm$modelData,
@@ -468,7 +480,7 @@ kleinRenorm$modelData <- within(kleinRenorm$modelData,
 
 
 ###################################################
-### code chunk number 39: bimets.Rnw:923-929
+### code chunk number 40: bimets.Rnw:964-970
 ###################################################
 #simulate the new model
 kleinRenorm <- SIMULATE(kleinRenorm
@@ -479,7 +491,7 @@ kleinRenorm <- SIMULATE(kleinRenorm
 
 
 ###################################################
-### code chunk number 40: bimets.Rnw:931-935
+### code chunk number 41: bimets.Rnw:972-976
 ###################################################
 #verify targets are achieved
 with(kleinRenorm$simulation,

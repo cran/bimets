@@ -6,7 +6,7 @@
 Load time series data into a BIMETS model object
 }
 \description{
-This function verifies the input time series list and copies the data into a BIMETS model object. For each endogenous and exogenous variable of the model a related time series must be defined in the input list. Provided time series must be BIMETS compliant, as defined in \code{\link[=is.bimets]{is.bimets}}
+This function verifies the input time series list and copies the data into a BIMETS model object. Provided time series must be BIMETS compliant, as defined in \code{\link[=is.bimets]{is.bimets}}
 }
 \usage{
 LOAD_MODEL_DATA(model=NULL, modelData=NULL, showWarnings=FALSE, quietly=FALSE, ...)

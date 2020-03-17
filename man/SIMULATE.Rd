@@ -122,6 +122,7 @@ SIMULATE(model=NULL,
 		 INSTRUMENT=NULL,
 		 MM_SHOCK=0.00001,
 		 quietly=FALSE,
+		 RESCHECKeqList=NULL,
 		 ...)
 
 }
@@ -176,6 +177,8 @@ SIMULATE(model=NULL,
     \item{MM_SHOCK}{The value of the shocks added to variables in the derivative calculation of the multipliers. The default value is \code{0.00001} times the value of the exogenous variable (see \code{\link[=MULTMATRIX]{MULTMATRIX}});
   }  
  \item{quietly}{ If \code{TRUE}, information messages will be suppressed.
+  } 
+\item{RESCHECKeqList}{ If \code{simType=RESCHECK}, by using this arguments users can select a subset of target endogenous variables: the simulation will be perfmormed only for the selected variables. It must be provided as an array of endogenous names, e.g. \code{c('endo1','endo2',...)}.
   } 
 
  \item{...}{

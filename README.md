@@ -102,7 +102,7 @@ TABIT(myMovAveTS,myTS1);
 **bimets** econometric modeling capabilities comprehend: 
 
 - *Model Definition Language* - the specification of an econometric model is translated and identified by keywords statements which are grouped in a model file, i.e. a plain text file or a `character` R variable with a specific syntax. Collectively, these keyword statements constitute a kind of a **bimets** Model Description Language (i.e. `MDL`). The MDL syntax allows to define behaviorals equations, technical equations, conditional evaluations during the simulation, and other model properties. 
-- *Estimation* - the estimation function `ESTIMATE()` supports Ordinary Least Squares, Instrumental Variables, deterministic linear restrictions on the coefficients, Almon Polynomial Distributed Lags (i.e. `PDL`), autocorrelation of the errors.
+- *Estimation* - the estimation function `ESTIMATE()` supports Ordinary Least Squares, Instrumental Variables, deterministic linear restrictions on the coefficients, Almon Polynomial Distributed Lags (i.e. `PDL`), autocorrelation of the errors, structural stability analysis (Chow tests).
 - *Simulation* - the simulation function `SIMULATE()` supports static, dynamic and forecast simulations, residuals check, partial or total exogenization of endogenous variables, constant adjustment of endogenous variables (i.e. add-factors).
 - *Multipliers Evaluation* - the multipliers evaluation function `MULTMATRIX()` computes the matrix of both impact and interim multipliers for a selected set of endogenous variables, i.e. the `TARGET`, with respect to a selected set of exogenous variables, i.e. the `INSTRUMENT`.
 - *Renormalization* - the renormalization function `RENORM()` performs the renormalization of econometric models, which consists of solving the model while interchanging the role of one or more endogenous variables with an equal number of exogenous variables. The procedure determines the values for the `INSTRUMENT` exogenous variables which allow to achieve the desired values for the `TARGET` endogenous variables, subject to the constraints given by the equations of the model. This is an approach to economic and monetary policy analysis,
@@ -277,19 +277,19 @@ kleinModel=ESTIMATE(kleinModel)
 #
 #
 #STATs:
-#R-Squared                      : 0.985263    
-#Adjusted R-Squared             : 0.979595    
-#Durbin-Watson Statistic        : 1.966609    
-#Sum of squares of residuals    : 9.273455    
-#Standard Error of Regression   : 0.8445961   
-#Log of the Likelihood Function : -20.14564   
-#F-statistic                    : 173.8271    
-#F-probability                  : 1.977107e-11
-#Akaike's IC                    : 54.29129    
-#Schwarz's IC                   : 60.90236    
-#Mean of Dependent Variable     : 55.71765    
-#Number of Observations         : 19
-#Number of Degrees of Freedom   : 13
+#R-Squared                      : 0.9891508   
+#Adjusted R-Squared             : 0.9855344   
+#Durbin-Watson Statistic        : 2.219659    
+#Sum of squares of residuals    : 6.3545      
+#Standard Error of Regression   : 0.7276962   
+#Log of the Likelihood Function : -15.75753   
+#F-statistic                    : 273.5171    
+#F-probability                  : 1.130929e-11
+#Akaike's IC                    : 43.51506    
+#Schwarz's IC                   : 48.51434    
+#Mean of Dependent Variable     : 37.69412    
+#Number of Observations         : 17
+#Number of Degrees of Freedom   : 12
 #Current Sample (year-period)   : 1925-1 / 1941-1
 #
 #

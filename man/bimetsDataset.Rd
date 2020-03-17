@@ -33,6 +33,13 @@
 \alias{bimets_static_TD90_5__}
 \alias{bimets_static_TD90_6__}
 \alias{bimets_static_TD90__}
+\alias{bimets_static_G90_1__}
+\alias{bimets_static_G90_2__}
+\alias{bimets_static_G90_3__}
+\alias{bimets_static_G90_4__}
+\alias{bimets_static_G90_5__}
+\alias{bimets_static_G90_6__}
+\alias{bimets_static_G90__}
 \alias{bimets_static_startYear___}
 \alias{bimets_static_totalLength___}
 
