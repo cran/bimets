@@ -31,6 +31,6 @@ This function returns a numerical array \code{c(YEAR,PERIOD)}
 \examples{
 	
 	#c(2,13) and frequency=4 => c(5,1)
-	print(normalizeYP(c(2,13),4));
+	print(normalizeYP(c(2,13),4))
 	
 }

@@ -90,7 +90,7 @@ The \bold{bimets} package provides, among others, the following time series mani
 - Time series projection \code{\link[=TSPROJECT]{TSPROJECT}} \cr
 - Lag \code{\link[=TSLAG]{TSLAG}}\cr
 - Lead \code{\link[=TSLEAD]{TSLEAD}}\cr
-- Lag differences, absolute and percentage \code{\link[=TSDELTA]{TSDELTA}} \code{\link[=TSDELTAP]{TSDELTAP}}\cr
+- Lag differences: standard, percentage, and logarithmic \code{\link[=TSDELTA]{TSDELTA}} \code{\link[=TSDELTAP]{TSDELTAP}} \code{\link[=TSDELTALOG]{TSDELTALOG}}\cr
 - Cumulative product \code{\link[=CUMPROD]{CUMPROD}} \cr
 - Cumulative sum \code{\link[=CUMSUM]{CUMSUM}} \cr
 - Moving average \code{\link[=MOVAVG]{MOVAVG}} \cr
@@ -203,7 +203,9 @@ As shown, the model definition is quite intuitive. The first keyword is \code{MO
 - \bold{COMMENT>} can be used to insert comments into a model;\cr \cr
 The mathematical expression in the EQ> and IF> definitions can include the standard arithmetic operators, parentheses, and the following MDL time series functions: \cr \cr
 - \code{TSLAG(ts,i)}: lag the \code{ts} time series by \code{i}-periods;\cr \cr
-- \code{TSDELTA(ts,i)}: \code{i}-periods difference of the \code{ts} time series ;\cr \cr
+- \code{TSDELTA(ts,i)}: \code{i}-periods difference of the \code{ts} time series;\cr \cr
+- \code{TSDELTAP(ts,i)}: \code{i}-periods percentage difference of the \code{ts} time series;\cr \cr
+- \code{TSDELTALOG(ts,i)}: \code{i}-periods logarithmic difference of the \code{ts} time series;\cr \cr
 - \code{MOVAVG(ts,i)}: \code{i}-periods moving average of the \code{ts} time series;\cr \cr
 - \code{MOVSUM(ts,i)}: \code{i}-periods moving sum of the  \code{ts} time series;\cr \cr
 - \code{LOG(ts)}: log of the \code{ts} time series.;\cr \cr
@@ -246,8 +248,8 @@ $eqRegressorsNames
 [1] "1" "p" "TSLAG(p,1)" "(w1+w2)"
 
 $eqSimExp
-expression(cn[2, ] = cn_ADDFACTOR[2, ] + +cn_a1 * 1 + cn_a2 *
-p[2, ] + cn_a3 * (p[1, ]) + cn_a4 * (w1[2, ] + w2[2, ]))
+expression(cn[2, ] = cn__ADDFACTOR[2, ] + +cn__a1 * 1 + cn__a2 *
+p[2, ] + cn__a3 * (p[1, ]) + cn__a4 * (w1[2, ] + w2[2, ]))
 
 etc...
 }
@@ -324,6 +326,64 @@ R> kleinModelData=list(
 R> kleinModel=LOAD_MODEL_DATA(kleinModel,kleinModelData)
 }
 Since time series and other data (e.g. regressor coefficients, error coefficients, constant adjustments, targets, instruments, etc...) are stored into the model object, users can define multiple model objects - each with its own arbitrary data - in the same \code{R} session. \bold{bimets} makes it possible to estimate, simulate and compare results from different models with different data sets. Furthermore, users can easily save an estimated or a simulated model as a standard \code{R} variable, thus reloading it later, having all available data and time series stored into it, i.e. endogenous and exogenous time series, estimated coefficients, constant adjustments, simulation options, simulated time series, calculated instruments, targets, etc. (see also \code{\link[=RENORM]{RENORM}} and \code{\link[=SIMULATE]{SIMULATE}})\cr\cr
+An advanced MDL model example follows:
+\preformatted{
+
+R> #KLEIN MODEL WITH AUTOCORRELATION, RESTRICTIONS, 
+R> #CONDITIONAL EVALUATIONS AND LHS FUNCTIONS
+
+R> lhsKlein1.txt="
+MODEL
+
+COMMENT> Modified Klein Model 1 of the U.S. Economy with PDL,
+COMMENT> autocorrelation on errors, restrictions, 
+COMMENT> conditional evaluations and LHS functions on EQ
+
+COMMENT> Exp Consumption
+BEHAVIORAL> cn
+TSRANGE 1925 1 1941 1
+EQ> EXP(cn) = a1 + a2*p + a3*LAG(p,1) + a4*(w1+w2)
+COEFF> a1 a2 a3 a4
+ERROR> AUTO(2)
+STORE> coe(1)
+
+COMMENT> Log Investment
+BEHAVIORAL> i
+TSRANGE 1925 1 1941 1
+EQ> LOG(i) = b1 + b2*p + b3*LAG(p,1) + b4*LAG(k,1)
+COEFF> b1 b2 b3 b4
+RESTRICT> b2 + b3 = 1
+STORE> coe(15)
+
+COMMENT> Demand for Labor
+BEHAVIORAL> w1
+TSRANGE 1925 1 1941 1
+EQ> w1 = c1 + c2*(TSDELTA(y)+t-w2) + c3*LAG(TSDELTA(y)+t-w2,1)+c4*time
+COEFF> c1 c2 c3 c4
+PDL> c3 1 3
+STORE> coe(29)
+
+COMMENT> Delta Gross National Product
+IDENTITY> y
+EQ> TSDELTA(y) = EXP(cn) + LOG(i) + g - t
+
+COMMENT> Profits
+IDENTITY> p
+EQ> p = TSDELTA(y) - (w1+w2)
+
+COMMENT> Capital Stock with switches
+IDENTITY> k
+EQ> k = LAG(k,1) + LOG(i)
+IF> LOG(i).GT.0
+IDENTITY> k
+EQ> k = LAG(k,1)
+IF> LOG(i).LE.0
+
+END"
+
+}
+
+See \code{\link[=MDL]{MDL}} help page for details.
 
 \tabular{c}{\emph{Estimation} }
 The \bold{bimets} \code{\link[=ESTIMATE]{ESTIMATE}} function estimates equations that are linear in the coefficients, as specified in the behavioral equations of the model object. Coefficients can be estimated for single equations or blocks of simultaneous equations. The estimation function supports:\cr\cr
@@ -517,26 +577,28 @@ BEHAVIORAL EQUATION: cn
 Estimation Technique: OLS
 Autoregression of Order 2 (Cochrane-Orcutt procedure)
 
-Convergence was reached in 9 / 20 iterations.
+Convergence was reached in  9  /  20  iterations.
 
-cn                          = 19.01352
-                                T-stat. 13.1876 ***
-                                
-                            + 0.3442816 p
-                                T-stat. 3.841051 **
-                                
-                            + 0.03443117 TSLAG(p,1)
-                                T-stat. 0.4280928
-                                
-                            + 0.6993905 (w1+w2)
-                                T-stat. 15.30744 ***
-                                
-ERROR: AUTO(2)
+
+cn                  =   19.01352    
+                        T-stat. 12.13083    ***
+
+                    +   0.3442816   p
+                        T-stat. 3.533253    **
+
+                    +   0.03443117  TSLAG(p,1)
+                        T-stat. 0.3937881   
+
+                    +   0.6993905   (w1+w2)
+                        T-stat. 14.0808     ***
+
+ERROR:  AUTO(2) 
 
 AUTOREGRESSIVE PARAMETERS:
-Rho           Std. Error          T-stat.
- 0.05743131    0.3324101           0.1727725
- 0.007785936   0.2647013           0.02941404
+Rho             Std. Error      T-stat.         
+ 0.05743131      0.3324101       0.1727725       
+ 0.007785936     0.2647013       0.02941404      
+
 
 STATs:
 R-Squared                      : 0.985263    
@@ -554,7 +616,9 @@ Number of Observations         : 17
 Number of Degrees of Freedom   : 11
 Current Sample (year-period)   : 1925-1 / 1941-1
 
-Signif. codes: *** 0.001 ** 0.01 * 0.05
+
+Signif. codes:   *** 0.001  ** 0.01  * 0.05  
+
 
 
 _________________________________________
@@ -562,91 +626,92 @@ _________________________________________
 BEHAVIORAL EQUATION: i
 Estimation Technique: OLS
 
-i                         = 2.868104
-                              T-stat. 0.3265098
-                              
-                          + 0.5787626 p
-                              T-stat. 4.456542 ***
-                              
-                          + 0.4212374 TSLAG(p,1)
-                              T-stat. 3.243579 **
-                              
-                          - 0.09160307 TSLAG(k,1)
-                              T-stat. -2.11748
-                              
+i                   =   2.868104    
+                        T-stat. 0.3265098   
+
+                    +   0.5787626   p
+                        T-stat. 4.456542    ***
+
+                    +   0.4212374   TSLAG(p,1)
+                        T-stat. 3.243579    **
+
+                    -   0.09160307  TSLAG(k,1)
+                        T-stat. -2.11748    
+
 RESTRICTIONS:
 b2+b3=1
 
 RESTRICTIONS F-TEST:
-F-value            : 8.194478
-F-prob(1,15)       : 0.0118602
+F-value            : 8.194478       
+F-prob(1,15)       : 0.0118602      
 
 
 STATs:
-R-Squared                       : 0.8928283
-Adjusted R-Squared              : 0.8794319
-Durbin-Watson Statistic         : 1.173106
-Sum of squares of residuals     : 26.76483
-Standard Error of Regression    : 1.293368
-Log of the Likelihood Function  : -30.215
-F-statistic                     : 66.64659
-F-probability                   : 1.740364e-08
-Akaike's IC                     : 68.43001
-Schwarz's IC                    : 72.20776
-Mean of Dependent Variable      : 1.310526
-Number of Observations          : 19
-Number of Degrees of Freedom    : 16
-Current Sample (year-period)    : 1923-1 / 1941-1
+R-Squared                      : 0.8928283   
+Adjusted R-Squared             : 0.8794319   
+Durbin-Watson Statistic        : 1.173106    
+Sum of squares of residuals    : 26.76483    
+Standard Error of Regression   : 1.293368    
+Log of the Likelihood Function : -30.215     
+F-statistic                    : 66.64659    
+F-probability                  : 1.740364e-08
+Akaike's IC                    : 68.43001    
+Schwarz's IC                   : 72.20776    
+Mean of Dependent Variable     : 1.310526    
+Number of Observations         : 19
+Number of Degrees of Freedom   : 16
+Current Sample (year-period)   : 1923-1 / 1941-1
 
 
-Signif. codes: *** 0.001 ** 0.01 * 0.05
+Signif. codes:   *** 0.001  ** 0.01  * 0.05  
+
+
 
 _________________________________________
 
 BEHAVIORAL EQUATION: w1
 Estimation Technique: OLS
 
-w1                          = 1.103637
-                                T-stat. 0.7290738
-                                
-                            + 0.4358984 (y+t-w2)
-                                T-stat. 11.35698 ***
-                                
-                            + c3 TSLAG(y+t-w2,1)
-                                PDL
-                                
-                            + 0.1363549 time
-                                T-stat. 3.398964 **
-                                
-                                
+w1                  =   1.103637    
+                        T-stat. 0.7290738   
+
+                    +   0.4358984   (y+t-w2)
+                        T-stat. 11.35698    ***
+
+                    +   c3          TSLAG(y+t-w2,1)
+                        PDL
+
+                    +   0.1363549   time
+                        T-stat. 3.398964    **
+
 PDL:
 c3 1 2
 
 Distributed Lag Coefficient: c3
-Lag   Coeff.      Std. Error    T-stat.
-0      0.1212886   0.06620502    1.832015
-1      0.0354339   0.04657983    0.7607135
-SUM    0.1567225   0.04163457
+Lag     Coeff.         Std. Error     T-stat.        
+0        0.1212886      0.06620502     1.832015      
+1        0.0354339      0.04657983     0.7607135     
+SUM      0.1567225      0.04163457    
 
 
 STATs:
-R-Squared                       : 0.9891508
-Adjusted R-Squared              : 0.9855344
-Durbin-Watson Statistic         : 2.219659
-Sum of squares of residuals     : 6.3545
-Standard Error of Regression    : 0.7276962
-Log of the Likelihood Function  : -15.75753
-F-statistic                     : 273.5171
-F-probability                   : 1.130929e-11
-Akaike's IC                     : 43.51506
-Schwarz's IC                    : 48.51434
-Mean of Dependent Variable      : 37.69412
-Number of Observations          : 17
-Number of Degrees of Freedom    : 12
-Current Sample (year-period)    : 1925-1 / 1941-1
+R-Squared                      : 0.9891508   
+Adjusted R-Squared             : 0.9855344   
+Durbin-Watson Statistic        : 2.219659    
+Sum of squares of residuals    : 6.3545      
+Standard Error of Regression   : 0.7276962   
+Log of the Likelihood Function : -15.75753   
+F-statistic                    : 273.5171    
+F-probability                  : 1.130929e-11
+Akaike's IC                    : 43.51506    
+Schwarz's IC                   : 48.51434    
+Mean of Dependent Variable     : 37.69412    
+Number of Observations         : 17
+Number of Degrees of Freedom   : 12
+Current Sample (year-period)   : 1925-1 / 1941-1
 
 
-Signif. codes: *** 0.001 ** 0.01 * 0.05
+Signif. codes:   *** 0.001  ** 0.01  * 0.05  
 
 ...ESTIMATE OK
 }

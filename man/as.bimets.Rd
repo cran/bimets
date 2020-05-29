@@ -53,58 +53,58 @@ This function returns a BIMETS time series (see also \code{\link[=bimetsConf]{BI
 	#xts series with dates equal to the first date in the period, 
 	#and some missing observations
 	#first...set option and work with xts
-	setBIMETSconf('BIMETS_CONF_CCT','XTS');
+	setBIMETSconf('BIMETS_CONF_CCT','XTS')
 	#create xts
-	xt=xts(1:10,order.by=seq(as.Date('2000-01-01'),len=10,by='year'));
+	xt=xts(1:10,order.by=seq(as.Date('2000-01-01'),len=10,by='year'))
 	#remove some data
-	xt=xt[-5];
-	xt=xt[-3]; 
+	xt=xt[-5]
+	xt=xt[-3] 
 	#convert to bimets
 	xtBimets=as.bimets(xt)
 	#print before and after...
-	print(xt);
-	print(xtBimets);
+	print(xt)
+	print(xtBimets)
 	
 	#ts bivariate series into xts
-	setBIMETSconf('BIMETS_CONF_CCT','XTS');
-	ts=ts(matrix(c(1,2,3,4,5,6),nrow=3,ncol=2),start=c(2000,1),frequency=1);
-	print(ts);
-	xtsBimets=as.bimets(ts);
-	print(xtsBimets);
+	setBIMETSconf('BIMETS_CONF_CCT','XTS')
+	ts=ts(matrix(c(1,2,3,4,5,6),nrow=3,ncol=2),start=c(2000,1),frequency=1)
+	print(ts)
+	xtsBimets=as.bimets(ts)
+	print(xtsBimets)
 	
 	#reset defaults
-	setBIMETSconf('BIMETS_CONF_DIP','LAST');
-	setBIMETSconf('BIMETS_CONF_CCT','TS');
+	setBIMETSconf('BIMETS_CONF_DIP','LAST')
+	setBIMETSconf('BIMETS_CONF_CCT','TS')
 	
 	#xts quarterly with irregular dates and missings data 
-	xt=xts(1:10,order.by=seq(as.Date('2000-01-03'),len=10,by='3 months'));
+	xt=xts(1:10,order.by=seq(as.Date('2000-01-03'),len=10,by='3 months'))
 	#remove some data
-	xt=xt[-5];
-	xt=xt[-3]; 
+	xt=xt[-5]
+	xt=xt[-3] 
 	#convert
-	tsBimets=as.bimets(xt);
+	tsBimets=as.bimets(xt)
 	#print before and after
-	print(xt);
-	print(tsBimets);
+	print(xt)
+	print(tsBimets)
 	
 	#xts daily with duplicated observations and missing data
 	xt=xts(1:11,order.by=c(as.Date('2000-01-01'),
 	                     seq(as.Date('2000-01-01'),
-	                     len=10,by='day')));
-	xt=xt[-5];
-	xt=xt[-3]; 
+	                     len=10,by='day')))
+	xt=xt[-5]
+	xt=xt[-3] 
 	#convert
-	tsBimets=as.bimets(xt);
+	tsBimets=as.bimets(xt)
 	#print before and after
-	print(xt);
-	print(tsBimets);
+	print(xt)
+	print(tsBimets)
 	
 	#verbose and fillvalue
 	xt=xts(1:11,order.by=c(as.Date('2000-01-01'),
                        seq(as.Date('2000-01-01'),
-                       len=10,by='day')));
-xt=xt[-5];
-xt=xt[-3];
+                       len=10,by='day')))
+xt=xt[-5]
+xt=xt[-3]
 as.bimets(xt,FILLVALUE=99.99,VERBOSE=TRUE)
 
 }

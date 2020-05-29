@@ -87,44 +87,44 @@ This function returns a BIMETS time series that is compliant with the BIMETS com
   Sys.setlocale('LC_TIME','C')
   
   #create ts
-  n=10;	
-  ts1=ts((1:n),start=c(2000,1),frequency=1);	
+  n=10
+  ts1=ts((1:n),start=c(2000,1),frequency=1)	
   
   #create ts annual with metadata
   out_tseries=TIMESERIES(5,ts1,NA,8,START=c(2020,1),FREQ=1,
-  SOURCE='mySource',TITLE='myTitle',UNITS='myUnits',SCALEFAC=2);
+  SOURCE='mySource',TITLE='myTitle',UNITS='myUnits',SCALEFAC=2)
   
   #print out
-  TABIT(out_tseries);
+  TABIT(out_tseries)
   
   #use Date() as start date
-  TABIT(TIMESERIES(1:10,START=as.Date('2000-01-01'),FREQ='A'));
-  TABIT(TIMESERIES(1:10,START=as.Date('2000-07-08'),FREQ='D'));
-  TABIT(TIMESERIES(1:10,START=as.Date('2018-01-01'),FREQ='W'));
+  TABIT(TIMESERIES(1:10,START=as.Date('2000-01-01'),FREQ='A'))
+  TABIT(TIMESERIES(1:10,START=as.Date('2000-07-08'),FREQ='D'))
+  TABIT(TIMESERIES(1:10,START=as.Date('2018-01-01'),FREQ='W'))
   
   #use yearmon()/yearqtr() as start date
-  TABIT(TIMESERIES(1:10,START=as.yearmon('Mar 2001'),FREQ='M'));
-  TABIT(TIMESERIES(1:10,START=as.yearqtr('2000 Q3'),FREQ='Q'));
+  TABIT(TIMESERIES(1:10,START=as.yearmon('Mar 2001'),FREQ='M'))
+  TABIT(TIMESERIES(1:10,START=as.yearqtr('2000 Q3'),FREQ='Q'))
   
   #create ts monthly with metadata
   out_tseries=TIMESERIES(5,ts1,NA,8,START=c(2020,1),FREQ='M', 
-  SOURCE='mySource',TITLE='myTitle',UNITS='myUnits',SCALEFAC=2);
+  SOURCE='mySource',TITLE='myTitle',UNITS='myUnits',SCALEFAC=2)
   
   #print out
-  TABIT(out_tseries);
+  TABIT(out_tseries)
   
   #create daily 
   out_tseries=TSERIES(5,ts1,NA,8,START=c(2000,1),FREQ=366, 
-  SOURCE='mySource',TITLE='myTitle',UNITS='myUnits',SCALEFAC=2);
+  SOURCE='mySource',TITLE='myTitle',UNITS='myUnits',SCALEFAC=2)
   
   #print out
-  TABIT(out_tseries);
+  TABIT(out_tseries)
   
   #insert values skipping 366 in non-bissextile
-  myLength=400;
-  myValues=1:myLength;
-  myDates=as.Date('2001-01-01')+0:(myLength-1);
-  ts=as.bimets(xts(myValues,order.by = myDates));
-  TABIT(ts); #366 observation will be a duplicated of 365, see as.bimets() help
+  myLength=400
+  myValues=1:myLength
+  myDates=as.Date('2001-01-01')+0:(myLength-1)
+  ts=as.bimets(xts(myValues,order.by = myDates))
+  TABIT(ts) #366 observation will be a duplicated of 365, see as.bimets() help
 	
 }

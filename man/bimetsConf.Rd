@@ -55,56 +55,56 @@ This function set or read global BIMETS options, and return a NULL value.
 	
 	#default BIMETS_CONF_DIP is LAST
 	#create ts
-	ts1=TSERIES((1:10),START=c(2000,1),FREQ=1);
+	ts1=TSERIES((1:10),START=c(2000,1),FREQ=1)
 	
 	#transform to xts and print
-	xt1=fromBIMETStoXTS(ts1);
-	print(xt1);  #....dates as of 31 Dec
+	xt1=fromBIMETStoXTS(ts1)
+	print(xt1)  #....dates as of 31 Dec
 	
 	#set configuration BIMETS_CONF_DIP to FIRST
-	setBIMETSconf('BIMETS_CONF_DIP','FIRST');
+	setBIMETSconf('BIMETS_CONF_DIP','FIRST')
 	
 	#create ts
-	ts1=TSERIES((1:10),START=c(2000,1),FREQ=1);
+	ts1=TSERIES((1:10),START=c(2000,1),FREQ=1)
 	
 	#transform to xts and print
-	xt1=fromBIMETStoXTS(ts1);
-	print(xt1);  #....dates as of 1 Jan
+	xt1=fromBIMETStoXTS(ts1)
+	print(xt1)  #....dates as of 1 Jan
 	
 	#set configuration BIMETS_CONF_DIP to LAST
-	setBIMETSconf('BIMETS_CONF_DIP','LAST');
+	setBIMETSconf('BIMETS_CONF_DIP','LAST')
 	
 	#work on XTS
-	setBIMETSconf('BIMETS_CONF_CCT','XTS');
+	setBIMETSconf('BIMETS_CONF_CCT','XTS')
 	
 	#check compliance of xt1 and fail...	
-	is.bimets(xt1); #... FALSE
+	is.bimets(xt1) #... FALSE
 	
 	#set configuration BIMETS_CONF_DIP to FIRST
-	setBIMETSconf('BIMETS_CONF_DIP','FIRST');
+	setBIMETSconf('BIMETS_CONF_DIP','FIRST')
 	
 	#check compliance of xt1 and ok...	
-	is.bimets(xt1); #... TRUE
+	is.bimets(xt1) #... TRUE
 	
-	print(getBIMETSconf('BIMETS_CONF_DIP')); # ... returns FIRST		
-	print(getBIMETSconf('BIMETS_CONF_CCT')); # ... returns XTS
+	print(getBIMETSconf('BIMETS_CONF_DIP')) # ... returns FIRST		
+	print(getBIMETSconf('BIMETS_CONF_CCT')) # ... returns XTS
 	
-	print(is.xts(TSERIES(1:10,START=c(2000,1),FREQ=1))); #...print TRUE
-	print(is.ts(TSERIES(1:10,START=c(2000,1),FREQ=1,class='TS'))); #...print TRUE
+	print(is.xts(TSERIES(1:10,START=c(2000,1),FREQ=1))) #...print TRUE
+	print(is.ts(TSERIES(1:10,START=c(2000,1),FREQ=1,class='TS'))) #...print TRUE
 	
 	
 	
 	#NOC
-	setBIMETSconf('BIMETS_CONF_CCT','XTS');
-	is.bimets(xts()); #FALSE
-	setBIMETSconf('BIMETS_CONF_NOC',TRUE); 
-	is.bimets(xts()); #TRUE
+	setBIMETSconf('BIMETS_CONF_CCT','XTS')
+	is.bimets(xts()) #FALSE
+	setBIMETSconf('BIMETS_CONF_NOC',TRUE) 
+	is.bimets(xts()) #TRUE
 	
 	
 	#...back to default
-	setBIMETSconf('BIMETS_CONF_DIP','LAST');
-	setBIMETSconf('BIMETS_CONF_CCT','TS');
-	setBIMETSconf('BIMETS_CONF_NOC',FALSE);
+	setBIMETSconf('BIMETS_CONF_DIP','LAST')
+	setBIMETSconf('BIMETS_CONF_CCT','TS')
+	setBIMETSconf('BIMETS_CONF_NOC',FALSE)
 	
 	
 }

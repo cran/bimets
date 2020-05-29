@@ -50,18 +50,18 @@ This function returns an array of the same class of the input.
 	
 	n=10;
 	#create ts
-	ts1=TSERIES(rnorm(n),START=c(2000,1),FREQ=1);
+	ts1=TSERIES(rnorm(n),START=c(2000,1),FREQ=1)
 
 	#create A1D() array with scalars, ts, and NA
-	out_a1d=A1D(length=25, ts1, 1, -8.9, NA);
-	print(out_a1d);
+	out_a1d=A1D(length=25, ts1, 1, -8.9, NA)
+	print(out_a1d)
 	
 	#same example no length specified
-	out_a1d=A1D(ts1, 1, -8.9, NA);
-	print(out_a1d);
+	out_a1d=A1D(ts1, 1, -8.9, NA)
+	print(out_a1d)
 	
 	#strings example
-	out_a1d=A1D(length=5,'aa','bb','ccc');
-	print(out_a1d);
+	out_a1d=A1D(length=5,'aa','bb','ccc')
+	print(out_a1d)
 }
 

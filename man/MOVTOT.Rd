@@ -54,21 +54,21 @@ This function returns an object of the same class of the input, i.e. an array or
 \examples{
   
 	#input data	
-	inputArray=c(1,2,3,4,NA,1,2,3,4,5);
+	inputArray=c(1,2,3,4,NA,1,2,3,4,5)
 	
 	#array lag 3
-	out_movtot=MOVSUM(inputArray,3);
-	print(out_movtot);
+	out_movtot=MOVSUM(inputArray,3)
+	print(out_movtot)
 
 	#ts lag 4 centered with missings	
-	ts1=TSERIES(inputArray,START=c(2000,1),FREQ='A');
-	out_movtot=MOVSUM(ts1,4,'CENTER');
-	TABIT(out_movtot);
+	ts1=TSERIES(inputArray,START=c(2000,1),FREQ='A')
+	out_movtot=MOVSUM(ts1,4,'CENTER')
+	TABIT(out_movtot)
 	
 	#ts daily	
-	ts1=TSERIES(inputArray,START=c(2000,1),FREQ='D');
-	out_movtot=MSUM(ts1,3);
-	TABIT(ts1,out_movtot);
+	ts1=TSERIES(inputArray,START=c(2000,1),FREQ='D')
+	out_movtot=MSUM(ts1,3)
+	TABIT(ts1,out_movtot)
 	
 	
 }

@@ -50,21 +50,21 @@ This function returns an object of class \code{c()}.
 
 \examples{
 	
-	print(INTS(10,1,-2)); #... 10  8  6  4  2
+	print(INTS(10,1,-2)) #... 10  8  6  4  2
 	
 	#...Error in INTS(10, 1, -0.5) : INTS(): inputs must be integers.
-	tryCatch({print(INTS(10,1,-0.5));},error=function(e){cat(e$message)});
+	tryCatch({print(INTS(10,1,-0.5));},error=function(e){cat(e$message)})
 	
-	print(INTS(10)); #...  1  2  3  4  5  6  7  8  9 10
-	print(INTS(-10));#  -1  -2  -3  -4  -5  -6  -7  -8  -9 -10
+	print(INTS(10))  #...  1  2  3  4  5  6  7  8  9 10
+	print(INTS(-10)) #  -1  -2  -3  -4  -5  -6  -7  -8  -9 -10
 	
 	# Error in INTS(0) : INTS(): magnitude must be >=1
-	tryCatch({print(INTS(0));},error=function(e){cat(e$message)});
+	tryCatch({print(INTS(0));},error=function(e){cat(e$message)})
 	
-	print(INTS(-10,-45));# -10 -11 -12 ... -41 -42 -43 -44 -45
+	print(INTS(-10,-45)) # -10 -11 -12 ... -41 -42 -43 -44 -45
 	
 	#...Error in seq.default(FROM, TO, BY) : wrong sign in 'by' argument
-	tryCatch({print(INTS(-10,-45,3));},error=function(e){cat(e$message)});
+	tryCatch({print(INTS(-10,-45,3));},error=function(e){cat(e$message)})
 	
-	print(INTS(-10,-45,-3));# -10 -13 -16 -19 -22 -25 -28 -31 -34 -37 -40 -43
+	print(INTS(-10,-45,-3)) # -10 -13 -16 -19 -22 -25 -28 -31 -34 -37 -40 -43
 }

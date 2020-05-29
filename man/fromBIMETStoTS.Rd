@@ -35,34 +35,34 @@ This function returns a time series of class \code{ts()} that has the same obser
 \examples{	
 	
 	#work with XTS
-	setBIMETSconf('BIMETS_CONF_CCT','XTS');
+	setBIMETSconf('BIMETS_CONF_CCT','XTS')
 	
 	#create yearly time series
-	xts=TSERIES(1:10,START=c(2000,1),FREQ='A');
-	print(is.ts(xts));#FALSE
+	xts=TSERIES(1:10,START=c(2000,1),FREQ='A')
+	print(is.ts(xts))#FALSE
 	#convert to ts
-	ts=fromBIMETStoTS(xts);
-	print(is.ts(ts));#TRUE
-	print(ts);
+	ts=fromBIMETStoTS(xts)
+	print(is.ts(ts))#TRUE
+	print(ts)
 	
 	#create monthly time series
-	xts=TSERIES(1:10,START=c(2000,1),FREQ='M');
-	print(is.ts(xts));#FALSE
+	xts=TSERIES(1:10,START=c(2000,1),FREQ='M')
+	print(is.ts(xts))#FALSE
 	#convert to ts
-	ts=fromBIMETStoTS(xts);
-	print(is.ts(ts));#TRUE
-	print(ts);
+	ts=fromBIMETStoTS(xts)
+	print(is.ts(ts))#TRUE
+	print(ts)
 	
 	#create daily time series
-	xts=TSERIES(1:10,START=c(2000,1),FREQ='D');
-	print(is.ts(xts));#FALSE
+	xts=TSERIES(1:10,START=c(2000,1),FREQ='D')
+	print(is.ts(xts))#FALSE
 	#convert to ts
-	ts=fromBIMETStoTS(xts);
-	print(is.ts(ts));#TRUE
-	print(ts);
+	ts=fromBIMETStoTS(xts)
+	print(is.ts(ts))#TRUE
+	print(ts)
 	
 
 	
 	#reset default	
-	setBIMETSconf('BIMETS_CONF_CCT','TS');
+	setBIMETSconf('BIMETS_CONF_CCT','TS')
 }

@@ -37,40 +37,40 @@ This function returns a time series of class \code{xts()} that has the same obse
 \examples{
 	
 	#create yearly time series
-	ts=TSERIES(1:10,START=c(2000,1),FREQ='A');
-	print(is.xts(ts));#FALSE
+	ts=TSERIES(1:10,START=c(2000,1),FREQ='A')
+	print(is.xts(ts))#FALSE
 	#convert to xts
-	xts=fromBIMETStoXTS(ts);
-	print(is.xts(xts));#TRUE
-	print(xts);
+	xts=fromBIMETStoXTS(ts)
+	print(is.xts(xts))#TRUE
+	print(xts)
 	
 	#create monthly time series
-	ts=TSERIES(1:10,START=c(2000,1),FREQ='M');
-	print(is.xts(ts));#FALSE
+	ts=TSERIES(1:10,START=c(2000,1),FREQ='M')
+	print(is.xts(ts))#FALSE
 	#convert to xts
-	xts=fromBIMETStoXTS(ts);
-	print(is.xts(xts));#TRUE
-	print(xts);
+	xts=fromBIMETStoXTS(ts)
+	print(is.xts(xts))#TRUE
+	print(xts)
 	
 	#create daily time series
-	ts=TSERIES(1:10,START=c(2000,1),FREQ='D');
-	print(is.xts(ts));#FALSE
+	ts=TSERIES(1:10,START=c(2000,1),FREQ='D')
+	print(is.xts(ts))#FALSE
 	#convert to xts
-	xts=fromBIMETStoXTS(ts);
-	print(is.xts(xts));#TRUE
-	print(xts);
+	xts=fromBIMETStoXTS(ts)
+	print(is.xts(xts))#TRUE
+	print(xts)
 	
 	#create yearly time series with first date on period
-	setBIMETSconf('BIMETS_CONF_DIP','FIRST');
-	ts=TSERIES(1:10,START=c(2000,1),FREQ='A');
-	print(is.xts(ts));#FALSE
+	setBIMETSconf('BIMETS_CONF_DIP','FIRST')
+	ts=TSERIES(1:10,START=c(2000,1),FREQ='A')
+	print(is.xts(ts))#FALSE
 	#convert to xts
-	xts=fromBIMETStoXTS(ts);
-	print(is.xts(xts));#TRUE
-	print(xts);#dates on Jan 1
+	xts=fromBIMETStoXTS(ts)
+	print(is.xts(xts))#TRUE
+	print(xts)#dates on Jan 1
 	
 	#reset default
-	setBIMETSconf('BIMETS_CONF_DIP','LAST');
+	setBIMETSconf('BIMETS_CONF_DIP','LAST')
 	
 	
 }

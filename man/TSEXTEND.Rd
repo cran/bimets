@@ -67,19 +67,19 @@ This function returns a BIMETS time series built by extending the input time ser
 	
 	
 	n=10;
-	ts1=TIMESERIES(1:n,START=c(2000,1),FREQ='A');
-	ts2=TSEXTEND(ts1,BACKTO=c(1990,1),UPTO=c(2020,1),EXTMODE='GROWTH4');
-	TABIT(ts1,ts2);
+	ts1=TIMESERIES(1:n,START=c(2000,1),FREQ='A')
+	ts2=TSEXTEND(ts1,BACKTO=c(1990,1),UPTO=c(2020,1),EXTMODE='GROWTH4')
+	TABIT(ts1,ts2)
 		
-	xArr=c(0.5,5.6,4.8,3.8,7.3,9.9,7.8,3.7,8.2,10);	
-	ts1=TIMESERIES(xArr,START=c(2000,1),FREQ='A');
-	ts2=TSEXTEND(ts1,BACKTO=c(1990,1),UPTO=c(2020,1),EXTMODE='QUADRATIC');
-	TABIT(ts1,ts2);
+	xArr=c(0.5,5.6,4.8,3.8,7.3,9.9,7.8,3.7,8.2,10)
+	ts1=TIMESERIES(xArr,START=c(2000,1),FREQ='A')
+	ts2=TSEXTEND(ts1,BACKTO=c(1990,1),UPTO=c(2020,1),EXTMODE='QUADRATIC')
+	TABIT(ts1,ts2)
 	
 	xArr=(1:n)
-	dateArr=seq(as.Date('2000/12/31'),by='year',length=n);
-	dataF=data.frame(dateArr,xArr);
-	ts1=TIMESERIES(xArr,START=c(2000,1),FREQ='A');
-	ts2=TSEXTEND(ts1,BACKTO=c(1990,1),UPTO=c(2020,1),EXTMODE='MYRATE',FACTOR=2.5);
-	TABIT(ts1,ts2);
+	dateArr=seq(as.Date('2000/12/31'),by='year',length=n)
+	dataF=data.frame(dateArr,xArr)
+	ts1=TIMESERIES(xArr,START=c(2000,1),FREQ='A')
+	ts2=TSEXTEND(ts1,BACKTO=c(1990,1),UPTO=c(2020,1),EXTMODE='MYRATE',FACTOR=2.5)
+	TABIT(ts1,ts2)
 }

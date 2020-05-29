@@ -39,5 +39,5 @@ This function returns a two-dimensional numerical array of type \code{c(YEAR,PER
   
   print(ym2yp(as.yearmon("Dec 2013"))); #print c(2013,12)
   print(ym2yp(c(as.yearmon('Jan 2000'),as.yearmon('Dec 1987'),
-        as.yearmon('Jan 2003'),as.yearmon('Mar 2012'))));
+        as.yearmon('Jan 2003'),as.yearmon('Mar 2012'))))
 }

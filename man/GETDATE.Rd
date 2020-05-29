@@ -69,48 +69,48 @@ Sys.setlocale('LC_ALL','C')
 Sys.setlocale('LC_TIME','C')
 
 #work on xts
-setBIMETSconf('BIMETS_CONF_CCT','XTS');
+setBIMETSconf('BIMETS_CONF_CCT','XTS')
 
 #XTS yearly
-n=10;
+n=10
 xArr=(n:1)
-dateArr=seq(as.Date('2000-12-31'),by='year',length=n);
-dataF=data.frame(dateArr,xArr);
-ts1=xts(dataF[,2],order.by=dataF[,1]);
-ts1[5]=NA;
-print(GETDATE(ts1,5)); #...print 2004-12-31
-print(GETDATE(ts1,5,'\%A \%d \%b \%Y')); #print... Friday 31 Dec 2004
-print(GETDATE(ts1)); #print... "2000-12-31" "2001-12-31" ... "2009-12-31"
+dateArr=seq(as.Date('2000-12-31'),by='year',length=n)
+dataF=data.frame(dateArr,xArr)
+ts1=xts(dataF[,2],order.by=dataF[,1])
+ts1[5]=NA
+print(GETDATE(ts1,5)) #...print 2004-12-31
+print(GETDATE(ts1,5,'\%A \%d \%b \%Y')) #print... Friday 31 Dec 2004
+print(GETDATE(ts1)) #print... "2000-12-31" "2001-12-31" ... "2009-12-31"
 
 #XTS quarterly
-n=15;
+n=15
 xArr=(n:0)
-dateArr=as.yearqtr('2000 Q1')+0:n/4;
-dataF=data.frame(dateArr,xArr);
-ts1=xts(dataF[,2],order.by=dataF[,1]);	
-print(GETDATE(ts1,9,'\%b \%Y')); #print...Mar 2002	
+dateArr=as.yearqtr('2000 Q1')+0:n/4
+dataF=data.frame(dateArr,xArr)
+ts1=xts(dataF[,2],order.by=dataF[,1])	
+print(GETDATE(ts1,9,'\%b \%Y')) #print...Mar 2002	
 
 #XTS monthly
 #set configuration BIMETS_CONF_DIP to FIRST
-setBIMETSconf('BIMETS_CONF_DIP','FIRST');
-n=15;
+setBIMETSconf('BIMETS_CONF_DIP','FIRST')
+n=15
 xArr=(n:0)
-dateArr=as.yearmon('Jan 2000')+0:n/12;
-dataF=data.frame(dateArr,xArr);
-ts1=xts(dataF[,2],order.by=dataF[,1]);	
-print(GETDATE(ts1,9,'\%b \%Y')); #print...Sep 2000	
+dateArr=as.yearmon('Jan 2000')+0:n/12
+dataF=data.frame(dateArr,xArr)
+ts1=xts(dataF[,2],order.by=dataF[,1])	
+print(GETDATE(ts1,9,'\%b \%Y')) #print...Sep 2000	
 
 #set configuration BIMETS_CONF_DIP to LAST
-setBIMETSconf('BIMETS_CONF_DIP','LAST');
+setBIMETSconf('BIMETS_CONF_DIP','LAST')
 
 #2000 is bissextile... 
-print(GETDATE(ts1,2)); #print... 2000-02-29
+print(GETDATE(ts1,2)) #print... 2000-02-29
 
 #quarter...
-print(GETDATE(ts1,5,'\%Y Q\%q')); #print... 2000 Q2
+print(GETDATE(ts1,5,'\%Y Q\%q')) #print... 2000 Q2
 
 #restore default
-setBIMETSconf('BIMETS_CONF_CCT','TS');
+setBIMETSconf('BIMETS_CONF_CCT','TS')
 				
 }
 

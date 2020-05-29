@@ -40,5 +40,5 @@ This function returns an integer of class \code{numeric}.
 \examples{
 
 	# f=5, c(3,4) - c(2,3) = 6 periods
-	print(NUMPERIOD(c(2,3),c(3,4),5));
+	print(NUMPERIOD(c(2,3),c(3,4),5))
 }

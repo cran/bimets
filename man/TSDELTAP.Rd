@@ -38,21 +38,21 @@ This function returns a BIMETS time series.
 }
 
 \seealso{
-\code{\link[=DELTA]{DELTA}}\cr
+\code{\link[=DELTA]{TSDELTA}}\cr
 \code{\link[=TSLAG]{TSLAG}}\cr
-\code{\link[=TSMERGE]{MOVAVG}}\cr
+\code{\link[=MOVAVG]{MOVAVG}}\cr
 \code{\link[=INDEXNUM]{INDEXNUM}}\cr
 }
 
 \examples{
 	
 	#TS Q
-	n=10;	
-	ts1=TSERIES(n:0,START=c(2000,1),FREQ='Q');
-	TABIT(ts1,TSDELTAP(ts1,1));
+	n=10;
+	ts1=TSERIES(n:0,START=c(2000,1),FREQ='Q')
+	TABIT(ts1,TSDELTAP(ts1,1))
 	
 	#TS 366
-	ts1=TSERIES(seq(1,length=10,by=-0.001),START=c(2000,1),FREQ=366);
-	TABIT(ts1,TSDELTAP(ts1,1,ANNUALIZE=TRUE));
+	ts1=TSERIES(seq(1,length=10,by=-0.001),START=c(2000,1),FREQ=366)
+	TABIT(ts1,TSDELTAP(ts1,1,ANNUALIZE=TRUE))
 	
 	}

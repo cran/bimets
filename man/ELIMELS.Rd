@@ -53,10 +53,10 @@ This function returns an array with the kept elements from the input array or th
 \examples{
 	
 	
-	print(ELIMELS(INTS(1,10),c(1,4,5))); 
+	print(ELIMELS(INTS(1,10),c(1,4,5))) 
 	#print 2 3 6 7 8 9 10
 	
-	print(ELIMELS(TSERIES(1:10,START=c(2000,1),FREQ=4),c(2000.25,2000.75))); 
+	print(ELIMELS(TSERIES(1:10,START=c(2000,1),FREQ=4),c(2000.25,2000.75))) 
 	#print 2  4  5  6  7  8  9 10 
 	
 				

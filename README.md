@@ -186,7 +186,7 @@ kleinModel$behaviorals$cn
 # [1] "1"         "p"        "TSLAG(p,1)" "(w1+w2)" 
 # 
 # $eqSimExp
-# expression(cn[2,]=cn_ADDFACTOR[2,]+cn_a1+cn_a2*p[2,]+cn_a3*...
+# expression(cn[2,]=cn__ADDFACTOR[2,]+cn__a1+cn__a2*p[2,]+cn__a3*...
 # 
 # ...and more
 
@@ -251,22 +251,23 @@ kleinModel=ESTIMATE(kleinModel)
 #
 #BEHAVIORAL EQUATION: cn
 #Estimation Technique: OLS
+#Estimation Technique: OLS
 #Autoregression of Order  2  (Cochrane-Orcutt procedure)
 #
 #Convergence was reached in  9  /  20  iterations.
 #
 #
 #cn                  =   19.01352    
-#                        T-stat. 13.1876     ***
+#                        T-stat. 12.13083    ***
 #
 #                    +   0.3442816   p
-#                        T-stat. 3.841051    **
+#                        T-stat. 3.533253    **
 #
 #                    +   0.03443117  TSLAG(p,1)
-#                        T-stat. 0.4280928   
+#                        T-stat. 0.3937881   
 #
 #                    +   0.6993905   (w1+w2)
-#                        T-stat. 15.30744    ***
+##                        T-stat. 14.0808     ***
 #
 #ERROR:  AUTO(2) 
 #
@@ -277,19 +278,19 @@ kleinModel=ESTIMATE(kleinModel)
 #
 #
 #STATs:
-#R-Squared                      : 0.9891508   
-#Adjusted R-Squared             : 0.9855344   
-#Durbin-Watson Statistic        : 2.219659    
-#Sum of squares of residuals    : 6.3545      
-#Standard Error of Regression   : 0.7276962   
-#Log of the Likelihood Function : -15.75753   
-#F-statistic                    : 273.5171    
-#F-probability                  : 1.130929e-11
-#Akaike's IC                    : 43.51506    
-#Schwarz's IC                   : 48.51434    
-#Mean of Dependent Variable     : 37.69412    
+#R-Squared                      : 0.985263    
+#Adjusted R-Squared             : 0.9785644   
+#Durbin-Watson Statistic        : 1.966609    
+#Sum of squares of residuals    : 9.273455    
+#Standard Error of Regression   : 0.9181728   
+#Log of the Likelihood Function : -18.97047   
+#F-statistic                    : 147.0844    
+#F-probability                  : 1.090551e-09
+#Akaike's IC                    : 51.94093    
+#Schwarz's IC                   : 57.77343    
+#Mean of Dependent Variable     : 55.71765    
 #Number of Observations         : 17
-#Number of Degrees of Freedom   : 12
+#Number of Degrees of Freedom   : 11
 #Current Sample (year-period)   : 1925-1 / 1941-1
 #
 #
@@ -330,8 +331,8 @@ kleinModel=MULTMATRIX(kleinModel,
 
 kleinModel$MultiplierMatrix
 #           w2_1      g_1
-#cn_1 -0.1576305 2.837179
-#y_1  -0.7182719 5.693190
+#cn_1 -0.1596758 2.853391
+#y_1  -0.7216553 5.720007
 
 #we want an arbitrary value on Consumption of 66 in 1940 and 78 in 1941
 #we want an arbitrary value on GNP of 77 in 1940 and 98 in 1941
@@ -366,14 +367,14 @@ with(kleinModel,TABIT(modelData$w2,
 # 
 #       1938, 1  ,        7.7,           ,         13,           
 #       1939, 1  ,        7.8,           ,       14.4,           
-#       1940, 1  ,          8,    7.41333,       15.4,    16.1069
-#       1941, 1  ,        8.5,     9.3436,       22.3,    22.6599
+#       1940, 1  ,          8,   8.857669,       15.4,    15.81276
+#       1941, 1  ,        8.5,   12.18823,       22.3,    21.83899
 
 #So, if we want to achieve on "cn" (Consumption) an arbitrary simulated value of 66 in 1940
 #and 78 in 1941, and if we want to achieve on "y" (GNP) an arbitrary simulated value of 77
 #in 1940 and 98 in 1941, we need to change exogenous "w2" (Wage Bill of the Government
-#Sector) from 8 to 7.41 in 1940 and from 8.5 to 9.34 in 1941, and we need to change exogenous
-#"g"(Government non-Wage Spending) from 15.4 to 16.1 in 1940 and from 22.3 to 22.66 in 1941.
+#Sector) from 8 to 8.86 in 1940 and from 8.5 to 12.19 in 1941, and we need to change exogenous
+#"g"(Government non-Wage Spending) from 15.4 to 15.81 in 1940 and from 22.3 to 21.84 in 1941.
 
 #Let's verify:
 

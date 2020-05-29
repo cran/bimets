@@ -57,23 +57,23 @@ This function returns a BIMETS time series that is built by joining the two inpu
   Sys.setlocale('LC_TIME','C')
   
   #TS
-  ts1=TSERIES((1:10),START=c(1985,1),FREQ=1);
-  ts2=TSERIES((1:10),START=c(2000,1),FREQ=1);
-  TABIT(ts1,ts2,TSJOIN(ts1,ts2,ALLOWGAP=TRUE));
+  ts1=TSERIES((1:10),START=c(1985,1),FREQ=1)
+  ts2=TSERIES((1:10),START=c(2000,1),FREQ=1)
+  TABIT(ts1,ts2,TSJOIN(ts1,ts2,ALLOWGAP=TRUE))
   
   #XTS
-  setBIMETSconf('BIMETS_CONF_CCT','XTS');
-  n=10;
+  setBIMETSconf('BIMETS_CONF_CCT','XTS')
+  n=10
   xArr=(0:n)
-  dateArr=as.yearqtr('1997 Q1')+ 0:n/4;
-  dataF=data.frame(dateArr,xArr);
-  ts1=xts(dataF[,2],order.by=dataF[,1]);
-  dateArr=as.yearqtr('2000 Q1')+ 0:n/4;
-  dataF=data.frame(dateArr,xArr);
-  ts2=xts(dataF[,2],order.by=dataF[,1]);
-  TABIT(ts1,ts2,TSJOIN(ts1,ts2,ALLOWGAP=TRUE,JPRD=yq2yp(as.yearqtr("2001 Q3"))));
+  dateArr=as.yearqtr('1997 Q1')+ 0:n/4
+  dataF=data.frame(dateArr,xArr)
+  ts1=xts(dataF[,2],order.by=dataF[,1])
+  dateArr=as.yearqtr('2000 Q1')+ 0:n/4
+  dataF=data.frame(dateArr,xArr)
+  ts2=xts(dataF[,2],order.by=dataF[,1])
+  TABIT(ts1,ts2,TSJOIN(ts1,ts2,ALLOWGAP=TRUE,JPRD=yq2yp(as.yearqtr("2001 Q3"))))
   
   #restore default
-  setBIMETSconf('BIMETS_CONF_CCT','TS');
+  setBIMETSconf('BIMETS_CONF_CCT','TS')
 	
 }

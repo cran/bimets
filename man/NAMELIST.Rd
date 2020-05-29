@@ -38,10 +38,10 @@ In the case of strings as input, this function returns a string array built with
 	
 	#NAMELIST with time series...
 	
-	ts1=TSERIES(1:10,START=c(2000,1),FREQ=12);
-	ts2=TSERIES(10:20,START=c(2002,5),FREQ=12);
-	myNameList=NAMELIST(ts1,ts2);
-	print(myNameList);
+	ts1=TSERIES(1:10,START=c(2000,1),FREQ=12)
+	ts2=TSERIES(10:20,START=c(2002,5),FREQ=12)
+	myNameList=NAMELIST(ts1,ts2)
+	print(myNameList)
 	
 	#prints a list with $ts1 and $ts2 elements 
 	#please note that names are 'ts1' and 'ts2'...	
@@ -58,8 +58,8 @@ In the case of strings as input, this function returns a string array built with
 	
 	#define strange namelist
 	#print warnings... '' converted in 'X', '9' converted in 'X9'
-	myNAMELIST=NAMELIST('pp','oo','ii','','9'); 
+	myNAMELIST=NAMELIST('pp','oo','ii','','9');
 	
-	print(myNAMELIST); 
+	print(myNAMELIST)
 	
 }

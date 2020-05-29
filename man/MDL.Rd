@@ -58,10 +58,27 @@ If the requested estimation method is \code{IV} (Instrumental Variables), given 
 \code{IDENTITY> name}\cr where \code{name} is the identity name.\cr\cr
 - \bold{EQ>} specifies the mathematical expression for a behavioral or an identity equation. \cr\cr
 The equation statement general form for a behavioral equation is:\cr
-\code{EQ> name = coeff1*f1 + coeff2*f2 + coeff3*f3 + ...}\cr
-where \code{name} is the name of the behavioral variable, \cr \code{coeff1, coeff2, coeff3, ...} are the coefficient names of the equation and \cr \code{f1, f2, f3, ...} are functions of variables.\cr\cr
-The equation statement general form for an identity equation is:\cr \code{EQ> name = f1 + f2 + f3 + ...} \cr where \code{name} is the name of the identity variable and \cr \code{f1, f2, f3, ...} are functions of variables.\cr\cr
-The mathematical expression can include the standard arithmetic operators, parentheses and \code{MDL} functions described later in this section. \code{MDL} function names are reserved names. They cannot be used as variable or coefficient names. The coefficient names are specified in a subsequent \code{COEFF>} keyword statement within a behavioral equation. By definition, identities do not have any coefficient that must be assessed. Any name not specified as a coefficient name or mentioned on the list of the available \code{MDL} functions is assumed to be a variable.\cr\cr
+\code{EQ> LHS = coeff1*f1 + coeff2*f2 + coeff3*f3 + ...}\cr
+where \code{LHS} is a function of the behavioral variable, \cr \code{coeff1, coeff2, coeff3, ...} are the coefficient names of the equation and \cr \code{f1, f2, f3, ...} are functions of variables.\cr\cr
+The equation statement general form for an identity equation is:\cr \code{EQ> LHS = f1 + f2 + f3 + ...} \cr where \code{LHS} is a function of the identity variable and \cr \code{f1, f2, f3, ...} are functions of variables.\cr\cr
+The following \code{MDL} functions can be used in the \code{LHS} left-hand side of the equation, with \code{name} as the name of the behavioral or the identity variable: \cr\cr
+- \code{name} - i.e. the identity function;\cr \cr
+- \code{TSDELTA(name,i)} - \code{i}-periods difference of the \code{name} time series;\cr \cr
+- \code{TSDELTAP(name,i)} - \code{i}-periods percentage difference of the \code{name} time series;\cr \cr
+- \code{TSDELTALOG(name,i)} - \code{i}-periods logarithmic difference of the \code{name} time series;\cr \cr
+- \code{LOG(name)} - log of the \code{name} time series;\cr \cr
+- \code{EXP(name)} - exponential of the \code{name} time series. \cr \cr
+On the other side the mathematical expression available for using in the \code{RHS} right-hand side of the \code{EQ>} equation (i.e. \code{f1, f2, f3, ...}) can include the standard arithmetic operators, parentheses and the following \code{MDL} functions:\cr \cr
+- \code{TSLAG(ts,i)} - lag the \code{ts} time series by \code{i}-periods;\cr \cr
+- \code{TSDELTA(ts,i)} - \code{i}-periods difference of the \code{ts} time series;\cr \cr
+- \code{TSDELTAP(ts,i)} - \code{i}-periods percentage difference of the \code{ts} time series;\cr \cr
+- \code{TSDELTALOG(ts,i)} - \code{i}-periods logarithmic difference of the \code{ts} time series;\cr \cr
+- \code{MOVAVG(ts,i)} - \code{i}-periods moving average of the \code{ts} time series;\cr \cr
+- \code{MOVSUM(ts,i)} - \code{i}-periods moving sum of the \code{ts} time series;\cr \cr
+- \code{LOG(ts)} - log of the \code{ts} time series;\cr \cr
+- \code{EXP(ts)} - exponential of the \code{ts} time series; \cr \cr
+- \code{ABS(ts)} - absolute values of the \code{ts} time series.\cr \cr
+\code{MDL} function names are reserved names. They cannot be used as variable or coefficient names. The coefficient names are specified in a subsequent \code{COEFF>} keyword statement within a behavioral equation. By definition, identities do not have any coefficient that must be assessed. Any name not specified as a coefficient name or mentioned on the list of the available \code{MDL} functions is assumed to be a variable.\cr\cr
 - \bold{COEFF>} specifies the coefficient names used in the EQ> keyword statement of a behavioral equation. The coefficients statement general form is:\cr
 \code{COEFF> coeff0 coeff1 coeff2 ... coeffn}. \cr The coefficients order in this statement must be the same as it appears in the behavioral equation.\cr\cr
 - \bold{ERROR>} specifies an autoregressive process of a given order for the regression error. The error statement general form is:\cr
@@ -94,7 +111,7 @@ P_i\tab = \tab -RHO_i[2] \tab -RHO_i[1] \tab 1 \tab 0 \tab ... \tab 0 \tab 0 \cr
 RESTRICT> linear_combination_of_coefficients_1 = value_1
 ...
 linear_combination_of_coefficients_n = value_n
-} where \code{linear_combination_of_coefficients_i, i=1..n} is a linear combination of the coefficient(s) to be restricted and \code{value_i} is the in-place scalar value to which the linear combination of the coefficients is set equal. Each linear combination can be set equal to a different value.\cr\cr MDL example:
+} where \code{linear_combination_of_coefficients_i, i=1..n} is a linear combination of the coefficient(s) to be restricted and \code{value_i} is the in-place scalar value to which the linear combination of the coefficients is set equal. Each linear combination can be set equal to a different value.\cr\cr \code{MDL} example:
 \preformatted{
 RESTRICT> coeff1 = 0
 coeff2 = 10.5
@@ -210,8 +227,8 @@ The expanded regressors are:\cr \code{X1, X2, TSLAG(X2,1), TSLAG(X2,2), TSLAG(X2
 - \bold{IF>} keyword is used to conditionally evaluate an identity during a simulation, depending on the value of a logical expression. Thus, it is possible to have a model alternating between two or more identity specifications for each simulation period, depending upon results from other equations.\cr \cr
 The IF> statement general form is:\cr
 \code{IF> logical_expression}\cr\cr The \code{IF>} keyword must be specified within an identity group; this keyword causes the equation specified in the identity group to be evaluated during the current simulation period only when the \code{logical_expression} is \code{TRUE}.\cr\cr Only one \code{IF>} keyword is allowed in an identity group. Further occurrences produce an error message and processing stops.\cr\cr
-The \code{logical_expression} can be composed of constants, endogenous variables, exogenous variables, an expression among variables, combinations of the logical operators; mathematical operators and the MDL functions, listed below, are allowed.\cr\cr
-In the following MDL example, the value of the endogenous \code{myIdentity} variable is specified with two complementary conditional identities, depending on the \code{TSDELTA()} result:
+The \code{logical_expression} can be composed of constants, endogenous variables, exogenous variables, an expression among variables, combinations of the logical operators; mathematical operators and the \code{MDL} functions listed in the \code{EQ>} section are allowed.\cr\cr
+In the following \code{MDL} example, the value of the endogenous \code{myIdentity} variable is specified with two complementary conditional identities, depending on the \code{TSDELTA()} result:
 \preformatted{
 IDENTITY> myIdentity
 IF> TSDELTA(myEndog*(1-myExog)) > 0
@@ -228,15 +245,7 @@ The \code{text} following the \code{COMMENT>} keyword is ignored during all proc
 \code{
 $This is a comment
 }
-\cr\cr No other keywords are currently allowed in the MDL syntax.\cr\cr
-The mathematical expression in the \code{EQ>} and \code{IF>} definitions can include the standard arithmetic operators, parentheses, and the following MDL time series functions: \cr \cr
-- \code{TSLAG(ts,i)} - lag the \code{ts} time series by \code{i}-periods;\cr \cr
-- \code{TSDELTA(ts,i)} - \code{i}-periods difference of the \code{ts} time series;\cr \cr
-- \code{MOVAVG(ts,i)} - \code{i}-periods moving average of the \code{ts} time series;\cr \cr
-- \code{MOVSUM(ts,i)} - \code{i}-periods moving sum of the \code{ts} time series;\cr \cr
-- \code{LOG(ts)} - log of the \code{ts} time series.\cr \cr
-- \code{EXP(ts)} - exponential of the \code{ts} time series. \cr \cr
-- \code{ABS(ts)} - absolute values of the \code{ts} time series.\cr \cr
+\cr\cr No other keywords are currently allowed in the \code{MDL} syntax.\cr\cr
 
 }
 
@@ -257,6 +266,10 @@ The mathematical expression in the \code{EQ>} and \code{IF>} definitions can inc
 }
 
 \examples{
+
+#########################################################
+#KLEIN MODEL WITH AUTOCORRELATION, RESTRICTIONS AND 
+#CONDITIONAL EVALUATIONS
 
 #define model
 myModel=
@@ -302,7 +315,7 @@ IDENTITY> k
 EQ> k = TSLAG(k,1) 
 IF> i <= 0
 
-END";
+END"
 
 #define model data
 modelData=list(
@@ -336,23 +349,131 @@ modelData=list(
   w2    =TIMESERIES(2.2,2.7,2.9,2.9,3.1,3.2,3.3,3.6,3.7,4,4.2,4.8,5.3,5.6,6,6.1,
             7.4,6.7,7.7,7.8,8,8.5,
             START=c(1920,1),FREQ=1)
-);
+)
 
 #load model and model data
-model=LOAD_MODEL(modelText=myModel);
-model=LOAD_MODEL_DATA(model,modelData);
+model=LOAD_MODEL(modelText=myModel)
+model=LOAD_MODEL_DATA(model,modelData)
 
 #estimate model
-model=ESTIMATE(model);
+model=ESTIMATE(model)
 
 #simulate model
 model=SIMULATE(model
                ,TSRANGE=c(1923,1,1941,1)
                ,simConvergence=0.00001
                ,simIterLimit=100
-);
+)
 
 
+#########################################################
+#KLEIN MODEL WITH LHS FUNCTIONS
 
 
+#define the model with LHS funs
+myModel='MODEL
+
+COMMENT> Modified Klein Model 1 of the U.S. Economy with PDL,
+COMMENT> autocorrelation on errors, restrictions and conditional evaluations
+COMMENT> LHS functions on EQ
+
+COMMENT> Exp Consumption
+BEHAVIORAL> cn
+TSRANGE 1925 1 1941 1
+EQ> EXP(cn) = a1 + a2*p + a3*LAG(p,1) + a4*(w1+w2)
+COEFF> a1 a2 a3 a4
+ERROR> AUTO(2)
+STORE> coe(1)
+
+COMMENT> Log Investment
+BEHAVIORAL> i
+TSRANGE 1925 1 1941 1
+EQ> LOG(i) = b1 + b2*p + b3*LAG(p,1) + b4*LAG(k,1)
+COEFF> b1 b2 b3 b4
+RESTRICT> b2 + b3 = 1
+STORE> coe(15)
+
+COMMENT> Demand for Labor
+BEHAVIORAL> w1
+TSRANGE 1925 1 1941 1
+EQ> w1 = c1 + c2*(TSDELTA(y)+t-w2) + c3*LAG(TSDELTA(y)+t-w2,1)+c4*time
+COEFF> c1 c2 c3 c4
+PDL> c3 1 3
+STORE> coe(29)
+
+COMMENT> Delta Gross National Product
+IDENTITY> y
+EQ> TSDELTA(y) = EXP(cn) + LOG(i) + g - t
+
+COMMENT> Profits
+IDENTITY> p
+EQ> p = TSDELTA(y) - (w1+w2)
+
+COMMENT> Capital Stock with switches
+IDENTITY> k
+EQ> k = LAG(k,1) + LOG(i)
+IF> LOG(i).GT.0
+IDENTITY> k
+EQ> k = LAG(k,1)
+IF> LOG(i).LE.0
+
+END'
+
+ 
+#define model data
+modelData=list(
+  cn=TSERIES(39.8,41.9,45,49.2,50.6,52.6,55.1,56.2,57.3,
+            57.8,55,50.9,45.6,46.5,48.7,51.3,57.7,58.7,57.5,61.6,65,69.7,
+            START=c(1920,1),FREQ=1),
+  g=TSERIES(4.6,6.6,6.1,5.7,6.6,6.5,6.6,7.6,7.9,8.1,9.4,
+            10.7,10.2,9.3,10,10.5,10.3,11,13,14.4,15.4,22.3,
+            START=c(1920,1),FREQ=1),
+  i=TSERIES(2.7,-.2,1.9,5.2,3,5.1,5.6,4.2,3,5.1,1,-3.4,
+            -6.2,-5.1,-3,-1.3,2.1,2,-1.9,1.3,3.3,4.9,
+            START=c(1920,1),FREQ=1),
+  k=TSERIES(182.8,182.6,184.5,189.7,192.7,197.8,203.4,
+            207.6,210.6,215.7,216.7,213.3,207.1,202,
+            199,197.7,199.8,201.8,199.9,201.2,204.5,209.4,
+            START=c(1920,1),FREQ=1),
+  p=TSERIES(12.7,12.4,16.9,18.4,19.4,20.1,19.6,19.8,21.1,
+            21.7,15.6,11.4,7,11.2,12.3,14,17.6,17.3,15.3,19,21.1,23.5,
+            START=c(1920,1),FREQ=1),
+  w1=TSERIES(28.8,25.5,29.3,34.1,33.9,35.4,37.4,37.9,39.2,
+            41.3,37.9,34.5,29,28.5,30.6,33.2,36.8,41,38.2,41.6,45,53.3,
+            START=c(1920,1),FREQ=1),
+  y=TSERIES(43.7,40.6,49.1,55.4,56.4,58.7,60.3,61.3,64,67,
+            57.7,50.7,41.3,45.3,48.9,53.3,61.8,65,61.2,68.4,74.1,85.3,
+            START=c(1920,1),FREQ=1),
+  t=TSERIES(3.4,7.7,3.9,4.7,3.8,5.5,7,6.7,4.2,4,7.7,7.5,
+            8.3,5.4,6.8,7.2,8.3,6.7,7.4,8.9,9.6,11.6,
+            START=c(1920,1),FREQ=1),
+  time=TSERIES(NA,-10,-9,-8,-7,-6,-5,-4,-3,-2,-1,0,1,2,
+            3,4,5,6,7,8,9,10,  
+            START=c(1920,1),FREQ=1),   
+  w2=TSERIES(2.2,2.7,2.9,2.9,3.1,3.2,3.3,3.6,3.7,4,4.2,
+            4.8,5.3,5.6,6,6.1,7.4,6.7,7.7,7.8,8,8.5,
+            START=c(1920,1),FREQ=1)
+)
+
+
+#example data transformation
+modelData=within(modelData,{
+  i=exp(i);     #we have LOG(i)     in the model MDL definition
+  cn=log(cn);   #we have EXP(cn)    in the model MDL definition
+  y=CUMSUM(y)   #we have TSDELTA(y) in the model MDL definition
+})
+
+#load model and model data
+model=LOAD_MODEL(modelText=myModel)
+model=LOAD_MODEL_DATA(model,modelData)
+
+#estimate model
+model=ESTIMATE(model)
+
+#simulate model
+model=SIMULATE(model
+               ,TSRANGE=c(1925,1,1930,1)
+               ,simConvergence=0.00001
+               ,simIterLimit=100
+)
 }

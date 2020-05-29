@@ -27,16 +27,17 @@ If the convergence condition is satisfied, the \code{RENORM} procedure will retu
 \usage{
 
 RENORM(model=NULL,
-	   renormIterLimit=10,
-	   renormConvergence=10E-5, 
-	   TSRANGE=NULL,
-	   TARGET=NULL,
-	   INSTRUMENT=NULL,
-	   ConstantAdjustment=NULL,
-	   quietly=FALSE,
-	   showWarnings=FALSE,
-	   tol=.Machine$double.eps,
-	   ...)
+        renormIterLimit=10,
+        renormConvergence=10E-5, 
+        TSRANGE=NULL,
+        TARGET=NULL,
+        INSTRUMENT=NULL,
+        ConstantAdjustment=NULL,
+        quietly=FALSE,
+        showWarnings=FALSE,
+        tol=.Machine$double.eps,
+        avoidCompliance=FALSE,
+        ...)
 }
 
 \arguments{
@@ -55,11 +56,14 @@ RENORM(model=NULL,
  \item{tol}{
   the tolerance for detecting linear dependencies in the columns of a matrix while an inversion is requested. The default is \code{.Machine$double.eps}.
   }
-
+    \item{avoidCompliance}{
+  If \code{TRUE}, compliance control check of model time series will be skipped. See \code{\link[=is.bimets]{is.bimets}}
+  }
+  
    \item{...}{ Other options to be sent to the underlying \code{\link[=MULTMATRIX]{MULTMATRIX}} operation, e.g.:\cr\cr
    \bold{simType}, the simulation type requested:\cr
    DYNAMIC: the default, for interim multipliers. Whenever lagged endogenous variables are needed in the computations, the simulated values of the endogenous variables evaluated in the previous time periods are used;\cr
-   STATIC: for impact multiplier. Rather than the simulated values, the actual historical values are used whenever lagged endogenous variables are needed in the computations; see also \code{\link[=MULTMATRIX]{MULTMATRIX}};}\cr
+   STATIC: for impact multiplier. Rather than the simulated values, the actual historical values are used whenever lagged endogenous variables are needed in the computations; see also \code{\link[=MULTMATRIX]{MULTMATRIX}};\cr
    
 \bold{simConvergence}: the percentage convergence value requested for the simulation process (see also \code{\link[=SIMULATE]{SIMULATE}}); \cr
   
@@ -73,6 +77,7 @@ RENORM(model=NULL,
 
 }
 
+}
 
 
 \value{
@@ -137,7 +142,7 @@ COMMENT> Capital Stock
 IDENTITY> k
 EQ> k = TSLAG(k,1) + i
 
-END";
+END"
 
 #define model data
 myModelData=list(
@@ -181,14 +186,14 @@ myModelData=list(
   =TIMESERIES(2.2,2.7,2.9,2.9,3.1,3.2,3.3,3.6,3.7,4,4.2,4.8,5.3,5.6,6,6.1,
               7.4,6.7,7.7,7.8,8,8.5,
               START=c(1920,1),FREQ=1)
-);
+)
 
 #load model and model data
-myModel=LOAD_MODEL(modelText=myModelDefinition);
-myModel=LOAD_MODEL_DATA(myModel,myModelData);
+myModel=LOAD_MODEL(modelText=myModelDefinition)
+myModel=LOAD_MODEL_DATA(myModel,myModelData)
 
 #estimate model
-myModel=ESTIMATE(myModel);
+myModel=ESTIMATE(myModel)
 
 #we want an arbitrary value of 66 on Consumption 'cn' in 1940 and 78 in 1941
 #we want an arbitrary value of 77 on GNP 'y' in 1940 and 98 in 1941
@@ -205,7 +210,7 @@ myModel=RENORM(myModel
                     ,TARGET = kleinTargets
                     ,TSRANGE = c(1940,1,1941,1)
                     ,simIterLimit = 100
-);
+)
 
 
 with(myModel,TABIT(modelData$w2,
@@ -283,7 +288,7 @@ myModel=RENORM(myModel
                ,TSRANGE = c(1940,1,1941,1)
                ,simIterLimit = 100
                ,ConstantAdjustment = myCA
-);
+)
 
 #get the values of the constant adjustment for the endogenous 'i' 
 #in 1940-1941 that allow to achieve the target values for 'cn' and 'y'

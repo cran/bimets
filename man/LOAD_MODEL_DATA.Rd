@@ -91,7 +91,7 @@ myModelData=list(
   =TIMESERIES(2.2,2.7,2.9,2.9,3.1,3.2,3.3,3.6,3.7,4,4.2,4.8,5.3,5.6,6,6.1,
               7.4,6.7,7.7,7.8,8,8.5,
               START=c(1920,1),FREQ=1)
-);
+)
 
 #define model
 myModelDefinition=
@@ -129,13 +129,13 @@ IF> i > 0
 IDENTITY> k
 EQ> k = TSLAG(k,1)
 IF> i <= 0
-END";
+END"
 
 #load model 
-myModel=LOAD_MODEL(modelText=myModelDefinition);
+myModel=LOAD_MODEL(modelText=myModelDefinition)
 
 #load data into the model
-myModel=LOAD_MODEL_DATA(myModel,myModelData,showWarnings = TRUE);
+myModel=LOAD_MODEL_DATA(myModel,myModelData,showWarnings = TRUE)
 #Load model data "myModelData" into model "myModelDefinition"...
 #CHECK_MODEL_DATA(): warning, there are missing values in series "time".
 #...LOAD MODEL DATA OK

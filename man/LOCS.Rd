@@ -54,12 +54,12 @@ This function returns a numerical array built with the indexes of the values tha
 \examples{
 
 	#create ts
-	n=10;
-	ts1=TSERIES((1:n),START=c(2000,1),FREQ=1);
-	print(LOCS(ts1>7,options='FIRST')); #print 8
+	n=10
+	ts1=TSERIES((1:n),START=c(2000,1),FREQ=1)
+	print(LOCS(ts1>7,options='FIRST')) #print 8
 	
 	#generate error: print LOCS(): input has more than one TRUE element.
-	tryCatch({print(LOCS(ts1>=3,options='UNIQUE'));},error=function(e){print(e$message);});
+	tryCatch({print(LOCS(ts1>=3,options='UNIQUE'));},error=function(e){print(e$message);})
 	
-	print(LOCS(is.na(c(1,2,NA,4,5,6,7,NA,NA)))); #print c(3,8,9)
+	print(LOCS(is.na(c(1,2,NA,4,5,6,7,NA,NA)))) #print c(3,8,9)
 }

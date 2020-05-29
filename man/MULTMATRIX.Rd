@@ -134,7 +134,7 @@ COMMENT> Capital Stock
 IDENTITY> k
 EQ> k = TSLAG(k,1) + i
 
-END";
+END"
 
 #define model data
 myModelData=list(
@@ -178,14 +178,14 @@ myModelData=list(
   =TIMESERIES(2.2,2.7,2.9,2.9,3.1,3.2,3.3,3.6,3.7,4,4.2,4.8,5.3,5.6,6,6.1,
               7.4,6.7,7.7,7.8,8,8.5,
               START=c(1920,1),FREQ=1)
-);
+)
 
 #load model and model data
-myModel=LOAD_MODEL(modelText=myModelDefinition);
-myModel=LOAD_MODEL_DATA(myModel,myModelData);
+myModel=LOAD_MODEL(modelText=myModelDefinition)
+myModel=LOAD_MODEL_DATA(myModel,myModelData)
 
 #estimate model
-myModel=ESTIMATE(myModel);
+myModel=ESTIMATE(myModel)
 
 #calculate impact multipliers of Government non-Wage Spending 'g' and
 #Government Wage Bill 'w2' with respect of Consumption 'cn' and
@@ -195,7 +195,7 @@ myModel=MULTMATRIX(myModel,
                   symType='STATIC',
                   TSRANGE=c(1941,1,1941,1),
                   INSTRUMENT=c('w2','g'),
-                  TARGET=c('cn','y'));
+                  TARGET=c('cn','y'))
                   
 #Multipliter Matrix:    100.00%
 #...MULTMATRIX OK
@@ -221,7 +221,7 @@ print(myModel$MultiplierMatrix)
 myModel=MULTMATRIX(myModel,
                    TSRANGE=c(1940,1,1941,1),
                    INSTRUMENT=c('w2','g'),
-                   TARGET=c('cn','y'));
+                   TARGET=c('cn','y'))
 
 #output multipliers matrix (note the zeros when the period
 #of the INSTRUMENT is greater than the period of the TARGET)
@@ -239,7 +239,7 @@ print(myModel$MultiplierMatrix)
 myModel=MULTMATRIX(myModel,
                     TSRANGE=c(1940,1,1941,1),
                     INSTRUMENT=c('w2','w1'),
-                    TARGET=c('cn','y'));
+                    TARGET=c('cn','y'))
 
 #Multipliter Matrix:    100.00%
 #...MULTMATRIX OK

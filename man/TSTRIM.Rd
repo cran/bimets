@@ -52,17 +52,17 @@ This function returns an object of the same class of the input, i.e. an array or
 \examples{
 	
 	#TS A
-	n=10;
-	ts1=TSERIES(c(NA,1:n,NA),START=c(2000,1),FREQ='A');
-	TABIT(ts1,TSTRIM(ts1));
+	n=10
+	ts1=TSERIES(c(NA,1:n,NA),START=c(2000,1),FREQ='A')
+	TABIT(ts1,TSTRIM(ts1))
 		
-	ts1=TSERIES(c(NA,1:n,NA),START=c(2000,1),FREQ='A');
-	TABIT(ts1,TSTRIM(ts1,TRAIL=FALSE));
+	ts1=TSERIES(c(NA,1:n,NA),START=c(2000,1),FREQ='A')
+	TABIT(ts1,TSTRIM(ts1,TRAIL=FALSE))
 	
-	ts1=TSERIES(c(NA,1:n,NA),START=c(2000,1),FREQ='A');
-	TABIT(ts1,TSTRIM(ts1,LEAD=FALSE));
+	ts1=TSERIES(c(NA,1:n,NA),START=c(2000,1),FREQ='A')
+	TABIT(ts1,TSTRIM(ts1,LEAD=FALSE))
 	
-	ts1=TSERIES(c(0,0,NA,1:n,NA,0),START=c(2000,1),FREQ='A');
-	TABIT(ts1,TSTRIM(ts1,0));
+	ts1=TSERIES(c(0,0,NA,1:n,NA,0),START=c(2000,1),FREQ='A')
+	TABIT(ts1,TSTRIM(ts1,0))
 	
 }

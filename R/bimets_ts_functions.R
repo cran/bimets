@@ -32,7 +32,7 @@
   #clear console
   packageStartupMessage("\014 ");
   
-  packageStartupMessage(gsub("\\$","",'bimets is active - version 1.4.3\nFor help type \'?bimets\'\n'))
+  packageStartupMessage(gsub("\\$","",'bimets is active - version 1.5.0\nFor help type \'?bimets\'\n'))
   
   #packageStartupMessage('Loading required libraries...OK'); 
   #packageStartupMessage('\nBIMETS is active.\n');
@@ -6520,6 +6520,47 @@ TSLEAD <- function(x=NULL,L=1,avoidCompliance=FALSE,...)
     },error=function(e){stop('TSLEAD(): ',e$message)});
 }
 
+
+# TSDELTALOG code ----------------------------------------
+
+#TSDELTALOG computes differences of the log time series
+TSDELTALOG <- function(x=NULL, L=1, avoidCompliance=FALSE,...)
+{
+  
+  if (is.null(x)) stop('TSDELTALOG(): input time series needs to be instance of ts() or xts() class.');
+  
+  if (is.null(L)) stop('TSDELTALOG(): NULL lag L.');
+  if (!(is.numeric(L) && L>0) ) stop('TSDELTALOG(): lag L must be a positive integer.');
+  if (!(L%%1==0))  stop('TSDELTALOG(): non-integer lag L.');
+  
+  
+  outF=x;	
+  
+  if (! avoidCompliance ) 
+  {
+    tryCatch({.isCompliant(x);},error=function(e){stop('TSDELTALOG(): x - ',e$message);});
+    
+  }
+  
+  
+  
+  if (is.ts(x) )
+  {			
+    if (length(x)<=(L)) stop('TSDELTALOG(): Too much lags: attempting to define a NULL object.')
+    
+    outF=TSDELTA(log(x),L=L,avoidCompliance=TRUE);
+    
+  }
+  
+  if (is.xts(x) )
+  {
+    return(fromTStoXTS(TSDELTALOG(fromXTStoTS(x,avoidCompliance=avoidCompliance),L=L, avoidCompliance=TRUE),avoidCompliance=TRUE));
+  }
+  
+  return(outF);
+}
+
+
 # TSDELTAP code ----------------------------------------
 
 #TSDELTAP computes the percent changes of a time series.
@@ -7211,28 +7252,41 @@ if (is.null(x)) stop('GETYEARPERIOD(): input time series needs to be instance of
     
   }
   
-  
+  freq=frequency(x)
   
   if (is.ts(x) )
   {			
+  
+      
+    localStart=start(x)
+    
+    outY=vector(length = length(x),mode = 'numeric')
+    outP=vector(length = length(x),mode = 'numeric')
+    
+    for (idx in 1:length(x))
+    {
+      tempYP=normalizeYP(c(localStart[1],localStart[2]-1+idx),f=freq)
+      outY[idx]=tempYP[1]
+      outP[idx]=tempYP[2]
+    }
     
     if (!JOIN)
     {
-    
-    outF=list();
+      outF=list();
+        
+      #assign years
+      #outF[[YEARS]]=trunc(coredata(time(x)));
+      outF[[YEARS]]=outY
       
-    #assign years
-    outF[[YEARS]]=trunc(coredata(time(x)));
-    
-    #assign prds
-    outF[[PERIODS]]=coredata(cycle(x));
-    
+      #assign prds
+      #outF[[PERIODS]]=coredata(cycle(x));
+      outF[[PERIODS]]=outP
+      
     } else
     {
-      outF=cbind(trunc(coredata(time(x))),coredata(cycle(x)));
+      #outF=cbind(trunc(coredata(time(x))),coredata(cycle(x)));
+      outF=cbind(outY,outP)
     }
-    
-   
     
   }
   
@@ -7778,8 +7832,8 @@ TABIT <- function(..., TSRANGE=NULL, digits=getOption('digits'),avoidCompliance=
   
   outF=c();
   
-  if ((! is.finite(digits) )|| (digits %% 1 !=0) || digits<=0 || digits > 16) 
-    stop('TABIT(): digits must be an integer between 1 and 16.');
+  if ((! is.finite(digits) )|| (digits %% 1 !=0) || digits<=0 || digits > 22) 
+    stop('TABIT(): digits must be an integer between 1 and 22.');
   
   
   #an input is null
@@ -7834,14 +7888,16 @@ TABIT <- function(..., TSRANGE=NULL, digits=getOption('digits'),avoidCompliance=
   
   #array of names max 10 chars
   seriesListADSLstr=sprintf(stdFormatS,.getFunArgsNames(...));
-  
+   
   for (idx in (1:length(seriesListADSL))){
+    
+    localStart=start(seriesListADSL[[idx]])
     for (idx2 in (1:length(seriesListADSL[[idx]]))){
       
-      
+      localYP=normalizeYP(c(localStart[1],localStart[2]+idx2-1),f = outFreq)
+                          
       arrayOfDates=c(arrayOfDates,
-                     1000*trunc(time(seriesListADSL[[idx]])[idx2])+
-                       cycle(seriesListADSL[[idx]])[idx2]);
+                     1000*localYP[1]+localYP[2]);
       
     }
   }

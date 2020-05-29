@@ -45,9 +45,9 @@ This function returns an annual BIMETS time series.
 	
 	#TS DAILY TO ANNUAL
 	n=366
-	ts1=TIMESERIES(0:n,START=c(2000,1),FREQ='D');
-	ts1[10]=NA;
-	TABIT(ANNUAL(ts1,fun='NAVE'));
+	ts1=TIMESERIES(0:n,START=c(2000,1),FREQ='D')
+	ts1[10]=NA
+	TABIT(ANNUAL(ts1,fun='NAVE'))
 }	
 
 

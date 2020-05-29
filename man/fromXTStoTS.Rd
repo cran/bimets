@@ -39,61 +39,61 @@ This function returns a time series of class \code{ts()} that has the same obser
 \examples{
 
 	#day and month names can change depending on locale
-  Sys.setlocale('LC_ALL','C')
-  Sys.setlocale('LC_TIME','C')
+	Sys.setlocale('LC_ALL','C')
+	Sys.setlocale('LC_TIME','C')
   
 	#set configuration BIMETS_CONF_DIP on FIRST
-	setBIMETSconf('BIMETS_CONF_DIP','FIRST');
+	setBIMETSconf('BIMETS_CONF_DIP','FIRST')
 	
 	#set configuration BIMETS_CONF_CCT on XTS
-	setBIMETSconf('BIMETS_CONF_CCT','XTS');
+	setBIMETSconf('BIMETS_CONF_CCT','XTS')
 	
 	#semiannual with Date()
-	n=10;
-	xArr=rnorm(n);
-	dateArr=seq(as.Date('2000/07/01'),by='6 months',length=n); 
-	dataF=data.frame(dateArr,xArr);
-	xt=xts(dataF[,2],order.by=dataF[,1]);
-	print(fromXTStoTS(xt));
+	n=10
+	xArr=rnorm(n)
+	dateArr=seq(as.Date('2000/07/01'),by='6 months',length=n) 
+	dataF=data.frame(dateArr,xArr)
+	xt=xts(dataF[,2],order.by=dataF[,1])
+	print(fromXTStoTS(xt))
 	
 	#set configuration BIMETS_CONF_DIP on LAST
-	setBIMETSconf('BIMETS_CONF_DIP','LAST');
+	setBIMETSconf('BIMETS_CONF_DIP','LAST')
 	
 	#annual with Date()
-	n=10;
-	xArr=rnorm(n);
-	dateArr=seq(as.Date('2000/12/31'),by='year',length=n);
-	dataF=data.frame(dateArr,xArr);
-	xt=xts(dataF[,2],order.by=dataF[,1]);
-	print(fromXTStoTS(xt));
+	n=10
+	xArr=rnorm(n)
+	dateArr=seq(as.Date('2000/12/31'),by='year',length=n)
+	dataF=data.frame(dateArr,xArr)
+	xt=xts(dataF[,2],order.by=dataF[,1])
+	print(fromXTStoTS(xt))
 	
 	#quarterly with yearqtr()
-	n=10;
-	xArr=rnorm(n+1);
-	dateArr=as.yearqtr('2000 Q2') + 0:n/4;
-	dataF=data.frame(dateArr,xArr);
-	xt=xts(dataF[,2],order.by=dataF[,1]);
-	print(fromXTStoTS(xt));
+	n=10
+	xArr=rnorm(n+1)
+	dateArr=as.yearqtr('2000 Q2') + 0:n/4
+	dataF=data.frame(dateArr,xArr)
+	xt=xts(dataF[,2],order.by=dataF[,1])
+	print(fromXTStoTS(xt))
 	
 	#monthly with yearmon()
-	n=10;
-	xArr=rnorm(n+1);
-	dateArr=as.yearmon('Jul 2000') + 0:n/12;
-	dataF=data.frame(dateArr,xArr);
-	xt=xts(dataF[,2],order.by=dataF[,1]);
-	print(fromXTStoTS(xt));
+	n=10
+	xArr=rnorm(n+1)
+	dateArr=as.yearmon('Jul 2000') + 0:n/12
+	dataF=data.frame(dateArr,xArr)
+	xt=xts(dataF[,2],order.by=dataF[,1])
+	print(fromXTStoTS(xt))
 	
 	#daily with Date()
-	n=10;
-	xArr=rnorm(n);
-	dateArr=seq(as.Date('2000/07/14'),by='day',length=n); 
-	dataF=data.frame(dateArr,xArr);
-	xt=xts(dataF[,2],order.by=dataF[,1]);
-	print(fromXTStoTS(xt));
+	n=10
+	xArr=rnorm(n)
+	dateArr=seq(as.Date('2000/07/14'),by='day',length=n) 
+	dataF=data.frame(dateArr,xArr)
+	xt=xts(dataF[,2],order.by=dataF[,1])
+	print(fromXTStoTS(xt))
 	
 	#restore defaults
-	setBIMETSconf('BIMETS_CONF_DIP','LAST');
-	setBIMETSconf('BIMETS_CONF_CCT','TS');
+	setBIMETSconf('BIMETS_CONF_DIP','LAST')
+	setBIMETSconf('BIMETS_CONF_CCT','TS')
 	
 	
 }

@@ -62,24 +62,24 @@ This function returns an array built with requested information about the input 
 	
 	#create ts
 	ts1=TIMESERIES(INTS(1,10),START=c(2004,2),FREQ=2,
-	UNITS='myUnits',TITLE='myTitle',SOURCE='mySource');
-	ts2=TIMESERIES(INTS(1,20),START=c(2006,3),FREQ=4,SCALEFAC=1);
-	ts3=TIMESERIES(INTS(1,30),START=c(2008,7),FREQ=12);
+	UNITS='myUnits',TITLE='myTitle',SOURCE='mySource')
+	ts2=TIMESERIES(INTS(1,20),START=c(2006,3),FREQ=4,SCALEFAC=1)
+	ts3=TIMESERIES(INTS(1,30),START=c(2008,7),FREQ=12)
 	
-	print(TSINFO(ts1,ts2,ts3,MODE='STARTY')); #print ... c(2004,2006,2008)
-	print(TSINFO(ts1,ts2,ts3,MODE='ENDP')); #print ... c(1,2,12)
-	print(TSINFO(ts1,ts2,ts3,MODE='FREQ')); #print ... c(2,4,12)
+	print(TSINFO(ts1,ts2,ts3,MODE='STARTY')) #print ... c(2004,2006,2008)
+	print(TSINFO(ts1,ts2,ts3,MODE='ENDP')) #print ... c(1,2,12)
+	print(TSINFO(ts1,ts2,ts3,MODE='FREQ')) #print ... c(2,4,12)
 	
-	print(TSINFO(ts1,ts2,ts3,MODE='START2')); 
+	print(TSINFO(ts1,ts2,ts3,MODE='START2')) 
 	#print ... 
 	#[,1] [,2]
 	#[1,] 2004    2
 	#[2,] 2006    3
 	#[3,] 2008    7
 	
-	print(TSINFO(ts1,ts2,ts3,MODE='END')); #print ... c(2009.5, 2011.5, 2011.0)
-	print(TSINFO(ts1,ts2,ts3,MODE='FACTOR')); #print ...  c(0,1,0)
-	print(TSINFO(ts1,ts2,ts3,MODE='UNITS')); #print ...  c('myUnits','','')
+	print(TSINFO(ts1,ts2,ts3,MODE='END')) #print ... c(2009.5, 2011.5, 2011.0)
+	print(TSINFO(ts1,ts2,ts3,MODE='FACTOR')) #print ...  c(0,1,0)
+	print(TSINFO(ts1,ts2,ts3,MODE='UNITS')) #print ...  c('myUnits','','')
 	
 }
 

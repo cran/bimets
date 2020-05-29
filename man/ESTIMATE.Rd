@@ -13,7 +13,7 @@ This function estimates equations that are linear in the coefficients, as specif
 - \emph{Deterministic linear restrictions on the coefficients};\cr
 - \emph{Almon Polynomial Distributed Lags};\cr
 - \emph{Autocorrelation of the errors};\cr
-- \emph{Structural stability analysis (Chow tests)};\cr\cr Further details on estimation calculus can be found in \code{\link[=MDL]{MDL}} help page; further details on Chow test can be found below in this page;
+- \emph{Structural stability analysis (Chow tests)};\cr\cr Further details on estimation calculus can be found in \code{\link[=MDL]{MDL}} help page; further details on Chow test can be found below in this section;
 
 
 }
@@ -31,6 +31,7 @@ ESTIMATE(model=NULL,
          centerCOV=TRUE,
          CHOWTEST=FALSE,
          CHOWPAR=NULL,
+         avoidCompliance=FALSE,
          ...)
 
 }
@@ -64,7 +65,7 @@ ESTIMATE(model=NULL,
   The tolerance for detecting linear dependencies in the columns of a matrix while an inversion is requested. The default is \code{.Machine$double.eps}.
   }
   \item{digits}{
-  Controls the number of digits to print when printing coefficients and statistics of the estimation. Valid values are 1 to 16 with a default of 7.
+  Controls the number of digits to print when printing coefficients and statistics of the estimation. Valid values are 1 to 22 with a default of 7.
   }
   \item{centerCOV}{
   If \code{TRUE}, the function subtracts the mean from the residuals before calculating the residual covariance matrix.
@@ -73,8 +74,12 @@ ESTIMATE(model=NULL,
   If \code{TRUE}, the structural stability analysis will be performed.
   }
   \item{CHOWPAR}{
-  Indicates the last year-period where the stability test is performed. If \code{NULL} it will be automatically calculated by using all available time series data. It must be provided as an integer array, e.g. \code{year,period}.
+  Indicates the last year-period where the stability test is performed. If \code{NULL} it will be automatically calculated by using all available time series data. It must be provided as an integer array, e.g. \code{c(YEAR,PERIOD)}.
   }
+    \item{avoidCompliance}{
+  If \code{TRUE}, compliance control check of model time series will be skipped. See \code{\link[=is.bimets]{is.bimets}}
+  }
+
    \item{...}{
 Backward compatibility.
 }
@@ -106,6 +111,7 @@ For each behavioral in the \code{eqList} this function will add 4 new named elem
 1) \code{coefficients}: a numerical array built with the estimated coefficients;\cr
 2) \code{errorCoefficients}: a numerical array built with the estimated coefficient for the error autoregression, if the \code{ERROR>} structure has been provided in the model \code{\link[=MDL]{MDL}} definition;\cr
 3) \code{residuals}: the time series of the regression residuals. If an \code{ERROR>} structure has been provided in the behavioral definition, the related residuals will be calculated as described in the Cochrane-Orcutt procedure (see \code{\link[=MDL]{MDL}}).\cr
+3) \code{residuals_no_error_correction}:  if an \code{ERROR>} structure has been provided in the behavioral definition, the residuals caclucated by using the original dependant and independent varibles are stored into this list element.\cr
 4) \code{statistics}: a list built with the parameters and the statistics of the estimation, e.g.:\cr
 - \code{TSRANGE}: TSRANGE requested in the latest estimation of the behavioral;\cr
 - \code{estimationTechinque}: estimation technique requested in the latest estimation of the behavioral;\cr
@@ -130,7 +136,7 @@ For each behavioral in the \code{eqList} this function will add 4 new named elem
 \cr\cr
 
 \emph{Structural Stability - Chow test}\cr\cr
-One of the main purposes of the econometric modeling is its use for forecast and policy evaluation and, to this end, the stability of a behavioral equation parameters over time should be verified. In order to check for structural stability two different procedures, which can be derived from the so called Chow-tests, are applied.\cr\cr
+One of the main purposes of the econometric modeling is its use for forecast and policy evaluation and, to this end, the stability of a behavioral equation parameters over time should be verified. In order to check for structural stability two different procedures, which can be derived from the so called Chow-tests, are applied.\cr
 \if{html}{
 Given a sample of \eqn{T_0 = t_k,...,t_n} observations (i.e. the base \code{TSRANGE}) and selecting an arbitrary forward extension in \eqn{T_1 = t_k,...,t_n,...,t_m} observations (i.e. the extended \code{TSRANGE}) in the general case we have the following two regressions: \cr\cr
 1) \eqn{Y_0 = b_0*X_0+eps_0,  eps_0  in N(0,sigma_0^2) }, having time series projected on the base \code{TSRANGE}\cr
@@ -172,8 +178,8 @@ The test statistic \eqn{\tau} follows the \eqn{F} distribution with  \eqn{ ( DoF
 
 }
 
-If \code{CHOWTEST=TRUE}, for each behavioral in the \code{eqList} this function will add the following named element into the related behavioral of the output model object:\cr
-- \code{ChowTest}: it will contain the statistics and the time series computed during the last structural analysis performed on the related behavioral.\cr
+If \code{CHOWTEST} is \code{TRUE}, for each behavioral in the \code{eqList} the output model will have the following named element:\cr
+- \code{ChowTest}: it contains the statistics and the time series computed during the last structural analysis performed on the related behavioral.\cr
 
 
 
@@ -237,7 +243,7 @@ IF> i > 0
 IDENTITY> k
 EQ> k = TSLAG(k,1)
 IF> i <= 0
-END";
+END"
 
 #define model data
 myModelData=list(
@@ -281,20 +287,20 @@ myModelData=list(
   =TIMESERIES(2.2,2.7,2.9,2.9,3.1,3.2,3.3,3.6,3.7,4,4.2,4.8,5.3,5.6,6,6.1,
               7.4,6.7,7.7,7.8,8,8.5,
               START=c(1920,1),FREQ=1)
-);
+)
 
 
 #load model 
-myModel=LOAD_MODEL(modelText=myModelDefinition);
+myModel=LOAD_MODEL(modelText=myModelDefinition)
 
 #load data into the model
-myModel=LOAD_MODEL_DATA(myModel,myModelData,showWarnings = TRUE);
+myModel=LOAD_MODEL_DATA(myModel,myModelData,showWarnings = TRUE)
 
 #################################################
 #OLS case
 
 #estimate the model
-myModel=ESTIMATE(myModel);
+myModel=ESTIMATE(myModel)
 
 #HERE BELOW THE OUTPUT OF THE ESTIMATION (COMMENTED OUT):
 #.CHECK_MODEL_DATA(): warning, there are undefined values in time series "time".
@@ -313,39 +319,39 @@ myModel=ESTIMATE(myModel);
 #
 #
 #cn                  =   19.01352    
-#                        T-stat. 13.1876     ***
+#                        T-stat. 12.13083    ***
 #
 #                    +   0.3442816   p
-#                        T-stat. 3.841051    **
+#                        T-stat. 3.533253    **
 #
 #                    +   0.03443117  TSLAG(p,1)
-#                        T-stat. 0.4280928   
+#                        T-stat. 0.3937881   
 #
 #                    +   0.6993905   (w1+w2)
-#                        T-stat. 15.30744    ***
+#                        T-stat. 14.0808     ***
 #
 #ERROR:  AUTO(2) 
 #
 #AUTOREGRESSIVE PARAMETERS:
 #Rho             Std. Error      T-stat.         
-# 0.05743131      0.3324101       0.1727725       
+ #0.05743131      0.3324101       0.1727725       
 # 0.007785936     0.2647013       0.02941404      
 #
 #
 #STATs:
 #R-Squared                      : 0.985263    
-#Adjusted R-Squared             : 0.979595    
+#Adjusted R-Squared             : 0.9785644   
 #Durbin-Watson Statistic        : 1.966609    
 #Sum of squares of residuals    : 9.273455    
-#Standard Error of Regression   : 0.8445961   
-#Log of the Likelihood Function : -20.14564   
-#F-statistic                    : 173.8271    
-#F-probability                  : 1.977107e-11
-#Akaike's IC                    : 54.29129    
-#Schwarz's IC                   : 60.90236    
+#Standard Error of Regression   : 0.9181728   
+#Log of the Likelihood Function : -18.97047   
+#F-statistic                    : 147.0844    
+#F-probability                  : 1.090551e-09
+#Akaike's IC                    : 51.94093    
+#Schwarz's IC                   : 57.77343    
 #Mean of Dependent Variable     : 55.71765    
-#Number of Observations         : 19
-#Number of Degrees of Freedom   : 13
+#Number of Observations         : 17
+#Number of Degrees of Freedom   : 11
 #Current Sample (year-period)   : 1925-1 / 1941-1
 #
 #
@@ -453,7 +459,6 @@ myModel=ESTIMATE(myModel);
 #
 #...ESTIMATE OK
 
-
 #get residuals of 'cn'
 myModel$behaviorals$cn$residuals
 #Time Series:
@@ -506,7 +511,7 @@ myModel=ESTIMATE(myModel,
                  IV=c('1',
                       'TSLAG(y)',
                       'TSLAG(w1)*pi+0.5',
-                      'exp(w2)'));
+                      'exp(w2)'))
 #Estimate the Model myModelDefinition:
 #the number of behavioral equations to be estimated is 1.
 #The total number of coefficients is 4.
@@ -573,7 +578,7 @@ myModel=ESTIMATE(myModel,
                  IV=c('1',
                       'TSLAG(w2)',
                       'TSLAG(w1)*pi+0.5',
-                      'exp(w2)'));
+                      'exp(w2)'))
 
 #.CHECK_MODEL_DATA(): warning, there are undefined values in time series "time".
 #

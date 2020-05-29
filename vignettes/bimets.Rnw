@@ -162,7 +162,7 @@ The \pkg{bimets} package provides, among others, the following time series manip
 \item[--]  Time series merging \code{TSMERGE()} 
 \item[--]  Time series projection \code{TSPROJECT()} 
 \item[--]  Lag \code{TSLAG()}
-\item[--]  Lag differences, absolute and percentage \code{TSDELTA()} \code{TSDELTAP()}
+\item[--]  Lag differences: standard, percentage and logarithmic, i.e. \code{TSDELTA()} \code{TSDELTAP()} \code{TSDELTALOG()}
 \item[--]  Cumulative product \code{CUMPROD()} 
 \item[--]  Cumulative sum \code{CUMSUM()} 
 \item[--]  Moving average \code{MOVAVG()} 
@@ -290,14 +290,29 @@ If the requested estimation method is \code{IV} (Instrumental Variables), given 
 \smallskip
 
 The equation statement general form for a behavioral equation is:\\
-\code{EQ> name = coeff1*f1 + coeff2*f2 + coeff3*f3 + ...} \\
-where \code{name} is the name of the behavioral variable, \\ \code{coeff1, coeff2, coeff3, ...} are the names of the coefficients of the equation and \\ \code{f1, f2, f3, ...} are functions of variables.
+\code{EQ> LHS = coeff1*f1 + coeff2*f2 + coeff3*f3 + ...} \\
+where \code{LHS} is a function of the behavioral variable, \\ \code{coeff1, coeff2, coeff3, ...} are the names of the coefficients of the equation and \\ \code{f1, f2, f3, ...} are functions of variables.
 \smallskip
 
-The equation statement general form for an identity equation is:\\ \code{EQ> name = f1 + f2 + f3 + ...} \\ where \code{name} is the name of the identity variable and \\ \code{f1, f2, f3, ...} are functions of variables.
+The equation statement general form for an identity equation is:\\ \code{EQ> LHS = f1 + f2 + f3 + ...} \\ where \code{LHS} is a function of the identity variable and \\ \code{f1, f2, f3, ...} are functions of variables.
 \smallskip
 
-The mathematical expression can include the standard arithmetic operators, parentheses and \code{MDL} functions described later in this section. \code{MDL} function names are reserved names. They cannot be used as variable or coefficient names. The coefficient names are specified in a subsequent \code{COEFF>} keyword statement within a behavioral equation. By definition, identities do not have any coefficient that must be assessed. Any name not specified as a coefficient name nor mentioned on the list of the available \code{MDL} functions is assumed to be a variable.
+The following \code{MDL} functions can be used in the \code{LHS} left-hand side of the equation, with \code{name} as the name of the behavioral or the identity variable: \\ \\
+- \code{name} - i.e. the identity function;\\ \\
+- \code{TSDELTA(name,i)} - \code{i}-periods difference of the \code{name} time series;\\ \\
+- \code{TSDELTAP(name,i)} - \code{i}-periods percentage difference of the \code{name} time series;\\ \\
+- \code{TSDELTALOG(name,i)} - \code{i}-periods logarithmic difference of the \code{name} time series;\\ \\
+- \code{LOG(name)} - log of the \code{name} time series;\\ \\
+- \code{EXP(name)} - exponential of the \code{name} time series.\\ \\
+On the other side the mathematical expression available for using in the \code{RHS} right-hand side of the \code{EQ>} equation (i.e. \code{f1, f2, f3, ...}) can include the standard arithmetic operators, parentheses and the following \code{MDL} functions:\\ \\
+-  \code{TSLAG(ts,i)}: lag the \code{ts} time series by \code{i}-periods;\\ \\
+-  \code{TSDELTA(ts,i)}: \code{i}-periods difference of the \code{ts} time series;\\ \\
+-  \code{MOVAVG(ts,i)}: \code{i}-periods moving average of the \code{ts} time series;\\ \\
+-  \code{MOVSUM(ts,i)}: \code{i}-periods moving sum of the \code{ts} time series;\\ \\
+-  \code{LOG(ts)}: log of the \code{ts} time series;\\ \\
+-  \code{EXP(ts)}: exponential of the \code{ts} time series;\\ \\
+-  \code{ABS(ts)}: absolute values of the \code{ts} time series;\\ \\
+\code{MDL} function names are reserved names. They cannot be used as variable or coefficient names. The coefficient names are specified in a subsequent \code{COEFF>} keyword statement within a behavioral equation. By definition, identities do not have any coefficient that must be assessed. Any name not specified as a coefficient name nor mentioned on the list of the available \code{MDL} functions is assumed to be a variable.
 \item[--] \textbf{COEFF>} specifies the coefficient names used in the EQ> keyword statement of a behavioral equation. The coefficients statement general form is:\\
 \code{COEFF> coeff0 coeff1 coeff2 ... coeffn}. \\ The coefficients order in this statement must be the same as it appears in the behavioral equation.
 
@@ -430,7 +445,7 @@ The expanded regressors are: \\ \code{X1, X2, TSLAG(X2,1), TSLAG(X2,2), TSLAG(X2
 \item[--] \textbf{IF>} keyword is used to conditionally evaluate an identity during a simulation, depending on the value of a logical expression. Thus, it is possible to have a model alternating between two or more identity specifications for each simulation period, depending upon results from other equations. \\ \\
 The \code{IF>} statement general form is: \\
 \code{IF> logical_expression} \\ \\The \code{IF>} keyword must be specified within an identity group; this keyword causes the equation specified in the identity group to be evaluated during the current simulation period only when the \code{logical_expression} is \code{TRUE}.\\ \\ Only one \code{IF>} keyword is allowed in an identity group. Further occurrences produce an error message and processing stops.\\ \\
-The \code{logical_expression} can be composed of constants, endogenous variables, exogenous variables, an expression among variables, combinations of the logical operators; mathematical operators and \code{MDL} functions listed below are allowed. \\ \\
+The \code{logical_expression} can be composed of constants, endogenous variables, exogenous variables, an expression among variables, combinations of the logical operators; mathematical operators and the \code{MDL} functions listed in the \code{EQ>} section are allowed. \\ \\
 In the following \code{MDL} example, the value of the endogenous \code{myIdentity} variable is specified with two complementary conditional identities, depending on the \code{TSDELTA()} result: \\ \\
 \code{
 IDENTITY> myIdentity \\
@@ -449,18 +464,6 @@ $This is a comment
 } \\ 
 \end{itemize}
 No other keywords are currently allowed in the \code{MDL} syntax. \\
-
-The mathematical expression in \code{EQ>} and \code{IF>} definitions can include the standard arithmetic operators, parentheses, and the following \code{MDL} time series functions: 
-\begin{itemize}
-\item[--]  \code{TSLAG(ts,i)}: lag the \code{ts} time series by \code{i}-periods;
-\item[--]  \code{TSDELTA(ts,i)}: \code{i}-periods difference of the \code{ts} time series;
-\item[--]  \code{MOVAVG(ts,i)}: \code{i}-periods moving average of the \code{ts} time series;
-\item[--]  \code{MOVSUM(ts,i)}: \code{i}-periods moving sum of the \code{ts} time series;
-\item[--]  \code{LOG(ts)}: log of the \code{ts} time series;
-\item[--]  \code{EXP(ts)}: exponential of the \code{ts} time series;
-\item[--]  \code{ABS(ts)}: absolute values of the \code{ts} time series;
-\end{itemize}
-
 
 Back to Klein's model example, the \pkg{bimets} \code{LOAD_MODEL()} function reads the \emph{klein1.txt} model as previously defined:
 \begin{footnotesize}
@@ -532,7 +535,88 @@ kleinModelData <- list(
 kleinModel <- LOAD_MODEL_DATA(kleinModel,kleinModelData)
 @
 \end{footnotesize}
-Since time series and other data (e.g. regressor coefficients, error coefficients, constant adjustments, targets, instruments, etc...) are stored into the model object, users can define multiple model objects - each with its own arbitrary data - in the same \proglang{R} session. \pkg{bimets} makes it possible to estimate, simulate and compare results from different models with different data sets. Furthermore, users can easily save an estimated or a simulated model as a standard \proglang{R} variable, thus reloading it later, having all available data and time series stored into it, i.e. endogenous and exogenous time series, estimated coefficients, constant adjustments, simulation options, simulated time series, calculated instruments, targets, etc.
+Since time series and other data (e.g. regressor coefficients, error coefficients, constant adjustments, targets, instruments, etc...) are stored into the model object, users can define multiple model objects - each with its own arbitrary data - in the same \proglang{R} session. \pkg{bimets} makes it possible to estimate, simulate and compare results from different models with different data sets. Furthermore, users can easily save an estimated or a simulated model as a standard \proglang{R} variable, thus reloading it later, having all available data and time series stored into it, i.e. endogenous and exogenous time series, estimated coefficients, constant adjustments, simulation options, simulated time series, calculated instruments, targets, etc.\\ \\
+An advanced MDL model example follows (original time series are manually adjusted in order to fit the example):
+\begin{footnotesize}
+<<computation,results=hide>>=
+
+lhsKlein1.txt <- "
+MODEL
+
+COMMENT> Modified Klein Model 1 of the U.S. Economy with PDL,
+COMMENT> autocorrelation on errors, restrictions and conditional evaluations
+COMMENT> LHS functions on EQ
+
+COMMENT> Exp Consumption
+BEHAVIORAL> cn
+TSRANGE 1925 1 1941 1
+EQ> EXP(cn) = a1 + a2*p + a3*LAG(p,1) + a4*(w1+w2)
+COEFF> a1 a2 a3 a4
+ERROR> AUTO(2)
+STORE> coe(1)
+
+COMMENT> Log Investment
+BEHAVIORAL> i
+TSRANGE 1925 1 1941 1
+EQ> LOG(i) = b1 + b2*p + b3*LAG(p,1) + b4*LAG(k,1)
+COEFF> b1 b2 b3 b4
+RESTRICT> b2 + b3 = 1
+STORE> coe(15)
+
+COMMENT> Demand for Labor
+BEHAVIORAL> w1
+TSRANGE 1925 1 1941 1
+EQ> w1 = c1 + c2*(TSDELTA(y)+t-w2) + c3*LAG(TSDELTA(y)+t-w2,1)+c4*time
+COEFF> c1 c2 c3 c4
+PDL> c3 1 3
+STORE> coe(29)
+
+COMMENT> Delta Gross National Product
+IDENTITY> y
+EQ> TSDELTA(y) = EXP(cn) + LOG(i) + g - t
+
+COMMENT> Profits
+IDENTITY> p
+EQ> p = TSDELTA(y) - (w1+w2)
+
+COMMENT> Capital Stock with switches
+IDENTITY> k
+EQ> k = LAG(k,1) + LOG(i)
+IF> LOG(i).GT.0
+IDENTITY> k
+EQ> k = LAG(k,1)
+IF> LOG(i).LE.0
+
+END"
+@
+\end{footnotesize}
+\begin{footnotesize}
+<<computation,results=hide>>=
+
+#adjust the original data in order to estimate and to simulate the model
+lhsKleinModelData <- within(kleinModelData,{
+  i =exp(i);     #we have LOG(i)     in the model MDL definition
+  cn=log(cn);    #we have EXP(cn)    in the model MDL definition
+  y =CUMSUM(y)   #we have TSDELTA(y) in the model MDL definition
+})
+@
+\end{footnotesize}
+\begin{footnotesize}
+<<computation,results=hide>>=
+
+lhsKleinModel <- LOAD_MODEL(modelText = lhsKlein1.txt)
+lhsKleinModel <- LOAD_MODEL_DATA(lhsKleinModel,lhsKleinModelData)
+@
+\end{footnotesize}
+\begin{footnotesize}
+<<computation,results=hide>>=
+
+#ESTIMATE and SIMULATE functions are described later
+lhsKleinModel <- ESTIMATE(lhsKleinModel)
+lhsKleinModel <- SIMULATE(lhsKleinModel, TSRANGE = c(1925,1,1930,1))
+@
+\end{footnotesize}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
 \subsection{Estimation}

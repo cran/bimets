@@ -36,20 +36,20 @@ This function returns the integer value stored in the attribute \code{.bimetsFre
 \examples{
 		
 	#build a sparse xts()
-	xArr=rnorm(13);
-	dateArr=seq(as.Date('2000/01/01'),by='6 months',length=10);
-	dateArr2=seq(as.Date('2010/01/01'),by='3 months',length=3);
+	xArr=rnorm(13)
+	dateArr=seq(as.Date('2000/01/01'),by='6 months',length=10)
+	dateArr2=seq(as.Date('2010/01/01'),by='3 months',length=3)
 	
 	#strange array of dates here below...
-	dateArr3=c(dateArr,dateArr2);
-	dataF=data.frame(dateArr3,xArr);
-	xt=xts(dataF[,2],order.by=dataF[,1]);
+	dateArr3=c(dateArr,dateArr2)
+	dataF=data.frame(dateArr3,xArr)
+	xt=xts(dataF[,2],order.by=dataF[,1])
 	
 	#get bimets calculated frequency
-	cat(frequency(xt)); #print 4... without bimets R returns 1
+	cat(frequency(xt)) #print 4... without bimets R returns 1
 	
 	#...legacy periodicity()
-	periodicity(xt);
+	periodicity(xt)
 	
 	
 }

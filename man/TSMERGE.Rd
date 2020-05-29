@@ -52,24 +52,24 @@ This function returns a BIMETS time series built by merging two or more input ti
 \examples{
 
 	#DEFINE TS
-	n=10;
-	ts1=TSERIES(n:1,START=c(1995,1),FREQ=1);
-	ts2=TSERIES(n:1,START=c(2000,1),FREQ=1);
+	n=10
+	ts1=TSERIES(n:1,START=c(1995,1),FREQ=1)
+	ts2=TSERIES(n:1,START=c(2000,1),FREQ=1)
 	
-	ts2[5]=NA;
-	ts1[10]=NA;
+	ts2[5]=NA
+	ts1[10]=NA
 	
 	#print TSMERGE
-	TABIT(ts1,ts2,TSMERGE(ts1,ts2,fun='SUM',MV=TRUE));
+	TABIT(ts1,ts2,TSMERGE(ts1,ts2,fun='SUM',MV=TRUE))
 	
 	#TS D
-	n=20;
-	ts1=TSERIES(n:1,START=c(1999,360),FREQ='D');
-	ts2=TSERIES(n:1,START=c(2000,1),FREQ='D');
+	n=20
+	ts1=TSERIES(n:1,START=c(1999,360),FREQ='D')
+	ts2=TSERIES(n:1,START=c(2000,1),FREQ='D')
 	
-	ts2[5]=NA;
-	ts1[10]=NA;
+	ts2[5]=NA
+	ts1[10]=NA
 	
 	#print TSMERGE
-	TABIT(ts1,ts2,TSMERGE(ts1,ts2,fun='SUM',MV=TRUE));
+	TABIT(ts1,ts2,TSMERGE(ts1,ts2,fun='SUM',MV=TRUE))
 }

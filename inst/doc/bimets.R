@@ -1,5 +1,5 @@
 ### R code from vignette source 'bimets.Rnw'
-### Encoding: ISO8859-1
+### Encoding: ISO8859-15
 
 ###################################################
 ### code chunk number 1: bimets.Rnw:61-62
@@ -169,19 +169,19 @@ END
 
 
 ###################################################
-### code chunk number 19: bimets.Rnw:467-468
+### code chunk number 19: bimets.Rnw:470-471
 ###################################################
 kleinModel <- LOAD_MODEL(modelText = klein1.txt)
 
 
 ###################################################
-### code chunk number 20: bimets.Rnw:477-478
+### code chunk number 20: bimets.Rnw:480-481
 ###################################################
 kleinModel$behaviorals$cn
 
 
 ###################################################
-### code chunk number 21: bimets.Rnw:484-489
+### code chunk number 21: bimets.Rnw:487-492
 ###################################################
 kleinModel$incidence_matrix
 kleinModel$vpre
@@ -191,7 +191,7 @@ kleinModel$vpost
 
 
 ###################################################
-### code chunk number 22: bimets.Rnw:497-532
+### code chunk number 22: bimets.Rnw:500-535
 ###################################################
 kleinModelData <- list(  
     cn  =TIMESERIES(39.8,41.9,45,49.2,50.6,52.6,55.1,56.2,57.3,57.8,
@@ -231,19 +231,102 @@ kleinModel <- LOAD_MODEL_DATA(kleinModel,kleinModelData)
 
 
 ###################################################
-### code chunk number 23: bimets.Rnw:553-554
+### code chunk number 23: computation
+###################################################
+
+lhsKlein1.txt <- "
+MODEL
+
+COMMENT> Modified Klein Model 1 of the U.S. Economy with PDL,
+COMMENT> autocorrelation on errors, restrictions and conditional evaluations
+COMMENT> LHS functions on EQ
+
+COMMENT> Exp Consumption
+BEHAVIORAL> cn
+TSRANGE 1925 1 1941 1
+EQ> EXP(cn) = a1 + a2*p + a3*LAG(p,1) + a4*(w1+w2)
+COEFF> a1 a2 a3 a4
+ERROR> AUTO(2)
+STORE> coe(1)
+
+COMMENT> Log Investment
+BEHAVIORAL> i
+TSRANGE 1925 1 1941 1
+EQ> LOG(i) = b1 + b2*p + b3*LAG(p,1) + b4*LAG(k,1)
+COEFF> b1 b2 b3 b4
+RESTRICT> b2 + b3 = 1
+STORE> coe(15)
+
+COMMENT> Demand for Labor
+BEHAVIORAL> w1
+TSRANGE 1925 1 1941 1
+EQ> w1 = c1 + c2*(TSDELTA(y)+t-w2) + c3*LAG(TSDELTA(y)+t-w2,1)+c4*time
+COEFF> c1 c2 c3 c4
+PDL> c3 1 3
+STORE> coe(29)
+
+COMMENT> Delta Gross National Product
+IDENTITY> y
+EQ> TSDELTA(y) = EXP(cn) + LOG(i) + g - t
+
+COMMENT> Profits
+IDENTITY> p
+EQ> p = TSDELTA(y) - (w1+w2)
+
+COMMENT> Capital Stock with switches
+IDENTITY> k
+EQ> k = LAG(k,1) + LOG(i)
+IF> LOG(i).GT.0
+IDENTITY> k
+EQ> k = LAG(k,1)
+IF> LOG(i).LE.0
+
+END"
+
+
+###################################################
+### code chunk number 24: computation
+###################################################
+
+#adjust the original data in order to estimate and to simulate the model
+lhsKleinModelData <- within(kleinModelData,{
+  i =exp(i);     #we have LOG(i)     in the model MDL definition
+  cn=log(cn);    #we have EXP(cn)    in the model MDL definition
+  y =CUMSUM(y)   #we have TSDELTA(y) in the model MDL definition
+})
+
+
+###################################################
+### code chunk number 25: computation
+###################################################
+
+lhsKleinModel <- LOAD_MODEL(modelText = lhsKlein1.txt)
+lhsKleinModel <- LOAD_MODEL_DATA(lhsKleinModel,lhsKleinModelData)
+
+
+###################################################
+### code chunk number 26: computation
+###################################################
+
+#ESTIMATE and SIMULATE functions are described later
+lhsKleinModel <- ESTIMATE(lhsKleinModel)
+lhsKleinModel <- SIMULATE(lhsKleinModel, TSRANGE = c(1925,1,1930,1))
+
+
+###################################################
+### code chunk number 27: bimets.Rnw:637-638
 ###################################################
 kleinModel <- ESTIMATE(kleinModel, quietly=TRUE)
 
 
 ###################################################
-### code chunk number 24: bimets.Rnw:559-560
+### code chunk number 28: bimets.Rnw:643-644
 ###################################################
 kleinModel <- ESTIMATE(kleinModel, eqList=c('cn'))
 
 
 ###################################################
-### code chunk number 25: bimets.Rnw:565-575
+### code chunk number 29: bimets.Rnw:649-659
 ###################################################
 #print estimated coefficients
 kleinModel$behaviorals$cn$coefficients
@@ -258,7 +341,7 @@ kleinModel$behaviorals$cn$statistics$LogLikelihood
 
 
 ###################################################
-### code chunk number 26: bimets.Rnw:583-628
+### code chunk number 30: bimets.Rnw:667-712
 ###################################################
 #define model
 advancedKlein1.txt <- 
@@ -308,7 +391,7 @@ END"
 
 
 ###################################################
-### code chunk number 27: bimets.Rnw:630-633
+### code chunk number 31: bimets.Rnw:714-717
 ###################################################
 #load model and data
 advancedKleinModel <- LOAD_MODEL(modelText=advancedKlein1.txt)
@@ -316,14 +399,14 @@ advancedKleinModel <- LOAD_MODEL_DATA(advancedKleinModel,kleinModelData)
 
 
 ###################################################
-### code chunk number 28: bimets.Rnw:635-637
+### code chunk number 32: bimets.Rnw:719-721
 ###################################################
 #estimate model
 advancedKleinModel <- ESTIMATE(advancedKleinModel)
 
 
 ###################################################
-### code chunk number 29: bimets.Rnw:672-679
+### code chunk number 33: bimets.Rnw:756-763
 ###################################################
 #chow test for the consumption equation
 #base TSRANGE set to 1921/1935
@@ -335,7 +418,7 @@ kleinModelChow <- ESTIMATE(kleinModel
 
 
 ###################################################
-### code chunk number 30: bimets.Rnw:750-770
+### code chunk number 34: bimets.Rnw:834-854
 ###################################################
 #FORECAST GNP in 1942 and 1943 
 #we need to extend exogenous variables in 1942 and 1943
@@ -360,7 +443,7 @@ TABIT(kleinModel$simulation$y)
 
 
 ###################################################
-### code chunk number 31: computation
+### code chunk number 35: computation
 ###################################################
 #STATIC SIMULATION EXAMPLE WITH EXOGENIZATION AND CONSTANT ADJUSTMENTS
  
@@ -390,7 +473,7 @@ kleinModel <- SIMULATE(kleinModel
 
 
 ###################################################
-### code chunk number 32: bimets.Rnw:862-869
+### code chunk number 36: bimets.Rnw:946-953
 ###################################################
 kleinModel <- MULTMATRIX(kleinModel,
                         TSRANGE=c(1941,1,1941,1),
@@ -402,7 +485,7 @@ kleinModel$MultiplierMatrix
 
 
 ###################################################
-### code chunk number 33: bimets.Rnw:875-884
+### code chunk number 37: bimets.Rnw:959-968
 ###################################################
 #multi-period interim multipliers
 kleinModel <- MULTMATRIX(kleinModel,
@@ -416,7 +499,7 @@ kleinModel$MultiplierMatrix
 
 
 ###################################################
-### code chunk number 34: bimets.Rnw:907-913
+### code chunk number 38: bimets.Rnw:991-997
 ###################################################
 #we want an arbitrary value on Consumption of 66 in 1940 and 78 in 1941
 #we want an arbitrary value on GNP of 77 in 1940 and 98 in 1941
@@ -427,7 +510,7 @@ kleinTargets <- list(
 
 
 ###################################################
-### code chunk number 35: computation
+### code chunk number 39: computation
 ###################################################
 kleinModel <- RENORM(kleinModel
                    ,INSTRUMENT = c('w2','g')
@@ -438,7 +521,7 @@ kleinModel <- RENORM(kleinModel
 
 
 ###################################################
-### code chunk number 36: bimets.Rnw:929-936
+### code chunk number 40: bimets.Rnw:1013-1020
 ###################################################
 with(kleinModel,TABIT(modelData$w2,
                       renorm$INSTRUMENT$w2,
@@ -450,21 +533,21 @@ with(kleinModel,TABIT(modelData$w2,
 
 
 ###################################################
-### code chunk number 37: bimets.Rnw:943-945
+### code chunk number 41: bimets.Rnw:1027-1029
 ###################################################
 #create a new model
 kleinRenorm <- kleinModel
 
 
 ###################################################
-### code chunk number 38: bimets.Rnw:947-949
+### code chunk number 42: bimets.Rnw:1031-1033
 ###################################################
 #get instruments to be used
 newInstruments <- kleinModel$renorm$INSTRUMENT
 
 
 ###################################################
-### code chunk number 39: bimets.Rnw:951-962
+### code chunk number 43: bimets.Rnw:1035-1046
 ###################################################
 #change exogenous by using new instruments data
 kleinRenorm$modelData <- within(kleinRenorm$modelData,
@@ -480,7 +563,7 @@ kleinRenorm$modelData <- within(kleinRenorm$modelData,
 
 
 ###################################################
-### code chunk number 40: bimets.Rnw:964-970
+### code chunk number 44: bimets.Rnw:1048-1054
 ###################################################
 #simulate the new model
 kleinRenorm <- SIMULATE(kleinRenorm
@@ -491,7 +574,7 @@ kleinRenorm <- SIMULATE(kleinRenorm
 
 
 ###################################################
-### code chunk number 41: bimets.Rnw:972-976
+### code chunk number 45: bimets.Rnw:1056-1060
 ###################################################
 #verify targets are achieved
 with(kleinRenorm$simulation,

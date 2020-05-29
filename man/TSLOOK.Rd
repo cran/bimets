@@ -54,15 +54,15 @@ This function returns a list of numeric arrays built with the following elements
 \examples{
 	
 	#create series
-	ts1=TSERIES(INTS(1,10),START=c(2000,1),FREQ=12);
+	ts1=TSERIES(INTS(1,10),START=c(2000,1),FREQ=12)
 	
-	ts1Look=TSLOOK(ts1);
+	ts1Look=TSLOOK(ts1)
   	
-	print(ts1Look$STARTY); #print...2000 
-	print(ts1Look$STARTP); #print...1
-	print(ts1Look$ENDY); #print...2000
-	print(ts1Look$ENDP); #print...10
-	print(ts1Look$FREQ); #print...12
+	print(ts1Look$STARTY) #print...2000 
+	print(ts1Look$STARTP) #print...1
+	print(ts1Look$ENDY) #print...2000
+	print(ts1Look$ENDP) #print...10
+	print(ts1Look$FREQ) #print...12
 	
 }
 

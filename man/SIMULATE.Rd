@@ -123,6 +123,7 @@ SIMULATE(model=NULL,
 		 MM_SHOCK=0.00001,
 		 quietly=FALSE,
 		 RESCHECKeqList=NULL,
+		 avoidCompliance=FALSE,
 		 ...)
 
 }
@@ -180,7 +181,9 @@ SIMULATE(model=NULL,
   } 
 \item{RESCHECKeqList}{ If \code{simType=RESCHECK}, by using this arguments users can select a subset of target endogenous variables: the simulation will be perfmormed only for the selected variables. It must be provided as an array of endogenous names, e.g. \code{c('endo1','endo2',...)}.
   } 
-
+    \item{avoidCompliance}{
+  If \code{TRUE}, compliance control check of model time series will be skipped. See \code{\link[=is.bimets]{is.bimets}}
+  }
  \item{...}{
 Backward compatibility.
 }
@@ -242,7 +245,7 @@ COMMENT> Capital Stock
 IDENTITY> k
 EQ> k = TSLAG(k,1) + i
 
-END";
+END"
 
 #define model data
 myModelData=list(
@@ -286,14 +289,14 @@ myModelData=list(
    =TIMESERIES(2.2,2.7,2.9,2.9,3.1,3.2,3.3,3.6,3.7,4,4.2,4.8,5.3,5.6,6,6.1,
                7.4,6.7,7.7,7.8,8,8.5,
                START=c(1920,1),FREQ=1)
- );
+ )
  
 #load model and model data
-myModel=LOAD_MODEL(modelText=myModelDefinition);
-myModel=LOAD_MODEL_DATA(myModel,myModelData);
+myModel=LOAD_MODEL(modelText=myModelDefinition)
+myModel=LOAD_MODEL_DATA(myModel,myModelData)
 
 #estimate model
-myModel=ESTIMATE(myModel);
+myModel=ESTIMATE(myModel)
  
 #DYNAMIC SIMULATION
  
@@ -302,13 +305,13 @@ myModel=SIMULATE(myModel
                  ,TSRANGE=c(1923,1,1941,1)
                  ,simConvergence=0.00001
                  ,simIterLimit=100
-  );
+  )
 #
 #Simulation:    100.00%
 #...SIMULATE OK
  
 #get simulated time series "cn" and "y"
-TABIT(myModel$simulation$cn);
+TABIT(myModel$simulation$cn)
 #
 #      DATE, PER, myModel$simulation$cn
 #
@@ -320,7 +323,7 @@ TABIT(myModel$simulation$cn);
 #      1941, 1  ,     75.451
 #
 
-TABIT(myModel$simulation$y);
+TABIT(myModel$simulation$y)
 #
 #      DATE, PER, myModel$simulation$y
 #
@@ -333,7 +336,7 @@ TABIT(myModel$simulation$y);
 #
  
 #get latest simulation parameters
-print(myModel$simulation$'__SIM_PARAMETERS__');
+print(myModel$simulation$'__SIM_PARAMETERS__')
 #$TSRANGE
 #[1] 1923    1 1941    1
 #
@@ -359,13 +362,13 @@ myModel=SIMULATE(myModel
                   ,TSRANGE=c(1923,1,1941,1)
                   ,simConvergence=0.00001
                   ,simIterLimit=100
- );
+ )
 #
 #Simulation:    100.00%
 #...SIMULATE OK
  
 #get consumption simulated vs historical differences
-TABIT(myModel$simulation$cn-myModel$modelData$cn);
+TABIT(myModel$simulation$cn-myModel$modelData$cn)
 #
 #      DATE, PER, myModel$simulation$cn - myModel$modelData$cn
 #
@@ -381,11 +384,11 @@ TABIT(myModel$simulation$cn-myModel$modelData$cn);
 #FORECAST GNP in 1942 and 1943 
  
 #we need to extend exogenous variables in 1942 and 1943
-myModel$modelData$w2   = TSEXTEND(myModel$modelData$w2,  UPTO=c(1943,1));
-myModel$modelData$t    = TSEXTEND(myModel$modelData$t,   UPTO=c(1943,1));
-myModel$modelData$g    = TSEXTEND(myModel$modelData$g,   UPTO=c(1943,1));
+myModel$modelData$w2   = TSEXTEND(myModel$modelData$w2,  UPTO=c(1943,1))
+myModel$modelData$t    = TSEXTEND(myModel$modelData$t,   UPTO=c(1943,1))
+myModel$modelData$g    = TSEXTEND(myModel$modelData$g,   UPTO=c(1943,1))
 myModel$modelData$time = TSEXTEND(myModel$modelData$time,UPTO=c(1943,1)
-                                     ,EXTMODE='LINEAR');
+                                     ,EXTMODE='LINEAR')
  
 #simulate model
 myModel=SIMULATE(myModel
@@ -393,13 +396,13 @@ myModel=SIMULATE(myModel
                   ,TSRANGE=c(1940,1,1943,1)
                   ,simConvergence=0.00001
                   ,simIterLimit=100
-);
+)
 #
 #Simulation:    100.00%
 #...SIMULATE OK
  
 #get forecasted GNP
-TABIT(myModel$simulation$y);
+TABIT(myModel$simulation$y)
 #
 #      DATE, PER, myModel$simulation$y
 #
@@ -417,13 +420,13 @@ TABIT(myModel$simulation$y);
 exogenizeList=list(
                 cn = c(1923,1,1925,1),
                 i  = TRUE
-);
+)
  
 #define add factor list
 constantAdjList=list(
                cn = TIMESERIES(1,-1,START=c(1923,1),FREQ='A'),
                y  = TIMESERIES(0.1,-0.1,-0.5,START=c(1926,1),FREQ='A')
-);
+)
  
 #simulate model
 myModel=SIMULATE(myModel
@@ -433,7 +436,7 @@ myModel=SIMULATE(myModel
                   ,simIterLimit=100
                   ,Exogenize=exogenizeList
                   ,ConstantAdjustment=constantAdjList 
- );
+ )
 #Endogenous variable cn has been exogenized from year-period 1923-1 to 1925-1
 #Endogenous variable i has been exogenized from year-period 1923-1 to 1941-1
 #Endogenous variable i has a constant adjustment from year-period 1923-1 to 1924-1
@@ -451,7 +454,7 @@ myModel=SIMULATE(myModel
                   ,verbose=TRUE
                   ,verboseSincePeriod=19
                   ,verboseVars=c('cn')
- );
+ )
 #CHECK_MODEL_DATA(): warning, there are missing values in series "time".
 #
 #Simulation:      5.26%

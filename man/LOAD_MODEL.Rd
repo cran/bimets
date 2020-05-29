@@ -147,10 +147,10 @@ IF> i > 0
 IDENTITY> k
 EQ> k = TSLAG(k,1)
 IF> i <= 0
-END";
+END"
 
 #load model 
-myModel=LOAD_MODEL(modelText=myModelDefinition);
+myModel=LOAD_MODEL(modelText=myModelDefinition)
 
 #retrieve model structure...
 #get definition
@@ -269,11 +269,11 @@ myModel$behaviorals$cn$errorDim
 #[1] 2
 
 myModel$behaviorals$cn$eqSimExp
-#expression(cn[4,]=cn_ADDFACTOR[4,]+cn_a1+cn_a2*p[4,]+cn_a3*(p[3,])+
-#cn_a4*(w1[4,]+w2[4,])+cn_RHO_1*(cn[3,]-(cn_ADDFACTOR[3,]+
-#cn_a1+cn_a2*p[3,]+cn_a3*(p[2,])+cn_a4*(w1[3,]+w2[3,])))+
-#cn_RHO_2*(cn[2,]-(cn_ADDFACTOR[2,]+cn_a1+cn_a2*p[2,]+
-#cn_a3*(p[1,])+cn_a4*(w1[2,]+w2[2,]))))
+#expression(cn[4,]=cn__ADDFACTOR[4,]+cn__a1+cn__a2*p[4,]+cn__a3*(p[3,])+
+#cn__a4*(w1[4,]+w2[4,])+cn__RHO_1*(cn[3,]-(cn__ADDFACTOR[3,]+
+#cn__a1+cn__a2*p[3,]+cn__a3*(p[2,])+cn__a4*(w1[3,]+w2[3,])))+
+#cn__RHO_2*(cn[2,]-(cn__ADDFACTOR[2,]+cn__a1+cn__a2*p[2,]+
+#cn__a3*(p[1,])+cn__a4*(w1[2,]+w2[2,]))))
 
 
 

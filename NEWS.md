@@ -1,12 +1,22 @@
 
 **bimets Change-Log**
 
+*bimets ver. 1.5.0 - May 2020*
+
+* added LHS functions on `MDL` `EQ>` definition
+* added `avoidCompliance` in `ESTIMATE`, `SIMULATE`, `RENORM`
+* added `residuals_no_error_correction` in `ESTIMATE`
+* added `TSDELTALOG` time series function
+* removed `stat:time` from code
+* fixed typos on `README.md`
+
+
 *bimets ver. 1.4.3 - Mar. 2020*
 
-* added structural stability analysis
-* added endogenous selection in simulation of type `RESCHECK`
-* removed check of presence for all vendog and vexog in `CHECK_MODEL_DATA`
-* added forceTSRANGE in `ESTIMATE`
+* added structural stability analysis in `ESTIMATE`
+* added endogenous selection in `SIMULATE` of type `RESCHECK`
+* removed check of existence for all vendog and vexog in `CHECK_MODEL_DATA`
+* added `forceTSRANGE` in `ESTIMATE`
 * added frequency and more details on model object
 * added mode details on behaviorals and `ESTIMATE` statistics
 * added compliance with R-devel (R-4.0.0)

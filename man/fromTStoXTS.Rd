@@ -39,47 +39,47 @@ This function returns a time series of class \code{xts()} that has the same obse
 \examples{
 	
 	#day and month names can change depending on locale
-  Sys.setlocale('LC_ALL','C')
-  Sys.setlocale('LC_TIME','C')
+	Sys.setlocale('LC_ALL','C')
+	Sys.setlocale('LC_TIME','C')
   
 	#BIMETS_CONF_DIP default on LAST
-	print('annual');
-	t=ts(1:20,start=c(2005,2),frequency=1);
-	ts=fromTStoXTS(t);
-	print(t);print(ts); #...dates on 31 Dec
+	print('annual')
+	t=ts(1:20,start=c(2005,2),frequency=1)
+	ts=fromTStoXTS(t)
+	print(t);print(ts) #...dates on 31 Dec
 	
-	print('semiannual');
-	t=ts(1:20,start=c(2005,2),frequency=2);
-	ts=fromTStoXTS(t);
-	print(t);print(ts); #...dates on 31 Dec/30 Jun
+	print('semiannual')
+	t=ts(1:20,start=c(2005,2),frequency=2)
+	ts=fromTStoXTS(t)
+	print(t);print(ts) #...dates on 31 Dec/30 Jun
 	
 	#set configuration BIMETS_CONF_DIP on FIRST
-	setBIMETSconf('BIMETS_CONF_DIP','FIRST');
+	setBIMETSconf('BIMETS_CONF_DIP','FIRST')
 	
-	print('annual');
-	t=ts(1:20,start=c(2005,2),frequency=1);
-	ts=fromTStoXTS(t);
-	print(t);print(ts); #...dates on 1 Jan
+	print('annual')
+	t=ts(1:20,start=c(2005,2),frequency=1)
+	ts=fromTStoXTS(t)
+	print(t);print(ts) #...dates on 1 Jan
 	
-	print('semiannual');
-	t=ts(1:20,start=c(2005,2),frequency=2);
-	ts=fromTStoXTS(t);
-	print(t);print(ts); #...dates on 1 Jan/1 Jul
+	print('semiannual')
+	t=ts(1:20,start=c(2005,2),frequency=2)
+	ts=fromTStoXTS(t)
+	print(t);print(ts) #...dates on 1 Jan/1 Jul
 	
-	print('quarterly');
-	t=ts(1:20,start=c(2004,3),frequency=4);
-	ts=fromTStoXTS(t);
-	print(t);print(ts);
+	print('quarterly')
+	t=ts(1:20,start=c(2004,3),frequency=4)
+	ts=fromTStoXTS(t)
+	print(t);print(ts)
 	
-	print('monthly');
-	t=ts(1:20,start=c(2003,5),frequency=12);
-	ts=fromTStoXTS(t);
-	print(t);print(ts);
+	print('monthly')
+	t=ts(1:20,start=c(2003,5),frequency=12)
+	ts=fromTStoXTS(t)
+	print(t);print(ts)
 	
 	
-	print('daily');
-	t=ts(1:20,start=c(2003,125),frequency=366);
-	ts=fromTStoXTS(t);
-	print(t);print(ts);
+	print('daily')
+	t=ts(1:20,start=c(2003,125),frequency=366)
+	ts=fromTStoXTS(t)
+	print(t);print(ts)
 	
 }
