@@ -1,9 +1,9 @@
-e8d738596476cecda4d60d809a1a0f84 *DESCRIPTION
+50a034e273d197d265376307ea7f1d66 *DESCRIPTION
 a42ab3536b675356ad7b32265b13e11b *NAMESPACE
-b9a884729ecad0a35f6595f4d669c974 *NEWS.md
+e1ba7b7aad9d8ba3fc27f20d2482f56e *NEWS.md
 494e804e9da0128a4b57c87ce7669766 *R/bimets_model_functions.R
-8c7abb1ace68e9127bbf63f359a41278 *R/bimets_ts_functions.R
-baa2880a07d575453e2ed3a42c7a0620 *README.md
+3fd28ff64723a726990f0f866a73e023 *R/bimets_ts_functions.R
+0f033e0dc68aab134f279fdb14b322cb *README.md
 236dd8ad771c7d8bc97b801199d556da *build/vignette.rds
 1264b74e898937b9e13385545ff5ca1b *data/bimets_12F_YP2D__.RData
 74eac3484b8f056f6360936dc493e2a1 *data/bimets_12L_YP2D__.RData
@@ -36,9 +36,9 @@ e42bae7828513d4de477c062c6fa0b3d *data/bimets_static_G90__.RData
 22bdc697cae71291908b3417dd5cd907 *data/bimets_static_startYear___.RData
 7cec9e85aa3dd2811c26c96ad957665a *data/bimets_static_totalLength___.RData
 d32239bcb673463ab874e80d47fae504 *inst/License_GPL-3.txt
-be17becd346a953fbc349c407f992c31 *inst/doc/bimets.R
-9845ab395a11672facc3573032e481a3 *inst/doc/bimets.Rnw
-36eeaed1465209a0e89429b8ccd1f7ee *inst/doc/bimets.pdf
+54b668c1f5dafa58051afba74ff55642 *inst/doc/bimets.R
+c0135ac94fc10f6368f3a9b6131bc483 *inst/doc/bimets.Rnw
+01c62d99742e5df3a9c6a04169c6edfa *inst/doc/bimets.pdf
 9a1c6eb1774aa95adeb747add9c75695 *man/A1D.Rd
 3bcb85e802cd4ca10592bf4a33dccfc0 *man/ANNUAL.Rd
 143386bccd87e3d5110d769bb1d006de *man/CUMPROD.Rd
@@ -53,7 +53,7 @@ f01cef1ac6a9321116eb036f7fee9a70 *man/INTS.Rd
 c6cefe6117b3fa784eedef124e8f38d9 *man/LOAD_MODEL.Rd
 0b120cac8ea6f02113347e43d1084dbc *man/LOAD_MODEL_DATA.Rd
 d995db882a31e83c9a8f857a170bf004 *man/LOCS.Rd
-72fe90a9b8c23c3f1c8e1c4e4801a5db *man/MDL.Rd
+a3009ac26cac4a998a105b2e759c11bf *man/MDL.Rd
 d7fdebbb9baaa4b16152883601fe0bf0 *man/MONTHLY.Rd
 4af867ee7822e3758ccf2b9ff6737a04 *man/MOVAVG.Rd
 612a2eb713973334431ee536f765eb8e *man/MOVTOT.Rd
@@ -80,7 +80,7 @@ b1568589906f674f6a9abf4b658deaee *man/TSLOOK.Rd
 2690728fd4fa806f09ceecdd84fe72ba *man/TSPROJECT.Rd
 e21e3d07da4a934923bd1825664497e3 *man/TSTRIM.Rd
 11a0ac4993c67f04b7e0a2f0e7747514 *man/as.bimets.Rd
-74e353fa152eb9735f6e554bc6b1e4cc *man/bimets-package.Rd
+9c46818774155924f45a5f856b75e220 *man/bimets-package.Rd
 b76cb55d8d7929ed11ada36195459304 *man/bimetsConf.Rd
 25ce23a8c88f2364bdf86934f48db94b *man/bimetsDataset.Rd
 493c4b378ce27c37990c67eccbe6c55b *man/date2yp.Rd
@@ -100,4 +100,4 @@ efc142d0571d5af01964d0daad5a560b *man/summary.BIMETS_MODEL.Rd
 e66872777832acd22536b2f5f54a1532 *man/yq2yp.Rd
 4f3e7fa9b523dd6c53e2b5e6d94d71e3 *vignettes/CnSim.png
 577f26f88575d11ef2b75bc70d03f4de *vignettes/Reordering.png
-9845ab395a11672facc3573032e481a3 *vignettes/bimets.Rnw
+c0135ac94fc10f6368f3a9b6131bc483 *vignettes/bimets.Rnw
