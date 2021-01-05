@@ -24,6 +24,7 @@ ESTIMATE(model=NULL,
          forceTSRANGE=FALSE,
          estTech='OLS',
          IV=NULL,
+         forceIV=FALSE,
          quietly=FALSE,
          showWarnings=FALSE,
          tol=.Machine$double.eps,
@@ -55,6 +56,9 @@ ESTIMATE(model=NULL,
     \item{IV}{
    The \code{character} array built with the Instrumental Variable expressions, in the case of Instrumental Variables estimation (see examples).
    }
+    \item{forceIV}{
+  If \code{TRUE}, the \code{IV} defined in the previous argument takes precedence over the \code{IV} provided in the behavioral \code{\link[=MDL]{MDL}} definition.
+  }
    \item{quietly}{
    If \code{TRUE}, information messages will be suppressed, e.g. results and regression statistics.
    }
@@ -107,11 +111,13 @@ If \code{outputText=TRUE}, for each behavioral in the \code{eqList} this functio
 - the \emph{Number of Degrees of Freedom};\cr
 - the \emph{Current Sample}, i.e. the \code{TSRANGE} of estimation;\cr
 
+All probabilities lie between [0, 1].\cr
+
 For each behavioral in the \code{eqList} this function will add 4 new named elements into the related behavioral of the output model object:\cr\cr
 1) \code{coefficients}: a numerical array built with the estimated coefficients;\cr
 2) \code{errorCoefficients}: a numerical array built with the estimated coefficient for the error autoregression, if the \code{ERROR>} structure has been provided in the model \code{\link[=MDL]{MDL}} definition;\cr
 3) \code{residuals}: the time series of the regression residuals. If an \code{ERROR>} structure has been provided in the behavioral definition, the related residuals will be calculated as described in the Cochrane-Orcutt procedure (see \code{\link[=MDL]{MDL}}).\cr
-3) \code{residuals_no_error_correction}:  if an \code{ERROR>} structure has been provided in the behavioral definition, the residuals caclucated by using the original dependant and independent varibles are stored into this list element.\cr
+3) \code{residuals_no_error_correction}:  if an \code{ERROR>} structure has been provided in the behavioral definition, the residuals caclucated by using the original dependent and independent varibles are stored into this list element.\cr
 4) \code{statistics}: a list built with the parameters and the statistics of the estimation, e.g.:\cr
 - \code{TSRANGE}: TSRANGE requested in the latest estimation of the behavioral;\cr
 - \code{estimationTechinque}: estimation technique requested in the latest estimation of the behavioral;\cr
@@ -330,7 +336,7 @@ myModel=ESTIMATE(myModel)
 #                    +   0.6993905   (w1+w2)
 #                        T-stat. 14.0808     ***
 #
-#ERROR:  AUTO(2) 
+#ERROR STRUCTURE:  AUTO(2) 
 #
 #AUTOREGRESSIVE PARAMETERS:
 #Rho             Std. Error      T-stat.         
@@ -537,7 +543,7 @@ myModel=ESTIMATE(myModel,
 #                    +   0.7363227   (w1+w2)
 #                        T-stat. 13.11572    ***
 #
-#ERROR:  AUTO(2) 
+#ERROR STRUCTURE:  AUTO(2) 
 #
 #AUTOREGRESSIVE PARAMETERS:
 #Rho             Std. Error      T-stat.         
@@ -567,7 +573,33 @@ myModel=ESTIMATE(myModel,
 #
 #...ESTIMATE OK
 
+#define model
+myShortModelDefinition=
+  "MODEL
+  COMMENT> Consumption with IV
+  BEHAVIORAL> cn
+  TSRANGE 1925 1 1941 1
+  EQ> cn = a1 + a2*p + a3*TSLAG(p,1) + a4*(w1+w2)
+  COEFF> a1 a2 a3 a4
+  IV> 1
+  IV> TSLAG(y)
+  IV> TSLAG(w1)*pi+0.5
+  IV> exp(w2)
+  END
+  " 
 
+
+#load model 
+myShortModel=LOAD_MODEL(modelText=myShortModelDefinition)
+
+#load data into the model
+myShortModel=LOAD_MODEL_DATA(myShortModel,myModelData,showWarnings = TRUE)
+
+#estimation of Consumption "cn" with arbitrary IVs
+#and error autocorrelation
+myShortModel=ESTIMATE(myShortModel,
+                 eqList = 'cn',
+                 estTech = 'IV')
 
 
 #estimation of Investment "i" with arbitrary IVs
@@ -706,7 +738,7 @@ myModel=ESTIMATE(myModel,
 #Chow test:
 #Sample (auto)      : 1936-1 / 1941-1 
 #F-value            : 15.3457       
-#F-prob(6,12)       : 0.00534447    
+#F-prob(6,12)       : 5.34447e-05    
 #
 #Predictive Power:
 #

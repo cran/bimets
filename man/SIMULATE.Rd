@@ -64,6 +64,23 @@ the add-factors \eqn{\bar{z}=[z_1, ... ,z_n]}{z=[z_1, ... ,z_n]} can be interpre
 3. solve the model, with the \code{simType='RESCHECK'} option, in a time interval including some periods beyond the estimation sample;\cr
 4. compute the difference between the historical and the simulated values for each the endogenous variables;\cr
 5. average, or process in a suitable way, the difference arising from point 4 in the time periods beyond the estimation sample to compute the constant value to be used as an add-factor in the following forecasting exercises;\cr\cr
+Please note that in case of equation that presents an LHS function the add-factor will be added before the application of the inverse function, i.e. during the simulation the following:\cr\cr
+\eqn{g_1(y_1)=f_1(\bar{x},\bar{y}) + z_1}{g_1(y_1)=f_1(x,y) + z_1} \cr
+\eqn{...} \cr
+\eqn{g_n(y_n)=f_n(\bar{x},\bar{y}) + z_n}{g_n(y_n)=f_n(x,y) + z_n} \cr\cr
+will be solved as:\cr\cr
+\eqn{y_1=g_{1}^{-1}(f_1(\bar{x},\bar{y}) + z_1)}{y_1=g_1^(-1)( f_1(x,y) + z_1 )} \cr
+\eqn{...} \cr
+\eqn{y_n=g_{n}^{-1}(f_n(\bar{x},\bar{y}) + z_n)}{y_n=g_n^(-1)( f_n(x,y) + z_n )} \cr\cr
+If a linear dependence from the simulated endogenous and the add-factor is preferred, users can manually insert an auxiliary equation \eqn{w_i} into the model definition, e.g. the following:\cr\cr
+\eqn{g_i(y_i)=f_i(\bar{x},\bar{y})}{g_i(y_i)=f_i(x,y)} \cr\cr
+can be replaced by:\cr\cr
+\eqn{w_i=f_i(\bar{x},\bar{y})}{w_i=f_i(x,y)} \cr
+\eqn{y_i=g_{i}^{-1}(w_i)}{y_i=g_i^(-1)(w_i)} \cr\cr
+During the simulation, the add-factors will be applied as in the following:\cr\cr
+\eqn{w_i=f_i(\bar{x},\bar{y}) + v_i}{w_i=f_i(x,y) + v_i} \cr
+\eqn{y_i=g_{i}^{-1}(w_i) + z_i}{y_i=g_i^(-1)(w_i) + z_i} \cr\cr
+given \eqn{v_i, z_i} as add-factors and the linear dependence from \eqn{z_i} and \eqn{y_i}.\cr\cr
 \tabular{c}{THE OPTIMAL REORDERING}
 In fact, the simulation process takes advantage of an appropriate ordering of the equations to increase the performances by iteratively solving only one subset of equations, while the others are solved straightforwardly. \emph{"...a different ordering of the equations can substantially affect the speed of convergence of the algorithm; indeed some orderings may produce divergence. The less feedback there is, the better the chances for fast convergence..."} - Don, Gallo - Solving large sparse systems of equations in econometric models - Journal of Forecasting 1987.\cr\cr
 The \code{\link[=LOAD_MODEL]{LOAD_MODEL}} function builds the incidence matrix of the model, then defines the proper equation reordering. The incidence matrix is built from the equations of the model; it is a square matrix in which each row and each column represents an endogenous variable. If the \code{(i,j)} element is equal to 1 then in the model definition the current value of the endogenous variable referred by the \code{i}-row depends directly from the current value of the endogenous variable referred by the \code{j}-column.\cr\cr

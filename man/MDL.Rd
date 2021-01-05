@@ -68,7 +68,7 @@ The following \code{MDL} functions can be used in the \code{LHS} left-hand side 
 - \code{TSDELTALOG(name,i)} - \code{i}-periods logarithmic difference of the \code{name} time series;\cr \cr
 - \code{LOG(name)} - log of the \code{name} time series;\cr \cr
 - \code{EXP(name)} - exponential of the \code{name} time series. \cr \cr
-On the other side the mathematical expression available for using in the \code{RHS} right-hand side of the \code{EQ>} equation (i.e. \code{f1, f2, f3, ...}) can include the standard arithmetic operators, parentheses and the following \code{MDL} functions:\cr \cr
+On the other side the mathematical expression available for using in the \code{RHS} right-hand side of the \code{EQ>} equation and in the \code{IV>} expression described later in this page (i.e. \code{f1, f2, f3, ...}) can include the standard arithmetic operators, parentheses and the following \code{MDL} functions:\cr \cr
 - \code{TSLAG(ts,i)} - lag the \code{ts} time series by \code{i}-periods;\cr \cr
 - \code{TSDELTA(ts,i)} - \code{i}-periods difference of the \code{ts} time series;\cr \cr
 - \code{TSDELTAP(ts,i)} - \code{i}-periods percentage difference of the \code{ts} time series;\cr \cr
@@ -238,7 +238,9 @@ IDENTITY> myIdentity
 IF> TSDELTA(myEndog*(1-myExog)) <= 0
 EQ> myIdentity = TSLAG(myIdentity)
 }
-
+- \bold{IV>} specifies the mathematical expression for an instrumental variable used in a behavioral equation. \cr\cr
+The general form for an instrumental variable expression is:\cr \code{IV> f1 + f2 + f3 + ...} \cr \code{f1, f2, f3, ...} are functions of variables.\cr\cr
+The mathematical expression available for using in the \code{IV>} definition are those already described in the \code{EQ>} section.\cr \cr
 - \bold{COMMENT>} can be used to insert comments into a model. The general form of this keyword is:\cr
 \code{COMMENT> text}\cr \cr
 The \code{text} following the \code{COMMENT>} keyword is ignored during all processing, and must lie in the same line. A comment cannot be inserted within another keyword statement. A dollar sign in the first position of a line is equivalent to using the COMMENT> keyword, as in this exmaple:\cr
@@ -380,21 +382,21 @@ COMMENT> LHS functions on EQ
 COMMENT> Exp Consumption
 BEHAVIORAL> cn
 TSRANGE 1925 1 1941 1
-EQ> EXP(cn) = a1 + a2*p + a3*LAG(p,1) + a4*(w1+w2)
+EQ> EXP(cn) = a1 + a2*p + a3*TSLAG(p,1) + a4*(w1+w2)
 COEFF> a1 a2 a3 a4
 ERROR> AUTO(2)
 
 COMMENT> Log Investment
 BEHAVIORAL> i
 TSRANGE 1925 1 1941 1
-EQ> LOG(i) = b1 + b2*p + b3*LAG(p,1) + b4*LAG(k,1)
+EQ> LOG(i) = b1 + b2*p + b3*TSLAG(p,1) + b4*TSLAG(k,1)
 COEFF> b1 b2 b3 b4
 RESTRICT> b2 + b3 = 1
 
 COMMENT> Demand for Labor
 BEHAVIORAL> w1
 TSRANGE 1925 1 1941 1
-EQ> w1 = c1 + c2*(TSDELTA(y)+t-w2) + c3*LAG(TSDELTA(y)+t-w2,1)+c4*time
+EQ> w1 = c1 + c2*(TSDELTA(y)+t-w2) + c3*TSLAG(TSDELTA(y)+t-w2,1)+c4*time
 COEFF> c1 c2 c3 c4
 PDL> c3 1 3
 
@@ -408,10 +410,10 @@ EQ> p = TSDELTA(y) - (w1+w2)
 
 COMMENT> Capital Stock with switches
 IDENTITY> k
-EQ> k = LAG(k,1) + LOG(i)
+EQ> k = TSLAG(k,1) + LOG(i)
 IF> LOG(i) > 0
 IDENTITY> k
-EQ> k = LAG(k,1)
+EQ> k = TSLAG(k,1)
 IF> LOG(i) <= 0
 
 END'
@@ -473,4 +475,27 @@ model=SIMULATE(model
                ,simConvergence=0.00001
                ,simIterLimit=100
 )
+
+#########################################################
+#SIMPLE MODEL WITH IV
+
+
+#define the model with IVs
+myShortModelDefinition="
+MODEL
+COMMENT> Consumption with IV
+BEHAVIORAL> cn
+TSRANGE 1925 1 1941 1
+EQ> cn = a1 + a2*p + a3*TSLAG(p,1) + a4*(w1+w2)
+COEFF> a1 a2 a3 a4
+IV> 1
+IV> TSLAG(y)
+IV> TSLAG(w1)*pi+0.5
+IV> exp(w2)
+END
+" 
+
+#load model 
+myShortModel=LOAD_MODEL(modelText=myShortModelDefinition)
+
 }

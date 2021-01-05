@@ -3,16 +3,16 @@
 
 
 \title{
-Perform the renormalization of a BIMETS model object.
+Perform the endogenous targeting (a.k.a. "renormalization"") of a BIMETS model object.
 }
 \description{
 \if{html}{(Note: this is the html version of the reference manual. Please consider reading the pdf version of this reference manual, wherein there are figures and the mathematical expressions are better formatted than in html.)\cr\cr}
 
-The renormalization of econometric models consists of solving the model while interchanging the role of one or more endogenous variables with an equal number of exogenous variables.\cr\cr This function determines the values for the \code{INSTRUMENT} exogenous variables which allow the objective \code{TARGET} endogenous variables to be achieved, with respect to the constraints given by the model \code{MDL} definition.\cr\cr
+The endogenous targeting of econometric models (a.k.a. "renormalization") consists of solving the model while interchanging the role of one or more endogenous variables with an equal number of exogenous variables.\cr\cr This function determines the values for the \code{INSTRUMENT} exogenous variables which allow the objective \code{TARGET} endogenous variables to be achieved, with respect to the constraints given by the model \code{MDL} definition.\cr\cr
 This is an approach to economic and monetary policy analysis, and is based on two assumptions:\cr\cr
 1. there exists a desired level for a set of \code{n} endogenous variables defined as \code{TARGET};\cr
 2. there exists a set of \code{n} exogenous variables defined as \code{INSTRUMENT};\cr\cr
-Given these premises, the renormalization process consists in determining the values of the exogenous variables chosen as \code{INSTRUMENT} allowing us to achieve the desired values for the endogenous variables designated as \code{TARGET}. In other words the procedure allows users to exchange the role of exogenous and endogenous among a set of time series pairs. \cr\cr
+Given these premises, the endogenous targeting process consists in determining the values of the exogenous variables chosen as \code{INSTRUMENT} allowing us to achieve the desired values for the endogenous variables designated as \code{TARGET}. In other words the procedure allows users to exchange the role of exogenous and endogenous among a set of time series pairs. \cr\cr
 Given a list of exogenous \code{INSTRUMENT} variables and a list of \code{TARGET} endogenous time series, the iterative procedure can be split into the following steps:\cr\cr
 1. Computation of the multipliers matrix \code{MULTMAT} of the \code{TARGET} endogenous variables with respect to the \code{INSTRUMENT} exogenous variables (this is a square matrix by construction);\cr\cr
 2. Solution of the linear system: \cr\cr
@@ -202,7 +202,7 @@ kleinTargets = list(
   y  = TSERIES(77,98,START=c(1940,1),FREQ=1)
 )
 
-#Then, we can perform the model renormalization by using Government Wage Bill 'w2' 
+#Then, we can perform the model endogenous targeting by using Government Wage Bill 'w2' 
 #and Government non-Wage Spending 'g' as 
 #INSTRUMENT in the years 1940 and 1941:
 myModel=RENORM(myModel

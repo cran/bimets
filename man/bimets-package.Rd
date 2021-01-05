@@ -27,10 +27,10 @@ R> library(bimets)
 Example: 
 \preformatted{
 R> #yearly time series
-R> myTS=TIMESERIES(1:10,START=as.Date('2000-01-01'),FREQ=1)
+R> myTS <- TIMESERIES(1:10,START=as.Date('2000-01-01'),FREQ=1)
 
 R> #monthly time series
-R> myTS=TIMESERIES(1:10,START=c(2002,3),FREQ='M')
+R> myTS <- TIMESERIES(1:10,START=c(2002,3),FREQ='M')
 }
 
 The main \bold{bimets} time series capabilities are:\cr\cr
@@ -48,16 +48,16 @@ The \bold{bimets} package extends R indexing capabilities in order to ease time 
 Example:
 \preformatted{
 R> #create a daily time series
-R> myTS=TIMESERIES((1:100),START=c(2000,1),FREQ='D')
+R> myTS <- TIMESERIES((1:100),START=c(2000,1),FREQ='D')
 
 R> myTS[1:3]                      #get first three obs.
 R> myTS['2000-01-12']             #get Jan 12, 2000 data
 R> myTS['2000-02-03/2000-02-14']  #get Feb 3 up to Feb 14
 R> myTS[[2000,14]]                #get year 2000 period 14
 
-R> myTS['2000-01-15'] = NA        #assign to Jan 15, 2000
-R> myTS[[2000,42]] = NA           #assign to Feb 11, 2000
-R> myTS[[2000,100]] = c(-1,-2,-3) #extend time series starting from period 100
+R> myTS['2000-01-15'] <- NA        #assign to Jan 15, 2000
+R> myTS[[2000,42]] <- NA           #assign to Feb 11, 2000
+R> myTS[[2000,100]] <- c(-1,-2,-3) #extend time series starting from period 100
 
 
 }
@@ -66,13 +66,13 @@ The \bold{bimets} package provides advanced (dis)aggregation capabilities, with 
 Example:
 \preformatted{
 R> #create a monthly time series
-R> myMonthlyTS=TIMESERIES(1:100,START=c(2000,1),FREQ='M')
+R> myMonthlyTS <- TIMESERIES(1:100,START=c(2000,1),FREQ='M')
 
-R> #convert to annual time series by using the average as aggregation fun
-R> myAnnualTS=ANNUAL(myMonthlyTS,'AVE')
+R> #convert to yearly time series by using the average as aggregation fun
+R> myYearlyTS <- YEARLY(myMonthlyTS,'AVE')
 
 R> #convert to daily by using central interpolation as disaggregation fun
-R> myDailyTS=DAILY(myMonthlyTS,'INTERP_CENTER')
+R> myDailyTS <- DAILY(myMonthlyTS,'INTERP_CENTER')
 
 
 
@@ -100,24 +100,24 @@ The \bold{bimets} package provides, among others, the following time series mani
 Example:
 \preformatted{
 R> #define two time series
-R> myTS1=TIMESERIES(1:100,START=c(2000,1),FREQ='M')
-R> myTS2=TIMESERIES(-(1:100),START=c(2005,1),FREQ='M')
+R> myTS1 <- TIMESERIES(1:100,START=c(2000,1),FREQ='M')
+R> myTS2 <- TIMESERIES(-(1:100),START=c(2005,1),FREQ='M')
 
 R> #extend time series up to Apr 2020 with quadratic formula
-R> myExtendedTS=TSEXTEND(myTS1,UPTO = c(2020,4),EXTMODE = 'QUADRATIC')
+R> myExtendedTS <- TSEXTEND(myTS1,UPTO = c(2020,4),EXTMODE = 'QUADRATIC')
 
 R> #merge two time series with sum
-R> myMergedTS=TSMERGE(myExtendedTS,myTS2,fun = 'SUM')
+R> myMergedTS <- TSMERGE(myExtendedTS,myTS2,fun = 'SUM')
 
 R> #project time series on arbitrary time range
-R> myProjectedTS=TSPROJECT(myMergedTS,TSRANGE = c(2004,2,2006,4))
+R> myProjectedTS <- TSPROJECT(myMergedTS,TSRANGE = c(2004,2,2006,4))
 
 R> #lag and delta% time series
-R> myLagTS=TSLAG(myProjectedTS,2)
-R> myDeltaPTS=TSDELTAP(myLagTS,2)
+R> myLagTS <- TSLAG(myProjectedTS,2)
+R> myDeltaPTS <- TSDELTAP(myLagTS,2)
 
 R> #moving average
-R> myMovAveTS=MOVAVG(myDeltaPTS,5)
+R> myMovAveTS <- MOVAVG(myDeltaPTS,5)
 
 R> #print data
 R> TABIT(myMovAveTS,
@@ -142,15 +142,15 @@ Dec 2004, 12 , 3.706247   , 60
 - \emph{Estimation} \cr
 - \emph{Simulation} \cr
 - \emph{Multipliers Analysis} \cr
-- \emph{Renormalization (Tinbergen Classification)} \cr\cr
-We will go through each item of the list with a simple Tinbergen-Klein model example. \cr
+- \emph{Endogenous Targeting } \cr\cr
+We will go through each item of the list with a simple Klein model example (ref: "Economic Fluctuations in the United States" by L. R. Klein, Wiley and Sons Inc., New York, 1950). \cr
 \tabular{c}{\emph{Model Definition Language} }
 
 \bold{bimets} provides a language to unambiguously specify an econometric model. This section describes how to create a model and its general structure. The specification of an econometric model is translated and identified by keyword statements which are grouped in a model file, i.e. a plain text file with a specific syntax. Collectively, these keyword statements constitute the \bold{bimets} Model Description Language (from now on \code{\link[=MDL]{MDL}}). The model specifications consist of groups of statements. Each statement begins with a keyword. The keyword classifies the component of the model which is beign specified.\cr\cr
 Below is an example of Klein's model, that can either be stored in an \code{R} variable of class \code{character} or in a plain text file with a \code{MDL} compliant syntax. \cr\cr
 The content of the \emph{klein1.txt} variable  is:
 \preformatted{
-R> klein1.txt="
+R> klein1.txt <- "
 MODEL 
 
 COMMENT> Consumption
@@ -200,6 +200,7 @@ As shown, the model definition is quite intuitive. The first keyword is \code{MO
 - \bold{PDL>} defines an Almon polynomial distributed lag;\cr  \cr
 - \bold{RESTRICT>} is a keyword that can be used to specify linear coefficient restrictions;\cr \cr
 - \bold{IF>} is used to conditionally evaluate an identity during a simulation, depending on the value of a logical expression. Thus, it is possible to have a model alternating between two or more identity specifications for each simulation period, depending upon results from other equations;\cr \cr
+- \bold{IV>} specifies the mathematical expression for an instrumental variable used in a behavioral equation;\cr \cr
 - \bold{COMMENT>} can be used to insert comments into a model;\cr \cr
 The mathematical expression in the EQ> and IF> definitions can include the standard arithmetic operators, parentheses, and the following MDL time series functions: \cr \cr
 - \code{TSLAG(ts,i)}: lag the \code{ts} time series by \code{i}-periods;\cr \cr
@@ -215,7 +216,7 @@ The mathematical expression in the EQ> and IF> definitions can include the stand
 More details are available in \code{\link[=MDL]{MDL}} and \code{\link[=LOAD_MODEL]{LOAD_MODEL}} help pages. \code{LOAD_MODEL()} is the \bold{bimets} function that reads an MDL model file and creates an equivalent R data structure.\cr \cr
 Back to Klein's model example, the \bold{bimets} \code{\link[=LOAD_MODEL]{LOAD_MODEL}} function reads the \emph{klein1.txt} model as previously defined:
 \preformatted{
-R> kleinModel=LOAD_MODEL(modelText = klein1.txt)
+R> kleinModel <- LOAD_MODEL(modelText = klein1.txt)
 
 Analyzing behaviorals...
 Analyzing identities...
@@ -289,7 +290,7 @@ While simulating the Klein's model, \bold{bimets} will iterate on the computatio
 More details on the equations reordering are available in \code{\link[=MDL]{MDL}} and \code{\link[=LOAD_MODEL]{LOAD_MODEL}} help pages.\cr\cr
 Once the model has been parsed, users needs to load the data of all the time series involved in the model, by using the \code{\link[=LOAD_MODEL_DATA]{LOAD_MODEL_DATA}} function. In the following example, the code defines a list of time series and loads this list into the Klein's model previously defined:
 \preformatted{
-R> kleinModelData=list(  
+R> kleinModelData <- list(  
     cn  =TIMESERIES(39.8,41.9,45,49.2,50.6,52.6,55.1,56.2,57.3,57.8,
                  55,50.9,45.6,46.5,48.7,51.3,57.7,58.7,57.5,61.6,65,69.7, 	
                  START=c(1920,1),FREQ=1),
@@ -323,7 +324,7 @@ R> kleinModelData=list(
                  START=c(1920,1),FREQ=1)
 	)
 
-R> kleinModel=LOAD_MODEL_DATA(kleinModel,kleinModelData)
+R> kleinModel <- LOAD_MODEL_DATA(kleinModel,kleinModelData)
 }
 Since time series and other data (e.g. regressor coefficients, error coefficients, constant adjustments, targets, instruments, etc...) are stored into the model object, users can define multiple model objects - each with its own arbitrary data - in the same \code{R} session. \bold{bimets} makes it possible to estimate, simulate and compare results from different models with different data sets. Furthermore, users can easily save an estimated or a simulated model as a standard \code{R} variable, thus reloading it later, having all available data and time series stored into it, i.e. endogenous and exogenous time series, estimated coefficients, constant adjustments, simulation options, simulated time series, calculated instruments, targets, etc. (see also \code{\link[=RENORM]{RENORM}} and \code{\link[=SIMULATE]{SIMULATE}})\cr\cr
 An advanced MDL model example follows:
@@ -332,7 +333,7 @@ An advanced MDL model example follows:
 R> #KLEIN MODEL WITH AUTOCORRELATION, RESTRICTIONS, 
 R> #CONDITIONAL EVALUATIONS AND LHS FUNCTIONS
 
-R> lhsKlein1.txt="
+R> lhsKlein1.txt <- "
 MODEL
 
 COMMENT> Modified Klein Model 1 of the U.S. Economy with PDL,
@@ -342,21 +343,21 @@ COMMENT> conditional evaluations and LHS functions on EQ
 COMMENT> Exp Consumption
 BEHAVIORAL> cn
 TSRANGE 1925 1 1941 1
-EQ> EXP(cn) = a1 + a2*p + a3*LAG(p,1) + a4*(w1+w2)
+EQ> EXP(cn) = a1 + a2*p + a3*TSLAG(p,1) + a4*(w1+w2)
 COEFF> a1 a2 a3 a4
 ERROR> AUTO(2)
 
 COMMENT> Log Investment
 BEHAVIORAL> i
 TSRANGE 1925 1 1941 1
-EQ> LOG(i) = b1 + b2*p + b3*LAG(p,1) + b4*LAG(k,1)
+EQ> LOG(i) = b1 + b2*p + b3*TSLAG(p,1) + b4*TSLAG(k,1)
 COEFF> b1 b2 b3 b4
 RESTRICT> b2 + b3 = 1
 
 COMMENT> Demand for Labor
 BEHAVIORAL> w1
 TSRANGE 1925 1 1941 1
-EQ> w1 = c1 + c2*(TSDELTA(y)+t-w2) + c3*LAG(TSDELTA(y)+t-w2,1)+c4*time
+EQ> w1 = c1 + c2*(TSDELTA(y)+t-w2) + c3*TSLAG(TSDELTA(y)+t-w2,1)+c4*time
 COEFF> c1 c2 c3 c4
 PDL> c3 1 3
 
@@ -370,10 +371,10 @@ EQ> p = TSDELTA(y) - (w1+w2)
 
 COMMENT> Capital Stock with switches
 IDENTITY> k
-EQ> k = LAG(k,1) + LOG(i)
+EQ> k = TSLAG(k,1) + LOG(i)
 IF> LOG(i) > 0
 IDENTITY> k
-EQ> k = LAG(k,1)
+EQ> k = TSLAG(k,1)
 IF> LOG(i) <= 0
 
 END"
@@ -393,11 +394,11 @@ The \bold{bimets} \code{\link[=ESTIMATE]{ESTIMATE}} function estimates equations
 Restrictions procedure derives from the theory of Lagrange Multipliers, while the Cochrane-Orcutt method allows to account for residuals autocorrelation. \cr\cr
 The estimation of the previously defined Klein's model is shown in the following example:  
 \preformatted{
-R> kleinModel=ESTIMATE(kleinModel)
+R> kleinModel <- ESTIMATE(kleinModel)
 }
 Users can also estimate a selection of behavioral equations:
 \preformatted{
-R> kleinModel=ESTIMATE(kleinModel,eqList=c('cn'))
+R> kleinModel <- ESTIMATE(kleinModel,eqList=c('cn'))
 
 .CHECK_MODEL_DATA(): warning, there are undefined values in time series "time".
 
@@ -496,7 +497,7 @@ Below is an example of a model estimation that presents coefficient restrictions
 \preformatted{
 
 R> #define model
-R> advancedKlein1.txt=
+R> advancedKlein1.txt <- 
 "MODEL
 
 COMMENT> Modified Klein Model 1 of the U.S. Economy with PDL, 
@@ -543,7 +544,7 @@ IF> i <= 0
 END"
 
 R> #load model and data
-R> advancedKleinModel=LOAD_MODEL(modelText=advancedKlein1.txt)
+R> advancedKleinModel <- LOAD_MODEL(modelText=advancedKlein1.txt)
 
 Analyzing behaviorals...
 Analyzing identities...
@@ -554,13 +555,13 @@ Loaded model "advancedKlein1.txt":
     12 coefficients
 ...LOAD MODEL OK
 
-R> advancedKleinModel=LOAD_MODEL_DATA(advancedKleinModel,kleinModelData)
+R> advancedKleinModel <- LOAD_MODEL_DATA(advancedKleinModel,kleinModelData)
 
 Load model data "kleinModelData" into model "advancedKlein1.txt"...
 ...LOAD MODEL DATA OK
 
 R> #estimate model
-R> advancedKleinModel=ESTIMATE(advancedKleinModel)
+R> advancedKleinModel <- ESTIMATE(advancedKleinModel)
 
 .CHECK_MODEL_DATA(): warning, there are undefined values in time series "time".
 
@@ -589,7 +590,7 @@ cn                  =   19.01352
                     +   0.6993905   (w1+w2)
                         T-stat. 14.0808     ***
 
-ERROR:  AUTO(2) 
+ERROR STRUCTURE:  AUTO(2) 
 
 AUTOREGRESSIVE PARAMETERS:
 Rho             Std. Error      T-stat.         
@@ -779,9 +780,7 @@ Behavioral equation: cn
 Chow test:
 Sample (auto)      : 1936-1 / 1941-1 
 F-value            : 4.48873       
-F-prob(6,17)       : 0.668723      
-
-Predictive Power:
+F-prob(6,17)       : 0.00668723      
 
 Predictive Power:
 
@@ -811,12 +810,12 @@ The simulation of an econometric model basically consists in solving the system 
 - \emph{Backfill of simulated time series}: specifies the periods of historical data prior to the simulation time interval which are to be included in the simulation results;\cr\cr
 More details are available in the \code{\link[=SIMULATE]{SIMULATE}} help page. \cr \cr
 
-Back to Kelin's model example, let's forecast the GNP (i.e. the "\code{y}" endogenous variable) up to 1943: 
+Back to Kelin's model example, let's forecast the GNP (i.e. the "\code{y}" endogenous variable, originally referred as "Net national income, measured in billions of 1934 dollars", pag. 141 in "Economic Fluctuations in the United States" by L. R. Klein, Wiley and Sons Inc., New York, 1950) up to 1943: 
 \preformatted{
 R> #FORECAST GNP in 1942 and 1943 
 
 R> #we need to extend exogenous variables in 1942 and 1943
-R> kleinModel$modelData=within(kleinModel$modelData,{
+R> kleinModel$modelData <- within(kleinModel$modelData,{
                     w2   = TSEXTEND(w2,  UPTO=c(1943,1))
                     t    = TSEXTEND(t,   UPTO=c(1943,1))
                     g    = TSEXTEND(g,   UPTO=c(1943,1))
@@ -826,7 +825,7 @@ R> kleinModel$modelData=within(kleinModel$modelData,{
 
  
 R> #simulate model
-R> kleinModel=SIMULATE(kleinModel
+R> kleinModel <- SIMULATE(kleinModel
                   ,simType='FORECAST'
                   ,TSRANGE=c(1940,1,1943,1)
                   ,simConvergence=0.00001
@@ -857,19 +856,19 @@ R> #STATIC SIMULATION EXAMPLE WITH EXOGENIZATION AND CONSTANT ADJUSTMENTS
 R> #define exogenization list
 R> #'cn' exogenized in 1923-1925
 R> #'i' exogenized in the whole TSRANGE
-R> exogenizeList=list(
+R> exogenizeList <- list(
                   cn = c(1923,1,1925,1),
                   i  = TRUE
                   )
  
 R> #define add-factor list
-R> constantAdjList=list(
+R> constantAdjList <- list(
                  cn = TIMESERIES(1,-1,START=c(1923,1),FREQ='A'),
                  y  = TIMESERIES(0.1,-0.1,-0.5,START=c(1926,1),FREQ='A')
                  )
  
 R> #simulate model
-R> kleinModel=SIMULATE(kleinModel
+R> kleinModel <- SIMULATE(kleinModel
                   ,simType='STATIC'
                   ,TSRANGE=c(1923,1,1941,1)
                   ,simConvergence=0.00001
@@ -891,7 +890,7 @@ The \code{MULTMATRIX()} procedure is articulated as follows:\cr\cr
 \bold{bimets} users can also declare an endogenous variable as the \code{INSTRUMENT} variable. In this case, the constant adjustment related to the provided endogenous variable will be used as the \code{INSTRUMENT} exogenous variable. \cr\cr
 Back to our Klein's model example, we can calculate impact multipliers of Government non-Wage Spending "\code{g}" and Government Wage Bill "\code{w2}" with respect of Consumption "\code{cn}" and Gross National Product "\code{y}" in the year 1941 by using the previously estimated model: 
 \preformatted{
-R> kleinModel=MULTMATRIX(kleinModel,
+R> kleinModel <- MULTMATRIX(kleinModel,
                         TSRANGE=c(1941,1,1941,1),
                         INSTRUMENT=c('w2','g'),
                         TARGET=c('cn','y')
@@ -909,7 +908,7 @@ Results show that the impact multiplier of "\code{y}" with respect to "\code{g}"
 An interim-multiplier example follows: 
 \preformatted{
 R> #multi-period interim multipliers
-R> kleinModel=MULTMATRIX(kleinModel,
+R> kleinModel <- MULTMATRIX(kleinModel,
                    TSRANGE=c(1940,1,1941,1),
                    INSTRUMENT=c('w2','g'),
                    TARGET=c('cn','y'))
@@ -928,18 +927,18 @@ y_2   -0.6251177  2.843960  0.2532000 3.653260
 }
 
 
-\tabular{c}{\emph{Renormalization}}
+\tabular{c}{\emph{Endogenous Targeting}}
 
 
 
 
 
-The renormalization of econometric models consists of solving the model while interchanging the role of one or more endogenous variables with an equal number of exogenous variables.\cr\cr
+The endogenous targeting of econometric models consists of solving the model while interchanging the role of one or more endogenous variables with an equal number of exogenous variables.\cr\cr
 The \bold{bimets} \code{\link[=RENORM]{RENORM}}  procedure determines the values for the \code{INSTRUMENT} exogenous variables which allow the objective \code{TARGET} endogenous variables to be achieved, with respect to the constraints given by the model \code{MDL} definition.\cr\cr
 This is an approach to economic and monetary policy analysis, and is based on two assumptions:\cr\cr
 1. there exists a desired level for a set of \code{n} endogenous variables of the model defined as \code{TARGET};\cr
 2. there exists a set of \code{n} exogenous variables defined as \code{INSTRUMENT};\cr\cr
-Given these premises, the renormalization process consists in determining the values of the exogenous variables chosen as \code{INSTRUMENT} allowing us to achieve the desired values for the endogenous variables designated as \code{TARGET}. In other words the procedure allows users to exchange the role of exogenous and endogenous among a set of variables pairs. \cr\cr
+Given these premises, the endogenous targeting process consists in determining the values of the exogenous variables chosen as \code{INSTRUMENT} allowing us to achieve the desired values for the endogenous variables designated as \code{TARGET}. In other words the procedure allows users to exchange the role of exogenous and endogenous among a set of variables pairs. \cr\cr
 Given a list of exogenous \code{INSTRUMENT} variables and a list of \code{TARGET} endogenous time series, the iterative procedure can be split into the following steps:\cr\cr
 1. Computation of the multipliers matrix \code{MULTMAT} of the \code{TARGET} endogenous variables with respect to the \code{INSTRUMENT} exogenous variables (this is a square matrix by construction);\cr\cr
 2. Solution of the linear system (if any): 
@@ -951,20 +950,20 @@ Given a list of exogenous \code{INSTRUMENT} variables and a list of \code{TARGET
 3. Simulation of the model with the new set of exogenous variables computed in step 2, then a convergence check by comparing the subset of endogenous variables arising from this simulation and the related time series in \code{TARGET} list. If the convergence condition is satisfied, or the maximum number of iterations is reached, the algorithm will stop, otherwise it will go back to step 1;\cr\cr
 Users can also declare an endogenous variable as an \code{INSTRUMENT} variable. In this case, the constant adjustment related to the provided endogenous variable will be used as the instrument exogenous variable. This procedure is particularly suited for the automatic computation of the add-factors needed to fine tune the model into a baseline path and to improve the forecasting accuracy.\cr\cr
 If the convergence condition is satisfied, the \code{RENORM} procedure will return the requested \code{INSTRUMENT} time series allowing to achieve the desired values for endogenous variables designated as \code{TARGET}.\cr\cr
-Back to our Klein's model example, we can perform the renormalization of the previously estimated model. First of all, the targets must be defined:
+Back to our Klein's model example, we can perform the endogenous targeting of the previously estimated model. First of all, the targets must be defined:
 \preformatted{
 
 R> #we want an arbitrary value on Consumption of 66 in 1940 and 78 in 1941
 R> #we want an arbitrary value on GNP of 77 in 1940 and 98 in 1941
 
-R> kleinTargets = list(
+R> kleinTargets  <-  list(
               cn = TIMESERIES(66,78,START=c(1940,1),FREQ=1),
               y  = TIMESERIES(77,98,START=c(1940,1),FREQ=1)
               )
 }
-Then, we can perform the model renormalization by using the "\code{w2}" (Wage Bill of the Government Sector) and the "\code{g}" (Government non-Wage Spending) exogenous variables as \code{INSTRUMENT}, in the years 1940 and 1941:
+Then, we can perform the model endogenous targeting by using the "\code{w2}" (Wage Bill of the Government Sector) and the "\code{g}" (Government non-Wage Spending) exogenous variables as \code{INSTRUMENT}, in the years 1940 and 1941:
 \preformatted{
-R> kleinModel=RENORM(kleinModel
+R> kleinModel <- RENORM(kleinModel
                    ,INSTRUMENT = c('w2','g')
                    ,TARGET = kleinTargets
                    ,TSRANGE = c(1940,1,1941,1)
@@ -992,13 +991,13 @@ So, if we want to achieve on "\code{cn}" (Consumption) an arbitrary simulated va
                 Let's verify:
 \preformatted{
 R> #create a new model
-R> kleinRenorm=kleinModel
+R> kleinRenorm <- kleinModel
 
 R> #get instruments to be used
-R> newInstruments=kleinModel$renorm$INSTRUMENT
+R> newInstruments <- kleinModel$renorm$INSTRUMENT
 
 R> #change exogenous by using new instruments data
-R> kleinRenorm$modelData=within(kleinRenorm$modelData,
+R> kleinRenorm$modelData <- within(kleinRenorm$modelData,
                  {
                    w2[[1940,1]]=newInstruments$w2[[1940,1]]
                    w2[[1941,1]]=newInstruments$w2[[1941,1]]
@@ -1007,10 +1006,10 @@ R> kleinRenorm$modelData=within(kleinRenorm$modelData,
                  }
                 )
 R> #users can also replace last two commands with:
-R> #kleinRenorm$modelData=kleinRenorm$renorm$modelData
+R> #kleinRenorm$modelData <- kleinRenorm$renorm$modelData
 
 R> #simulate the new model
-R> kleinRenorm=SIMULATE(kleinRenorm
+R> kleinRenorm <- SIMULATE(kleinRenorm
                       ,TSRANGE=c(1940,1,1941,1)
                       ,simConvergence=0.00001
                       ,simIterLimit=100
