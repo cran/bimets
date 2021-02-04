@@ -34,7 +34,6 @@ RENORM(model=NULL,
         INSTRUMENT=NULL,
         ConstantAdjustment=NULL,
         quietly=FALSE,
-        showWarnings=FALSE,
         tol=.Machine$double.eps,
         avoidCompliance=FALSE,
         ...)
@@ -52,7 +51,6 @@ RENORM(model=NULL,
 \item{ConstantAdjustment}{A named list that specifies the constant adjustments (i.e. add factors) to be added to the selected equations of the model (see also \code{\link[=SIMULATE]{SIMULATE}});}
 \item{quietly}{If \code{TRUE}, information messages will be suppressed.
  } 
-\item{showWarnings}{If \code{TRUE}, a warning message will be shown if any input time series has missing values.}
  \item{tol}{
   the tolerance for detecting linear dependencies in the columns of a matrix while an inversion is requested. The default is \code{.Machine$double.eps}.
   }
@@ -218,12 +216,12 @@ with(myModel,TABIT(modelData$w2,
                    modelData$g,
                    renorm$INSTRUMENT$g))
 
-# DATE, PER, modelData$w2, renorm$INSTRUMENT$w2, modelData$g, renorm$INSTRUMENT$g
+#  Date, Prd., modelData$w2, renorm$INSTRUMENT$w2, modelData$g, renorm$INSTRUMENT$g
 # etc.
-#      1938, 1  ,        7.7,           ,         13,           
-#      1939, 1  ,        7.8,           ,       14.4,           
-#      1940, 1  ,          8,    7.41333,       15.4,    16.1069
-#      1941, 1  ,        8.5,     9.3436,       22.3,    22.6599
+#  1938, 1   ,          7.7,                     ,          13,           
+#  1939, 1   ,          7.8,                     ,        14.4,           
+#  1940, 1   ,            8,              7.41333,        15.4,             16.1069
+#  1941, 1   ,          8.5,               9.3436,        22.3,             22.6599
 #So, if we want to achieve on Consumption 'cn' 
 #an arbitrary simulated value of 66 
 #in 1940 and 78 in 1941, and if we want 
@@ -267,9 +265,9 @@ with(kleinRenorm$simulation,
      TABIT(cn,y)
      )
      
-#DATE, PER, cn        , y
-#1940,  1 , 66.01116  , 77.01772
-#1941,  1 , 78.02538  , 98.04121
+#Date, Prd., cn        , y
+#1940,  1  , 66.01116  , 77.01772
+#1941,  1  , 78.02538  , 98.04121
 
 
 

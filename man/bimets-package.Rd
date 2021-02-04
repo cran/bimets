@@ -125,12 +125,12 @@ R> TABIT(myMovAveTS,
       TSRANGE=c(2004,8,2004,12)
       )
 
-    DATE, PER, myMovAveTS , myTS1
-Aug 2004, 8  ,            , 56
-Sep 2004, 9  ,            , 57
-Oct 2004, 10 , 3.849002   , 58
-Nov 2004, 11 , 3.776275   , 59
-Dec 2004, 12 , 3.706247   , 60
+    Date, Prd., myMovAveTS , myTS1
+Aug 2004, 8   ,            , 56
+Sep 2004, 9   ,            , 57
+Oct 2004, 10  , 3.849002   , 58
+Nov 2004, 11  , 3.776275   , 59
+Dec 2004, 12  , 3.706247   , 60
  
 }
 
@@ -143,7 +143,7 @@ Dec 2004, 12 , 3.706247   , 60
 - \emph{Simulation} \cr
 - \emph{Multipliers Analysis} \cr
 - \emph{Endogenous Targeting } \cr\cr
-We will go through each item of the list with a simple Klein model example (ref: "Economic Fluctuations in the United States" by L. R. Klein, Wiley and Sons Inc., New York, 1950). \cr
+We will go through each item of the list with a simple Klein model example (ref: \emph{"Economic Fluctuations in the United States 1921-1941"} by L. R. Klein, Wiley and Sons Inc., New York, 1950). \cr
 \tabular{c}{\emph{Model Definition Language} }
 
 \bold{bimets} provides a language to unambiguously specify an econometric model. This section describes how to create a model and its general structure. The specification of an econometric model is translated and identified by keyword statements which are grouped in a model file, i.e. a plain text file with a specific syntax. Collectively, these keyword statements constitute the \bold{bimets} Model Description Language (from now on \code{\link[=MDL]{MDL}}). The model specifications consist of groups of statements. Each statement begins with a keyword. The keyword classifies the component of the model which is beign specified.\cr\cr
@@ -187,8 +187,31 @@ END
 "
 }
 
-Please note that there are circular dependencies between equations of the model,\cr i.e. \code{cn <- w1 <- y <- cn}. Circular dependencies imply that the model simulation must be solved with an iterative algorithm.\cr\cr
-As shown, the model definition is quite intuitive. The first keyword is \code{MODEL}, while at the end of the model definition we can find the \code{END} keyword. Available tags in the definition of a generic \bold{bimets} model are: 
+Given: \cr \cr
+- \code{cn} as private consumption expenditure;   \cr
+- \code{i} as investment;    \cr
+- \code{w1} as wage bill of the private sector (demand for labor);   \cr
+- \code{p} as profits;  \cr
+- \code{k} as stock of capital goods;   \cr
+- \code{y} as gross national product;  \cr  
+- \code{w2} as wage bill of the government sector;   \cr
+- \code{time} as an index of the passage of time, e.g. 1931 = zero;   \cr
+- \code{g} as government expenditure plus net exports;   \cr
+- \code{t} as business taxes.   \cr \cr
+\code{a1, a2, a3, a4, b1, b2, b3, b4, c1, c2, c3, c4} are coefficient to be estimated.  \cr \cr
+\cr 
+\if{latex}{
+This system has only 6 equations, three of which must be fitted in order to assess the coefficients. It may not seem so difficult to solve this system, but the real complexity emerges if you look at the incidence graph in the following figure, wherein endogenous variables are plotted in blue and exogenous variables are plotted in pink.\cr \cr
+
+\figure{KleinIG.png}{options: width=14cm} \cr \cr
+
+Each edge states a simultaneous dependence from a variable to another, e.g. the \code{w1} equation depends on the current value of the \code{time} time series; complexity arises because in this model there are several circular dependencies, one of which is plotted in dark blue.  \cr \cr
+A circular dependency in the incidence graph of a model implies that the model is a \emph{simultaneous} equations model and that it must be estimated by using ad-hoc procedures; moreover it can be simulated, i.e. performing a forecast, only by using an iterative algorithm.  
+}
+\if{html}{
+Please note that there are circular dependencies between equations of the model, i.e. \code{p <- w1 <- y <- p}. Circular dependencies imply that the model simulation must be solved with an iterative algorithm.\cr\cr
+} 
+As shown in the code, the model definition is quite intuitive. The first keyword is \code{MODEL}, while at the end of the model definition we can find the \code{END} keyword. Available tags in the definition of a generic \bold{bimets} model are: 
 
 
 
@@ -399,8 +422,6 @@ R> kleinModel <- ESTIMATE(kleinModel)
 Users can also estimate a selection of behavioral equations:
 \preformatted{
 R> kleinModel <- ESTIMATE(kleinModel,eqList=c('cn'))
-
-.CHECK_MODEL_DATA(): warning, there are undefined values in time series "time".
 
 Estimate the Model klein1.txt:
 the number of behavioral equations to be estimated is 1.
@@ -784,14 +805,14 @@ F-prob(6,17)       : 0.00668723
 
 Predictive Power:
 
-DATE, PER, ACTUAL  , PREDICT   , ERROR      , STDERR    , TSTAT         
+Date, Prd., Actual  , Predict   , Error      , Std. Error, T-stat         
 
-1936, 1  ,  57.7   ,  56.5544  ,  1.14564   ,  1.01181  ,  1.13227      
-1937, 1  ,  58.7   ,  59.931   , -1.23099   ,  1.0201   , -1.20673      
-1938, 1  ,  57.5   ,  57.9721  , -0.472122  ,  0.968638 , -0.487409     
-1939, 1  ,  61.6   ,  61.5207  ,  0.0793139 ,  1.20048  ,  0.0660685    
-1940, 1  ,  65     ,  65.3957  , -0.395718  ,  1.24227  , -0.318545     
-1941, 1  ,  69.7   ,  73.7965  , -4.09655   ,  1.6693   , -2.45405   
+1936, 1   ,  57.7   ,  56.5544  ,  1.14564   ,  1.01181  ,  1.13227      
+1937, 1   ,  58.7   ,  59.931   , -1.23099   ,  1.0201   , -1.20673      
+1938, 1   ,  57.5   ,  57.9721  , -0.472122  ,  0.968638 , -0.487409     
+1939, 1   ,  61.6   ,  61.5207  ,  0.0793139 ,  1.20048  ,  0.0660685    
+1940, 1   ,  65     ,  65.3957  , -0.395718  ,  1.24227  , -0.318545     
+1941, 1   ,  69.7   ,  73.7965  , -4.09655   ,  1.6693   , -2.45405   
           
 
 ...ESTIMATE OK                      
@@ -812,25 +833,24 @@ More details are available in the \code{\link[=SIMULATE]{SIMULATE}} help page. \
 
 Back to Kelin's model example, let's forecast the GNP (i.e. the "\code{y}" endogenous variable, originally referred as "Net national income, measured in billions of 1934 dollars", pag. 141 in "Economic Fluctuations in the United States" by L. R. Klein, Wiley and Sons Inc., New York, 1950) up to 1943: 
 \preformatted{
-R> #FORECAST GNP in 1942 and 1943 
+R> #FORECAST GNP in 1942:1944
 
-R> #we need to extend exogenous variables in 1942 and 1943
+R> #we need to extend exogenous variables in 1942 up to 1944
 R> kleinModel$modelData <- within(kleinModel$modelData,{
-                    w2   = TSEXTEND(w2,  UPTO=c(1943,1))
-                    t    = TSEXTEND(t,   UPTO=c(1943,1))
-                    g    = TSEXTEND(g,   UPTO=c(1943,1))
-                    time = TSEXTEND(time,UPTO=c(1943,1)
-                                     ,EXTMODE='LINEAR')
-                    })
+            w2   = TSEXTEND(w2,  UPTO=c(1944,1),EXTMODE='CONSTANT')
+            t    = TSEXTEND(t,   UPTO=c(1944,1),EXTMODE='CONSTANT')
+            g    = TSEXTEND(g,   UPTO=c(1944,1),EXTMODE='CONSTANT')
+            time = TSEXTEND(time,UPTO=c(1944,1),EXTMODE='LINEAR')
+            })
 
  
 R> #simulate model
 R> kleinModel <- SIMULATE(kleinModel
-                  ,simType='FORECAST'
-                  ,TSRANGE=c(1940,1,1943,1)
-                  ,simConvergence=0.00001
-                  ,simIterLimit=100
-                  )
+            ,simType='FORECAST'
+            ,TSRANGE=c(1941,1,1944,1)
+            ,simConvergence=0.00001
+            ,simIterLimit=100
+            )
   
 Simulation: 100.00%
 ...SIMULATE OK
@@ -838,13 +858,14 @@ Simulation: 100.00%
 R> #get forecasted GNP
 R> TABIT(kleinModel$simulation$y)
 
-DATE,  PER, kleinModel$simulation$y
-1940,   1 , 74.57806
-1941,   1 , 94.01525
-1942,   1 , 133.9687
-1943,   1 , 199.9133}
-\if{latex}{In the following figure you will find the historical consumption, the dynamic simulated consumption and the RHS computation of the consumption equation, from 1921 to 1941: \cr
-\figure{CnSim.png}{options: width=14cm} \cr \cr
+Date, Prd., kleinModel$simulation$y
+1941, 1   ,  95.41613      
+1942, 1   ,  106.8923      
+1943, 1   ,  107.4302      
+1944, 1   ,  100.7512     
+}
+\if{latex}{
+\figure{KleinGNP.png}{options: width=14cm} \cr \cr
 }
 
 Below is an example of advanced simulation:
@@ -895,7 +916,7 @@ R> kleinModel <- MULTMATRIX(kleinModel,
                         INSTRUMENT=c('w2','g'),
                         TARGET=c('cn','y')
                         )
-Multipliter Matrix: 100.00%
+Multiplier Matrix: 100.00%
 ...MULTMATRIX OK
 
 R> kleinModel$MultiplierMatrix
@@ -912,7 +933,7 @@ R> kleinModel <- MULTMATRIX(kleinModel,
                    TSRANGE=c(1940,1,1941,1),
                    INSTRUMENT=c('w2','g'),
                    TARGET=c('cn','y'))
-Multipliter Matrix: 100.00%
+Multiplier Matrix: 100.00%
 ...MULTMATRIX OK
 
 R> #output multipliers matrix (note the zeros where the period
@@ -980,9 +1001,9 @@ R> with(kleinModel,TABIT(modelData$w2,
                       )
           )
      
-DATE, PER, modelData$w2, renorm$INSTRUMENT$w2, modelData$g, renorm$INSTRUMENT$g
-1940,  1 , 8           , 7.413331            , 15.4       , 16.1069
-1941,  1 , 8.5         , 9.3436              , 22.3       , 22.65985
+Date, Prd., modelData$w2, renorm$INSTRUMENT$w2, modelData$g, renorm$INSTRUMENT$g
+1940,  1  , 8           , 7.413331            , 15.4       , 16.1069
+1941,  1  , 8.5         , 9.3436              , 22.3       , 22.65985
      
 }
 
@@ -1022,9 +1043,9 @@ R> with(kleinRenorm$simulation,
      TABIT(cn,y)
      )
      
-DATE, PER, cn        , y
-1940,  1 , 66.01116  , 77.01772
-1941,  1 , 78.02538  , 98.04121
+Date, Prd., cn        , y
+1940,  1  , 66.01116  , 77.01772
+1941,  1  , 78.02538  , 98.04121
 
 
 }

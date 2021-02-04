@@ -46,7 +46,7 @@ EQ> k = TSLAG(k,1) + i
 END
 "
 }
-Please note that there are circular dependencies between equations of the model, i.e. \code{cn <- w1 <- y <- cn}. Circular dependencies imply that the model simulation must be solved with an iterative algorithm.\cr\cr
+Please note that there are circular dependencies between equations of the model, e.g. \code{p <- w1 <- y <- p} as shown in the \code{\link[=bimets]{"BIMETS package"}} section figure. Circular dependencies imply that the model simulation must be solved with an iterative algorithm.\cr\cr
 As shown, the model definition is quite intuitive. The first keyword is \code{MODEL}, while at the end of the model definition we can find the \code{END} keyword. Available tags in the definition of a generic BIMETS model are: 
 \cr\cr
 - \bold{EQUATION>} or \bold{BEHAVIORAL>} indicate the beginning of a series of keyword statements describing a behavioral equation. The behavioral statement general form is: \cr

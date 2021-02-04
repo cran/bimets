@@ -1,6 +1,6 @@
 #############################################################################
 #
-# Copyright (C) 2019 Bank of Italy
+# Copyright (C) 2021-2031 Bank of Italy
 #  
 #  This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -32,7 +32,7 @@
   #clear console
   packageStartupMessage("\014 ");
   
-  packageStartupMessage(gsub("\\$","",'bimets is active - version 1.5.2\nFor help type \'?bimets\'\n'))
+  packageStartupMessage(gsub("\\$","",'bimets is active - version 1.5.3\nFor help type \'?bimets\'\n'))
   
   #packageStartupMessage('Loading required libraries...OK'); 
   #packageStartupMessage('\nBIMETS is active.\n');
@@ -7967,7 +7967,7 @@ TABIT <- function(..., TSRANGE=NULL, digits=getOption('digits'),avoidCompliance=
   }
   
   #print header
-  cat('\n      DATE, PER, ',seriesListADSLstr,'\n\n',sep='');
+  cat('\n      Date, Prd., ',seriesListADSLstr,'\n\n',sep='');
   
   
   #main cycle
@@ -8020,11 +8020,11 @@ TABIT <- function(..., TSRANGE=NULL, digits=getOption('digits'),avoidCompliance=
     }  
     
     #print out row
-    if (outFreq==1) {cat(paste(sprintf("%10s",GETDATE(ts(1,start=c(localYint,localPint),frequency=outFreq),1,format='%Y',avoidCompliance=TRUE)),', ', sprintf("%-3d",localPint), tmpOutStr, '\n',sep=''),sep='');   }
-    else if (outFreq==2) {cat(paste(sprintf("%10s",GETDATE(ts(1,start=c(localYint,localPint),frequency=outFreq),1,format='%Y',avoidCompliance=TRUE)),', ', sprintf("%-3d",localPint), tmpOutStr, '\n',sep=''),sep='');}
-    else if (outFreq==4) {cat(paste(sprintf("%10s",GETDATE(ts(1,start=c(localYint,localPint),frequency=outFreq),1,format='%Y Q%q',avoidCompliance=TRUE)),', ', sprintf("%-3d",localPint), tmpOutStr, '\n',sep=''),sep='');}   
-    else if (outFreq==12) {cat(paste(sprintf("%10s",GETDATE(ts(1,start=c(localYint,localPint),frequency=outFreq),1,format='%b %Y',avoidCompliance=TRUE)),', ', sprintf("%-3d",localPint), tmpOutStr, '\n',sep=''),sep=''); }  
-    else {cat(paste(sprintf("%10s",GETDATE(ts(1,start=c(localYint,localPint),frequency=outFreq),1,avoidCompliance=TRUE)),', ', sprintf("%-3d",localPint), tmpOutStr, '\n',sep=''),sep='');   }
+    if (outFreq==1) {cat(paste(sprintf("%10s",GETDATE(ts(1,start=c(localYint,localPint),frequency=outFreq),1,format='%Y',avoidCompliance=TRUE)),', ', sprintf("%-4d",localPint), tmpOutStr, '\n',sep=''),sep='');   }
+    else if (outFreq==2) {cat(paste(sprintf("%10s",GETDATE(ts(1,start=c(localYint,localPint),frequency=outFreq),1,format='%Y',avoidCompliance=TRUE)),', ', sprintf("%-4d",localPint), tmpOutStr, '\n',sep=''),sep='');}
+    else if (outFreq==4) {cat(paste(sprintf("%10s",GETDATE(ts(1,start=c(localYint,localPint),frequency=outFreq),1,format='%Y Q%q',avoidCompliance=TRUE)),', ', sprintf("%-4d",localPint), tmpOutStr, '\n',sep=''),sep='');}   
+    else if (outFreq==12) {cat(paste(sprintf("%10s",GETDATE(ts(1,start=c(localYint,localPint),frequency=outFreq),1,format='%b %Y',avoidCompliance=TRUE)),', ', sprintf("%-4d",localPint), tmpOutStr, '\n',sep=''),sep=''); }  
+    else {cat(paste(sprintf("%10s",GETDATE(ts(1,start=c(localYint,localPint),frequency=outFreq),1,avoidCompliance=TRUE)),', ', sprintf("%-4d",localPint), tmpOutStr, '\n',sep=''),sep='');   }
     
     
     

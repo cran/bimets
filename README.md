@@ -82,29 +82,29 @@ myMovAveTS <- MOVAVG(myDeltaPTS,5)
 #print data
 TABIT(myMovAveTS,myTS1)
 
-#     DATE, PER, myMovAveTS     , myTS1          
+#     Date, Prd., myMovAveTS     , myTS1          
 # 
-# Jan 2000, 1  ,                ,  1             
-# Feb 2000, 2  ,                ,  2             
-# Mar 2000, 3  ,                ,  3             
+# Jan 2000, 1   ,                ,  1             
+# Feb 2000, 2   ,                ,  2             
+# Mar 2000, 3   ,                ,  3             
 # ...
-# Sep 2004, 9  ,                ,  57            
-# Oct 2004, 10 ,  3.849002      ,  58            
-# Nov 2004, 11 ,  3.776275      ,  59            
-# Dec 2004, 12 ,  3.706247      ,  60            
-# Jan 2005, 1  ,  3.638771      ,  61            
-# Feb 2005, 2  ,  3.573709      ,  62            
-# Mar 2005, 3  ,  3.171951      ,  63            
-# Apr 2005, 4  ,  2.444678      ,  64            
-# May 2005, 5  ,  1.730393      ,  65            
-# Jun 2005, 6  ,  1.028638      ,  66            
-# Jul 2005, 7  ,  0.3389831     ,  67            
-# Aug 2005, 8  ,  0             ,  68            
-# Sep 2005, 9  ,  0             ,  69            
-# Oct 2005, 10 ,  0             ,  70            
+# Sep 2004, 9   ,                ,  57            
+# Oct 2004, 10  ,  3.849002      ,  58            
+# Nov 2004, 11  ,  3.776275      ,  59            
+# Dec 2004, 12  ,  3.706247      ,  60            
+# Jan 2005, 1   ,  3.638771      ,  61            
+# Feb 2005, 2   ,  3.573709      ,  62            
+# Mar 2005, 3   ,  3.171951      ,  63            
+# Apr 2005, 4   ,  2.444678      ,  64            
+# May 2005, 5   ,  1.730393      ,  65            
+# Jun 2005, 6   ,  1.028638      ,  66            
+# Jul 2005, 7   ,  0.3389831     ,  67            
+# Aug 2005, 8   ,  0             ,  68            
+# Sep 2005, 9   ,  0             ,  69            
+# Oct 2005, 10  ,  0             ,  70            
 # ...
-# Mar 2008, 3  ,                ,  99            
-# Apr 2008, 4  ,                ,  100 
+# Mar 2008, 3   ,                ,  99            
+# Apr 2008, 4   ,                ,  100 
 
 ```
 
@@ -323,14 +323,14 @@ kleinModel <- SIMULATE(kleinModel,
 #print simulated gdp
 TABIT(kleinModel$simulation$y)
 #
-#DATE, PER, kleinModel$simulation$y
+#      Date, Prd., kleinModel$simulation$y
 #
-#      1925, 1  ,  62.74953      
-#      1926, 1  ,  56.46665      
-#      1927, 1  ,  48.3741       
-#      1928, 1  ,  55.58927      
-#      1929, 1  ,  73.35799      
-#      1930, 1  ,  74.93561  
+#      1925, 1   ,  62.74953      
+#      1926, 1   ,  56.46665      
+#      1927, 1   ,  48.3741       
+#      1928, 1   ,  55.58927      
+#      1929, 1   ,  73.35799      
+#      1930, 1   ,  74.93561  
 
 #get multiplier matrix in 1941
 kleinModel <- MULTMATRIX(kleinModel,
@@ -339,7 +339,7 @@ kleinModel <- MULTMATRIX(kleinModel,
                         TARGET=c('cn','y'),
                         simIterLimit = 100)
 
-# Multipliter Matrix:    100.00%
+# Multiplier Matrix:    100.00%
 # ...MULTMATRIX OK
 
 kleinModel$MultiplierMatrix
@@ -374,14 +374,14 @@ with(kleinModel,TABIT(modelData$w2,
                       modelData$g,
                       renorm$INSTRUMENT$g))
 
-# DATE, PER, modelData$w2, renorm$w2, modelData$g, renorm$g
+#       Date, Prd., modelData$w2,  renorm$w2, modelData$g, renorm$g
 # 
 #       ...
 # 
-#       1938, 1  ,        7.7,           ,         13,           
-#       1939, 1  ,        7.8,           ,       14.4,           
-#       1940, 1  ,          8,   8.857669,       15.4,    15.81276
-#       1941, 1  ,        8.5,   12.18823,       22.3,    21.83899
+#       1938, 1   ,          7.7,           ,          13,           
+#       1939, 1   ,          7.8,           ,        14.4,           
+#       1940, 1   ,            8,   8.857669,        15.4,    15.81276
+#       1941, 1   ,          8.5,   12.18823,        22.3,    21.83899
 
 #So, if we want to achieve on "cn" (Consumption) an arbitrary simulated value of 66 in 1940
 #and 78 in 1941, and if we want to achieve on "y" (GNP) an arbitrary simulated value of 77
@@ -411,10 +411,10 @@ with(kleinRenorm$simulation,
     TABIT(cn,y)
     )
     
-#    DATE, PER, cn             , y              
+#    Date, Prd., cn             , y              
 #
-#    1940, 1  ,  66.02157      ,  77.03568      
-#    1941, 1  ,  78.05216      ,  98.09119 
+#    1940, 1   ,  66.02157      ,  77.03568      
+#    1941, 1   ,  78.05216      ,  98.09119 
 
 ```
 Transformations of the dependent variable are allowed in `EQ>` definition, e.g. `TSDELTA(cn)=...`, `EXP(i)=...`, `TSDELTALOG(y)=...`, etc.
