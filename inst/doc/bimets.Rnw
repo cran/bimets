@@ -218,7 +218,7 @@ TABIT(myMovAveTS,
 \item[--] \emph{Optimal Control}, par. \ref{ssec:10}
 \end{itemize}
 We will go through each item of the list with a simple Klein\footnote{\emph{"Economic Fluctuations in the United States 1921-1941"} by L. R. Klein, Wiley and Sons Inc., New York, 1950}  model example. \\ \\
-For more realistic scenarios, several advanced econometric exercises on the US Federal Reserve FRB/US econometric model (e.g., dynamic simulation in a monetary policy shock, rational expectations, endogenous targeting, stochastic simulation, etc.) are available in the \href{https://cran.r-project.org/package=bimets/}{"US Federal Reserve quarterly model (FRB/US) in R with bimets"} vignette. \\ \\
+For more realistic scenarios, several advanced econometric exercises on the US Federal Reserve FRB/US econometric model (e.g., dynamic simulation in a monetary policy shock, rational expectations, endogenous targeting, stochastic simulation, etc.) are available in the \href{https://cran.r-project.org/package=bimets/vignettes/frb2bimets.pdf}{"US Federal Reserve quarterly model (FRB/US) in R with bimets"} vignette. \\ \\
 More details on \pkg{bimets} econometric capabilities are available in the \href{https://CRAN.R-project.org/package=bimets/bimets.pdf}{reference manual}.\\ \\
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Model Description Language} \label{ssec:1}
@@ -1504,7 +1504,7 @@ The models used in the comparison have more than:
 \linespread{1.2}
 In these models, there are equations with restricted coefficients, polynomial distributed lags, error autocorrelation, and conditional evaluation of technical identities; all models have been simulated in \emph{static}, \emph{dynamic}, and \emph{forecast} mode, with exogenization and constant adjustments of endogenous variables through the use of \pkg{bimets} capabilities.\\ \\
 In the +800 endogenous simulated time series over the +20 simulated periods (i.e. more than 16.000 simulated observations), the average \emph{percentage} difference between \pkg{bimets} and leading commercial software results has a magnitude of \(10^{-7} \% \). The difference between results calculated by using different commercial software has the same average magnitude.\\ \\
-Several advanced econometric exercises on the US Federal Reserve FRB/US econometric model (e.g., dynamic simulation in a monetary policy shock, rational expectations, endogenous targeting, stochastic simulation, etc.) are available in the \href{https://cran.r-project.org/package=bimets/}{"US Federal Reserve quarterly model (FRB/US) in R with bimets"} vignette. \\ \\
+Several advanced econometric exercises on the US Federal Reserve FRB/US econometric model (e.g., dynamic simulation in a monetary policy shock, rational expectations, endogenous targeting, stochastic simulation, etc.) are available in the \href{https://cran.r-project.org/package=bimets/vignettes/frb2bimets.pdf}{"US Federal Reserve quarterly model (FRB/US) in R with bimets"} vignette. \\ \\
 \pkg{bimets} stands for Bank of Italy Model Easy Time Series; it does not depend on compilers or third-party software so it can be freely downloaded and installed on Linux, MS Windows\textsuperscript{\textregistered} and Mac OSX\textsuperscript{\textregistered}, without any further requirements. \\ \\
 The package can be installed and loaded in \proglang{R} with the following commands (with "\code{R>}" as the \proglang{R} command prompt):
 \begin{footnotesize}
