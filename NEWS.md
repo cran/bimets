@@ -1,3 +1,11 @@
+# bimets 4.1.0
+
+Oct. 2025
+
+* added `CSV2BIMETS`
+* added `BIMETS2CSV`
+* fixed bug on `[[<-,ts/xts`. Multiple observations assignment to a missing value,e.g.,  `ts[[start,end]] <- NA` is now correctly executed.
+
 # bimets 4.0.4
 
 May. 2025

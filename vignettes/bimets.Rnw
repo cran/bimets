@@ -93,6 +93,7 @@ The main \pkg{bimets} time series capabilities are:
 \item[--] \emph{Indexing}, par. \ref{ssts:1};
 \item[--] \emph{Aggregation / Disaggregation}, par. \ref{ssts:2};
 \item[--] \emph{Manipulation}, par. \ref{ssts:3};
+\item[--] \emph{Import/Export}, par. \ref{ssts:4};
 \end{itemize}
 More details on \pkg{bimets} time series capabilities are available in the \href{https://CRAN.R-project.org/package=bimets/bimets.pdf}{reference manual}.\\ \\
 \subsection{Time Series Indexing} \label{ssts:1}
@@ -197,6 +198,27 @@ TABIT(myMovAveTS,
       myTS1,
       TSRANGE = c(2004,8,2004,12)
       )
+@
+\end{footnotesize} 
+
+\subsection{Time Series Import/Export} \label{ssts:4}
+
+Users can import/export time series lists, also having different frequency and time range, from/to CSV (Comma-Separated Values) files, using \code{BIMETS2CSV()} and \code{CSV2BIMETS()} functions.
+
+Example:
+\begin{footnotesize}
+<<eval=FALSE>>=
+
+#save to CSV
+csvOut <- list(
+    mySeries1=myTS1,
+    mySeries2=myMovAveTS
+    ) 
+
+BIMETS2CSV(csvOut, 
+    filePath='~/temp.csv', 
+    mergeList=TRUE, 
+    overWrite=TRUE)
 @
 \end{footnotesize} 
 
@@ -873,6 +895,16 @@ kleinModel <- SIMULATE(kleinModel
 
 #get forecasted GNP
 TABIT(kleinModel$simulation$y)
+@
+
+<<eval=FALSE>>=
+
+#save simulated time series to csv
+BIMETS2CSV(
+  kleinModel$simulation[kleinModel$vendog], 
+  filePath='~/temp.csv', 
+  mergeList=TRUE, 
+  overWrite=TRUE)
 @
 \end{footnotesize}
 
