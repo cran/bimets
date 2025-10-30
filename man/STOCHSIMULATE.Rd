@@ -19,7 +19,7 @@ In the following figure, the advanced Klein model (see code example), has been p
 \figure{StochKleinGNP.png} \cr \cr
 
 At the moment, all the disturbances are i.i.d. and are not transformed into a congruent autoregressive scheme in the case the related perturbed endogenous behavioral presents an autocorrelation for the errors in its \code{\link[=MDL]{MDL}} definition, e.g. \code{ERROR> AUTO(n)} \cr \cr
-For more realistic scenarios, several advanced econometric exercises on the US Federal Reserve FRB/US econometric model (e.g., dynamic simulation in a monetary policy shock, rational expectations, endogenous targeting, stochastic simulation, etc.) are available in the \href{https://cran.r-project.org/package=bimets/vignettes/frb2bimets.pdf}{"US Federal Reserve quarterly model (FRB/US) in R with bimets"} vignette. \cr \cr
+For more realistic scenarios, several advanced econometric exercises on the US Federal Reserve FRB/US econometric model (e.g., dynamic simulation in a monetary policy shock, rational expectations, endogenous targeting, stochastic simulation, etc.) are available in the "US Federal Reserve quarterly model (FRB/US) in R with bimets" vignette. \cr \cr
 } 
 \usage{
 STOCHSIMULATE(model=NULL,

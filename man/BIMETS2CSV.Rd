@@ -160,7 +160,11 @@ This function produces a CSV file, in the provided \code{filePath}, built with t
 }
 
 \examples{
-	
+\donttest{
+
+#define file path
+filePath <- tempfile(fileext = ".csv")
+
 #Heterogeneous frequency -----------------------------
 
 #create time series
@@ -173,9 +177,6 @@ myList <- list(
   myTitle1=ts1,
   myTitle2=ts2,
   myTitle3=ts3)
-  
-#define file path
-filePath <- '~/temp.csv'
 
 #export time series to csv then import back from csv
 
@@ -210,9 +211,6 @@ myList <- list(
   myTitle1=ts1,
   myTitle2=ts2,
   myTitle3=ts3)
-  
-#define file path
-filePath <- '~/temp.csv'
 
 #export time series to csv then import from csv
 
@@ -346,4 +344,6 @@ outList <- CSV2BIMETS(
 
 #print ts
 TABIT(outList[['My Long Description']])
+
+}
 }

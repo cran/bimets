@@ -3,7 +3,7 @@
 ###################################################
 ### code chunk number 1: bimets.Rnw:61-63
 ###################################################
-options( prompt = "R> ", continue = "   " )
+oldOptions <- options( prompt = "R> ", continue = "   " )
 library(bimets)
 
 
@@ -141,7 +141,7 @@ TABIT(myMovAveTS,
 ##     ) 
 ## 
 ## BIMETS2CSV(csvOut, 
-##     filePath='~/temp.csv', 
+##     filePath='temp.csv', 
 ##     mergeList=TRUE, 
 ##     overWrite=TRUE)
 
@@ -471,7 +471,7 @@ TABIT(kleinModel$simulation$y)
 ## #save simulated time series to csv
 ## BIMETS2CSV(
 ##   kleinModel$simulation[kleinModel$vendog], 
-##   filePath='~/temp.csv', 
+##   filePath='temp.csv', 
 ##   mergeList=TRUE, 
 ##   overWrite=TRUE)
 
@@ -997,13 +997,20 @@ abs(sum(TSPROJECT(optFunTest
 
 
 ###################################################
-### code chunk number 74: bimets.Rnw:1543-1544 (eval = FALSE)
+### code chunk number 74: bimets.Rnw:1520-1522
+###################################################
+# reset options
+options(oldOptions)
+
+
+###################################################
+### code chunk number 75: bimets.Rnw:1549-1550 (eval = FALSE)
 ###################################################
 ## install.packages('bimets')
 
 
 ###################################################
-### code chunk number 75: bimets.Rnw:1546-1547
+### code chunk number 76: bimets.Rnw:1552-1553
 ###################################################
 library(bimets)
 

@@ -1,3 +1,9 @@
+# bimets 4.1.1
+
+Oct. 2025
+
+* fixed issues with CRAN compliance
+
 # bimets 4.1.0
 
 Oct. 2025

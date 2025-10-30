@@ -15,7 +15,7 @@ Users can select observations also by using a single bi-dimensional argument, e.
 }
 
 
-
+\value{No return value.}
 
 
 \seealso{
