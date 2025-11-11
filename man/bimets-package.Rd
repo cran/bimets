@@ -174,7 +174,7 @@ BIMETS econometric modeling capabilities comprehend:\cr\cr
 - \emph{Endogenous Targeting } \cr
 - \emph{Optimal Control } \cr\cr
 We will go through each item of the list with a simple Klein model example (ref: \emph{"Economic Fluctuations in the United States 1921-1941"} by L. R. Klein, Wiley and Sons Inc., New York, 1950). \cr \cr
-For more realistic scenarios, several advanced econometric exercises on the US Federal Reserve FRB/US econometric model (e.g., dynamic simulation in a monetary policy shock, rational expectations, endogenous targeting, stochastic simulation, etc.) are available in the "US Federal Reserve quarterly model (FRB/US) in R with bimets" vignette. \cr \cr
+For more realistic scenarios, several advanced econometric exercises on the US Federal Reserve FRB/US econometric model (e.g., dynamic simulation in a monetary policy shock, rational expectations, endogenous targeting, stochastic simulation, etc.) are available in the \href{https://cran.r-project.org/package=bimets/vignettes/frb2bimets.pdf}{"US Federal Reserve quarterly model (FRB/US) in R with bimets"} vignette. \cr \cr
 \tabular{c}{\emph{Model Description Language} }
 
 BIMETS provides a language to specify an econometric model unambiguously. This section describes how to create a model and its general structure. The specification of an econometric model is translated and identified by keyword statements which are grouped in a model file, i.e. a plain text file or a \code{character} variable with a specific syntax. Collectively, these keyword statements constitute the BIMETS Model Description Language (from now on \code{\link[=MDL]{MDL}}). The model specifications consist of groups of statements. Each statement begins with a keyword. The keyword classifies the component of the model which is being specified.\cr\cr
@@ -1368,8 +1368,6 @@ R> abs(sum(TSPROJECT(optFunTest
 Package: bimets - Time Series And Econometric Modeling In R\cr
 Type: Package\cr
 License: GPL-3\cr
- 
-
 
 BIMETS estimation and simulation results have been compared to the output results of leading commercial econometric software by using several large and complex models.\cr\cr
 The models used in the comparison have more than:\cr\cr
@@ -1379,7 +1377,7 @@ The models used in the comparison have more than:\cr\cr
 +1000 time series of endogenous and exogenous variables;\cr\cr
 In these models, there are equations with restricted coefficients, polynomial distributed lags, error autocorrelation, and conditional evaluation of technical identities; all models have been simulated in \emph{static}, \emph{dynamic}, and \emph{forecast} mode, with exogenization and constant adjustments of endogenous variables through the use of BIMETS capabilities.\cr\cr
 In the +800 endogenous simulated time series over the +20 simulated periods (i.e. more than 16.000 simulated observations), the average \emph{percentage} difference between BIMETS and leading commercial software results has a magnitude of \eqn{10^{-7} \% }{10^(-7) \%}. The difference between results calculated by using different commercial software has the same average magnitude.\cr\cr
-Several advanced econometric exercises on the US Federal Reserve FRB/US econometric model (e.g., dynamic simulation in a monetary policy shock, rational expectations, endogenous targeting, stochastic simulation, etc.) are available in the "US Federal Reserve quarterly model (FRB/US) in R with bimets" vignette. \cr \cr
+Several advanced econometric exercises on the US Federal Reserve FRB/US econometric model (e.g., dynamic simulation in a monetary policy shock, rational expectations, endogenous targeting, stochastic simulation, etc.) are available in the \href{https://cran.r-project.org/package=bimets/vignettes/frb2bimets.pdf}{"US Federal Reserve quarterly model (FRB/US) in R with bimets"} vignette. \cr \cr
 BIMETS stands for Bank of Italy Model Easy Time Series; it does not depend on compilers or third-party software so it can be freely downloaded and installed on Linux, MS Windows(R) and Mac OSX(R), without any further requirements. \cr\cr
 More details in:\cr\cr
 - \code{\link[=MDL]{MDL}}\cr

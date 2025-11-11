@@ -1,3 +1,9 @@
+# bimets 4.1.2
+
+Nov. 2025
+
+* Docs code minor refactoring
+
 # bimets 4.1.1
 
 Oct. 2025

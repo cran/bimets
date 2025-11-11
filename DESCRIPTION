@@ -1,8 +1,8 @@
 Package: bimets
 Type: Package
 Title: Time Series and Econometric Modeling
-Version: 4.1.1
-Date: 2025-10-21
+Version: 4.1.2
+Date: 2025-11-11
 Authors@R: c(person("Andrea", "Luciani", email = "andrea.luciani@bancaditalia.it", role = c("aut", "cre"), comment = c(ORCID = "0000-0002-7372-358X")), person("Roberto", "Stok", email = "roberto.stok@bancaditalia.it", role = c("aut")), person("Bank of Italy",role = c("cph")))
 Maintainer: Andrea Luciani <andrea.luciani@bancaditalia.it>
 Author: Andrea Luciani [aut, cre] (ORCID:
@@ -19,6 +19,6 @@ Encoding: UTF-8
 BugReports: https://github.com/andrea-luciani/bimets/issues
 URL: https://github.com/andrea-luciani/bimets
 NeedsCompilation: no
-Packaged: 2025-10-27 15:42:50 UTC; m025732
+Packaged: 2025-11-11 14:27:48 UTC; m025732
 Repository: CRAN
-Date/Publication: 2025-10-30 20:20:08 UTC
+Date/Publication: 2025-11-11 15:00:02 UTC
